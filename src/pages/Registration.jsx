@@ -378,34 +378,34 @@ import { registerAdmin } from "../api/adminApi";
 
 const registrationValidationSchema = Yup.object().shape({
   // Full Name validation - must be at least 2 characters
-  fullName: Yup.string()
-    .min(2, "Full name must be at least 2 characters")
-    .max(50, "Full name must not exceed 50 characters")
-    .required("Full name is required")
-    .matches(
-      /^[a-zA-Z\s]+$/,
-      "Full name should only contain letters and spaces",
-    ),
+  // fullName: Yup.string()
+  //   .min(2, "Full name must be at least 2 characters")
+  //   .max(50, "Full name must not exceed 50 characters")
+  //   .required("Full name is required")
+  //   .matches(
+  //     /^[a-zA-Z\s]+$/,
+  //     "Full name should only contain letters and spaces",
+  //   ),
 
-  // Email validation - must be valid email format
-  email: Yup.string()
-    .email("Please enter a valid email address")
-    .required("Email is required"),
+  // // Email validation - must be valid email format
+  // email: Yup.string()
+  //   .email("Please enter a valid email address")
+  //   .required("Email is required"),
 
-  // Password validation - minimum 8 characters with complexity requirements
-  password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
-    .max(100, "Password must not exceed 100 characters")
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
-      "Password must contain at least one uppercase letter, one lowercase letter, and one number",
-    )
-    .required("Password is required"),
+  // // Password validation - minimum 8 characters with complexity requirements
+  // password: Yup.string()
+  //   .min(8, "Password must be at least 8 characters")
+  //   .max(100, "Password must not exceed 100 characters")
+  //   .matches(
+  //     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
+  //     "Password must contain at least one uppercase letter, one lowercase letter, and one number",
+  //   )
+  //   .required("Password is required"),
 
-  // Confirm Password validation - must match password field
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords do not match")
-    .required("Please confirm your password"),
+  // // Confirm Password validation - must match password field
+  // confirmPassword: Yup.string()
+  //   .oneOf([Yup.ref("password"), null], "Passwords do not match")
+  //   .required("Please confirm your password"),
 });
 
 export default function Registration() {
@@ -585,11 +585,10 @@ export default function Registration() {
                 onChange={handleChange}
                 placeholder="Enter your full name"
                 disabled={isLoading}
-                className={`w-full pl-11 pr-4 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.fullName
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-amber-500/40 focus:border-amber-400"
-                }`}
+                className={`w-full pl-11 pr-4 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.fullName
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-amber-500/40 focus:border-amber-400"
+                  }`}
               />
             </div>
 
@@ -622,11 +621,10 @@ export default function Registration() {
                 onChange={handleChange}
                 placeholder="your.email@example.com"
                 disabled={isLoading}
-                className={`w-full pl-11 pr-4 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.email
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-amber-500/40 focus:border-amber-400"
-                }`}
+                className={`w-full pl-11 pr-4 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.email
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-amber-500/40 focus:border-amber-400"
+                  }`}
               />
             </div>
 
@@ -659,11 +657,10 @@ export default function Registration() {
                 onChange={handleChange}
                 placeholder="Create a strong password"
                 disabled={isLoading}
-                className={`w-full pl-11 pr-12 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.password
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-amber-500/40 focus:border-amber-400"
-                }`}
+                className={`w-full pl-11 pr-12 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.password
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-amber-500/40 focus:border-amber-400"
+                  }`}
               />
 
               {/* Password visibility toggle button */}
@@ -710,11 +707,10 @@ export default function Registration() {
                 onChange={handleChange}
                 placeholder="Re-enter your password"
                 disabled={isLoading}
-                className={`w-full pl-11 pr-12 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.confirmPassword
-                    ? "border-red-500 focus:border-red-500"
-                    : "border-amber-500/40 focus:border-amber-400"
-                }`}
+                className={`w-full pl-11 pr-12 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.confirmPassword
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-amber-500/40 focus:border-amber-400"
+                  }`}
               />
 
               {/* Password visibility toggle button */}

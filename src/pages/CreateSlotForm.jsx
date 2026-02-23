@@ -288,47 +288,47 @@ import InputField from "../components/form/InputField";
 // ============================================================================
 const slotValidationSchema = Yup.object().shape({
   // Trek ID validation - must select a trek
-  trekId: Yup.string().required("Please select a trek"),
+  // trekId: Yup.string().required("Please select a trek"),
 
-  // Start date validation - required and must be a valid date
-  startDate: Yup.date()
-    .required("Start date is required")
-    .typeError("Please enter a valid start date"),
+  // // Start date validation - required and must be a valid date
+  // startDate: Yup.date()
+  //   .required("Start date is required")
+  //   .typeError("Please enter a valid start date"),
 
-  // End date validation - must be after start date
-  endDate: Yup.date()
-    .required("End date is required")
-    .min(Yup.ref("startDate"), "End date must be after start date")
-    .typeError("Please enter a valid end date"),
+  // // End date validation - must be after start date
+  // endDate: Yup.date()
+  //   .required("End date is required")
+  //   .min(Yup.ref("startDate"), "End date must be after start date")
+  //   .typeError("Please enter a valid end date"),
 
-  // Status validation - must be one of predefined values
-  status: Yup.string()
-    .oneOf(["AVBL", "FULL", "CANCELLED"], "Invalid status")
-    .required("Status is required"),
+  // // Status validation - must be one of predefined values
+  // status: Yup.string()
+  //   .oneOf(["AVBL", "FULL", "CANCELLED"], "Invalid status")
+  //   .required("Status is required"),
 
-  // Total seats validation - must be positive integer
-  totalSeats: Yup.number()
-    .integer("Total seats must be a whole number")
-    .min(1, "Total seats must be at least 1")
-    .max(100, "Total seats cannot exceed 100")
-    .required("Total seats is required"),
+  // // Total seats validation - must be positive integer
+  // totalSeats: Yup.number()
+  //   .integer("Total seats must be a whole number")
+  //   .min(1, "Total seats must be at least 1")
+  //   .max(100, "Total seats cannot exceed 100")
+  //   .required("Total seats is required"),
 
-  // Booked seats validation - cannot exceed total seats
-  bookedSeats: Yup.number()
-    .integer("Booked seats must be a whole number")
-    .min(0, "Booked seats cannot be negative")
-    .test(
-      "max-booked-seats",
-      "Booked seats cannot exceed total seats",
-      function (value) {
-        const { totalSeats } = this.parent;
-        return value <= totalSeats;
-      },
-    )
-    .required("Booked seats is required"),
+  // // Booked seats validation - cannot exceed total seats
+  // bookedSeats: Yup.number()
+  //   .integer("Booked seats must be a whole number")
+  //   .min(0, "Booked seats cannot be negative")
+  //   .test(
+  //     "max-booked-seats",
+  //     "Booked seats cannot exceed total seats",
+  //     function (value) {
+  //       const { totalSeats } = this.parent;
+  //       return value <= totalSeats;
+  //     },
+  //   )
+  //   .required("Booked seats is required"),
 
-  // Display range - auto-generated, optional validation
-  displayRange: Yup.string().nullable(),
+  // // Display range - auto-generated, optional validation
+  // displayRange: Yup.string().nullable(),
 });
 
 // ============================================================================
@@ -724,7 +724,7 @@ const CreateSlotForm = () => {
               >
                 <option value="AVBL">Available</option>
                 <option value="FULL">Full</option>
-                <option value="CANCELLED">Cancelled</option>
+                {/* <option value="CANCELLED">Cancelled</option> */}
               </select>
               <ErrorMessage error={validationErrors.status} />
             </div>

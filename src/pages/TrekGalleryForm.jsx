@@ -428,69 +428,69 @@ import { addGallery, updateGallery } from "../api/galleryApi";
 // ============================================================================
 const galleryValidationSchema = Yup.object().shape({
   // Title validation - descriptive name for the trek photo
-  title: Yup.string()
-    .min(3, "Title must be at least 3 characters")
-    .max(100, "Title must not exceed 100 characters")
-    .required("Title is required"),
+  // title: Yup.string()
+  //   .min(3, "Title must be at least 3 characters")
+  //   .max(100, "Title must not exceed 100 characters")
+  //   .required("Title is required"),
 
-  // Month validation - when the trek took place
-  month: Yup.string()
-    .oneOf(
-      [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ],
-      "Invalid month selected",
-    )
-    .required("Month is required"),
+  // // Month validation - when the trek took place
+  // month: Yup.string()
+  //   .oneOf(
+  //     [
+  //       "January",
+  //       "February",
+  //       "March",
+  //       "April",
+  //       "May",
+  //       "June",
+  //       "July",
+  //       "August",
+  //       "September",
+  //       "October",
+  //       "November",
+  //       "December",
+  //     ],
+  //     "Invalid month selected",
+  //   )
+  //   .required("Month is required"),
 
-  // Year validation - year when trek took place
-  year: Yup.string()
-    .matches(/^\d{4}$/, "Year must be a valid 4-digit number")
-    .required("Year is required"),
+  // // Year validation - year when trek took place
+  // year: Yup.string()
+  //   .matches(/^\d{4}$/, "Year must be a valid 4-digit number")
+  //   .required("Year is required"),
 
-  // Experience level validation
-  experience: Yup.string()
-    .oneOf(["Beginner", "Moderate", "Advanced"], "Invalid experience level")
-    .required("Experience level is required"),
+  // // Experience level validation
+  // experience: Yup.string()
+  //   .oneOf(["Beginner", "Moderate", "Advanced"], "Invalid experience level")
+  //   .required("Experience level is required"),
 
-  // Season validation
-  season: Yup.string()
-    .oneOf(["Winter", "Spring", "Summer", "Autumn"], "Invalid season")
-    .required("Season is required"),
+  // // Season validation
+  // season: Yup.string()
+  //   .oneOf(["Winter", "Spring", "Summer", "Autumn"], "Invalid season")
+  //   .required("Season is required"),
 
-  // Region validation
-  region: Yup.string()
-    .oneOf(
-      ["Uttarakhand", "Himachal", "Kashmir", "Nepal", "Sikkim"],
-      "Invalid region",
-    )
-    .required("Region is required"),
+  // // Region validation
+  // region: Yup.string()
+  //   .oneOf(
+  //     ["Uttarakhand", "Himachal", "Kashmir", "Nepal", "Sikkim"],
+  //     "Invalid region",
+  //   )
+  //   .required("Region is required"),
 
-  // Photo validation - required for new uploads, optional for edits
-  photo: Yup.mixed()
-    .nullable()
-    .test("fileRequired", "Photo is required", function (value) {
-      const { isEditMode, hasExistingPhoto } = this.options.context || {};
-      // Photo is required only if not in edit mode or if there's no existing photo
-      if (isEditMode && hasExistingPhoto) {
-        return true; // Valid if editing and has existing photo
-      }
-      return value !== null && value !== undefined; // Required for new uploads
-    }),
+  // // Photo validation - required for new uploads, optional for edits
+  // photo: Yup.mixed()
+  //   .nullable()
+  //   .test("fileRequired", "Photo is required", function (value) {
+  //     const { isEditMode, hasExistingPhoto } = this.options.context || {};
+  //     // Photo is required only if not in edit mode or if there's no existing photo
+  //     if (isEditMode && hasExistingPhoto) {
+  //       return true; // Valid if editing and has existing photo
+  //     }
+  //     return value !== null && value !== undefined; // Required for new uploads
+  //   }),
 
-  // Active status validation
-  isActive: Yup.boolean().required("Active status is required"),
+  // // Active status validation
+  // isActive: Yup.boolean().required("Active status is required"),
 });
 
 // ============================================================================
@@ -781,7 +781,7 @@ export default function TrekGalleryForm({
         console.error("Failed to save gallery item:", error);
         setApiError(
           error?.message ||
-            "Failed to save gallery item. Please check your connection and try again.",
+          "Failed to save gallery item. Please check your connection and try again.",
         );
         alert(error?.message || "Failed to save gallery item");
       }

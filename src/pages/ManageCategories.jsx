@@ -68,6 +68,15 @@ export default function ManageCategories() {
     }
   };
 
+  const getImageSrc = (catImage) => {
+    if (!catImage) return null;
+    if (typeof catImage === "string") return catImage;
+    if (typeof catImage === "object") {
+      return catImage.cdnUrl || null;
+    }
+    return null;
+  };
+
   const rowActions = [
     { label: "View Details", icon: <FaEye />, onClick: handleView },
     { label: "Edit Category", icon: <FaEdit />, onClick: handleEdit },
@@ -85,9 +94,9 @@ export default function ManageCategories() {
       render: (row) => (
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl border-2 border-emerald-100 overflow-hidden flex-shrink-0 bg-gray-50 flex items-center justify-center">
-            {row.catImage ? (
+            {getImageSrc(row.catImage) ? (
               <img
-                src={row.catImage}
+                src={getImageSrc(row.catImage)}
                 alt={row.title}
                 className="w-full h-full object-cover"
               />
@@ -213,9 +222,9 @@ export default function ManageCategories() {
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div className="flex flex-col md:flex-row gap-6">
               <div className="w-full md:w-40 h-40 rounded-xl overflow-hidden border border-gray-100 flex-shrink-0">
-                {selectedCategory.catImage ? (
+                {getImageSrc(selectedCategory.catImage) ? (
                   <img
-                    src={selectedCategory.catImage}
+                    src={getImageSrc(selectedCategory.catImage)}
                     alt={selectedCategory.title}
                     className="w-full h-full object-cover"
                   />

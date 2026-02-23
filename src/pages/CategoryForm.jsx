@@ -257,46 +257,46 @@ import TagsInput from "../components/form/TagsInput";
 // ============================================================================
 const categoryValidationSchema = Yup.object().shape({
   // Category ID validation - must be unique, lowercase, no spaces
-  categoryId: Yup.string()
-    .min(3, "Category ID must be at least 3 characters")
-    .max(50, "Category ID must not exceed 50 characters")
-    .matches(
-      /^[a-z0-9-]+$/,
-      "Category ID must be lowercase letters, numbers, and hyphens only (no spaces)",
-    )
-    .required("Category ID is required"),
+  // categoryId: Yup.string()
+  //   .min(3, "Category ID must be at least 3 characters")
+  //   .max(50, "Category ID must not exceed 50 characters")
+  //   .matches(
+  //     /^[a-z0-9-]+$/,
+  //     "Category ID must be lowercase letters, numbers, and hyphens only (no spaces)",
+  //   )
+  //   .required("Category ID is required"),
 
-  // Title validation - display name for the category
-  title: Yup.string()
-    .min(3, "Title must be at least 3 characters")
-    .max(100, "Title must not exceed 100 characters")
-    .required("Title is required"),
+  // // Title validation - display name for the category
+  // title: Yup.string()
+  //   .min(3, "Title must be at least 3 characters")
+  //   .max(100, "Title must not exceed 100 characters")
+  //   .required("Title is required"),
 
-  // Description validation - rich text content
-  description: Yup.string()
-    .min(10, "Description must be at least 10 characters")
-    .max(5000, "Description must not exceed 5000 characters")
-    .required("Description is required"),
+  // // Description validation - rich text content
+  // description: Yup.string()
+  //   .min(10, "Description must be at least 10 characters")
+  //   .max(5000, "Description must not exceed 5000 characters")
+  //   .required("Description is required"),
 
-  // Tags validation - array of season/characteristic tags
-  tags: Yup.array()
-    .of(Yup.string())
-    .min(1, "At least one tag is required")
-    .max(10, "Maximum 10 tags allowed"),
+  // // Tags validation - array of season/characteristic tags
+  // tags: Yup.array()
+  //   .of(Yup.string())
+  //   .min(1, "At least one tag is required")
+  //   .max(10, "Maximum 10 tags allowed"),
 
-  // Difficulty validation - must be one of predefined values
-  difficulty: Yup.string()
-    .oneOf(
-      ["Easy", "Moderate", "Challenging", "Difficult", "Expert"],
-      "Invalid difficulty level",
-    )
-    .required("Difficulty level is required"),
+  // // Difficulty validation - must be one of predefined values
+  // difficulty: Yup.string()
+  //   .oneOf(
+  //     ["Easy", "Moderate", "Challenging", "Difficult", "Expert"],
+  //     "Invalid difficulty level",
+  //   )
+  //   .required("Difficulty level is required"),
 
-  // Category image validation - optional but recommended
-  catImage: Yup.string().nullable().notRequired(),
+  // // Category image validation - optional but recommended
+  // catImage: Yup.string().nullable().notRequired(),
 
-  // Active status validation
-  isActive: Yup.boolean().required("Active status is required"),
+  // // Active status validation
+  // isActive: Yup.boolean().required("Active status is required"),
 });
 
 // ============================================================================
@@ -364,7 +364,9 @@ export default function CategoryForm() {
             description: data.description || "",
             tags: data.tag ? data.tag.split(",").map((t) => t.trim()) : [],
             difficulty: data.difficulty || "Easy",
-            catImage: data.catImage || "",
+            catImage: data.catImage
+              ? (data.catImage.cdnUrl || data.catImage.fullS3URL || data.catImage || null)
+              : null,
             isActive: data.isActive ?? true,
           });
           setLoading(false);
@@ -393,66 +395,106 @@ export default function CategoryForm() {
     setValidationErrors({});
 
     try {
-      // Step 1: Validate form data using Yup schema
-      // abortEarly: false collects all validation errors
-      await categoryValidationSchema.validate(formData, {
-        abortEarly: false,
-      });
+      // Step 1: Validate form data (optional check for schema defined)
+      if (categoryValidationSchema.validate) {
+        await categoryValidationSchema.validate(formData, { abortEarly: false });
+      }
 
-      // Step 2: Prepare FormData for API (matches Multer expectation)
+      // Step 2: Prepare FormData for API
       const data = new FormData();
 
-      // Append all fields except image and tags
-      const { catImage, tags, ...otherData } = formData;
-      Object.keys(otherData).forEach((key) => {
-        data.append(key, otherData[key]);
+      // System fields to EXCLUDE from the payload
+      const exclude = ["_id", "createdAt", "updatedAt", "__v", "trekCount", "id"];
+
+      Object.keys(formData).forEach((key) => {
+        // Skip excluded fields and special ones
+        if (exclude.includes(key)) return;
+        if (key === "catImage" || key === "tags") return;
+
+        const value = formData[key];
+        if (value !== null && value !== undefined) {
+          data.append(key, value);
+        }
       });
 
       // Step 3: Handle tags - join array into comma-separated string
-      data.append("tag", tags.join(", "));
-
-      // Step 4: Append image file with backend expected field name
-      if (catImage) {
-        data.append("TrekCategoryImage", catImage);
+      if (Array.isArray(formData.tags) && formData.tags.length > 0) {
+        data.append("tag", formData.tags.join(", "));
       }
 
-      // Step 5: Call appropriate API based on mode
+      // Step 4: Handle image file
+      // ImageUploader now returns either:
+      //   - a raw File object (new upload)
+      //   - a string URL (existing image loaded in edit mode)
+      //   - null (no image)
+      const catImageValue = formData.catImage;
+      if (catImageValue instanceof File) {
+        // New binary file — rename so Multer can identify extension
+        const ext = catImageValue.type?.split("/")?.[1] || "jpg";
+        const properName = `category_image.${ext === "jpeg" ? "jpg" : ext}`;
+        const properFile = new File([catImageValue], properName, { type: catImageValue.type });
+        data.append("TrekCategoryImage", properFile);
+        console.log(`  [FILE appended] TrekCategoryImage: ${properName}, ${properFile.size}b`);
+      } else if (catImageValue && catImageValue.file instanceof File) {
+        // Legacy fallback: {file: File, preview: ..., url: ...}
+        data.append("TrekCategoryImage", catImageValue.file);
+      }
+      // If catImageValue is a string URL (existing image), we don't send it— backend keeps existing.
+      // Note: If no new file is provided, we don't send the catImage field at all.
+      // This prevents Multer "Unexpected field" errors on some backend configurations.
+
+      // === ENHANCED DEBUGGING ===
+      console.group("🔍 CategoryForm handleSubmit");
+      console.group("📋 Raw formData state:");
+      Object.keys(formData).forEach((key) => {
+        const val = formData[key];
+        const type = Array.isArray(val) ? "Array" : typeof val;
+        console.log(`  [${type}] ${key}:`, val);
+      });
+      console.groupEnd();
+      console.group("📦 Exact fields being sent to backend:");
+      const sentFields = [];
+      for (let [key, value] of data.entries()) {
+        sentFields.push(key);
+        if (value instanceof File) {
+          console.log(`  [FILE] ${key}: name="${value.name}", size=${value.size}b, type="${value.type}"`);
+        } else {
+          console.log(`  [TEXT] ${key}: "${value}"`);
+        }
+      }
+      console.log("📤 All field names sent to backend:", sentFields);
+      console.groupEnd();
+      console.groupEnd();
+      // === END DEBUGGING ===
+
+      // Step 5: API Call
+      let response;
       if (isEditMode) {
-        await updateCategory(id, data);
+        response = await updateCategory(id, data);
         alert("Category updated successfully!");
       } else {
-        await createCategory(data);
+        response = await createCategory(data);
         alert("Category created successfully!");
       }
 
-      // Step 6: Navigate back to category management page
+      console.log("✅ Success:", response);
       navigate("/categories/manage");
     } catch (error) {
-      // Handle Yup validation errors
       if (error.name === "ValidationError") {
-        // Create error object with field names as keys
         const errors = {};
-        error.inner.forEach((err) => {
+        error.inner?.forEach((err) => {
           errors[err.path] = err.message;
         });
         setValidationErrors(errors);
-
-        // Scroll to first error
-        const firstErrorField = Object.keys(errors)[0];
-        const errorElement = document.getElementById(firstErrorField);
-        if (errorElement) {
-          errorElement.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
       } else {
-        // Handle API errors
-        console.error("Submission error:", error);
-        setErrorMessage(
-          error.message || "An error occurred while saving category.",
-        );
-        alert(`Error: ${error.message || "Failed to save category"}`);
+        console.error("❌ Submission error:", error);
+        console.error("❌ Error response:", error.response);
+        console.error("❌ Error response data:", error.response?.data);
+        const apiMsg = error.message || error.response?.data?.message || "Failed to save category.";
+        setErrorMessage(apiMsg);
+        alert(`Error: ${apiMsg}`);
       }
     } finally {
-      // Always set loading to false
       setLoading(false);
     }
   };

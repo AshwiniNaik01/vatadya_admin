@@ -1203,8 +1203,8 @@ export default function TrekForm() {
     addons: [],
     months: [],
     reviewsData: [],
-    image: "",
-    gallery: [],
+    image: null, // Changed from "" to null
+    gallery: [], // Changed from [] to [] (still array, but will hold file objects)
   });
 
   const [activeTab, setActiveTab] = useState("basic");
@@ -1232,6 +1232,48 @@ export default function TrekForm() {
     fetchCategories();
   }, []);
 
+  // useEffect(() => {
+  //   if (isEditMode) {
+  //     const fetchTrekDetails = async () => {
+  //       try {
+  //         setLoading(true);
+  //         const trekData = await getTrekById(id);
+
+  //         const categoryId = trekData.category?._id || trekData.category;
+
+  //         const monthsList = Array.isArray(trekData.months)
+  //           ? trekData.months.map((m) => (typeof m === "object" ? m.month : m))
+  //           : [];
+
+  //         setFormData((prev) => ({
+  //           ...prev,
+  //           ...trekData,
+  //           category: categoryId,
+  //           months: monthsList,
+  //           feeDetails: { ...prev.feeDetails, ...(trekData.feeDetails || {}) },
+  //           links: { ...prev.links, ...(trekData.links || {}) },
+  //           trekInfo:
+  //             trekData.trekInfo && trekData.trekInfo.length > 0
+  //               ? trekData.trekInfo
+  //               : prev.trekInfo,
+  //           // startDate: trekData.startDate
+  //           //   ? trekData.startDate.split("T")[0]
+  //           //   : "",
+  //           // endDate: trekData.endDate ? trekData.endDate.split("T")[0] : "",
+  //           startDate: trekData.startDate ? new Date(trekData.startDate) : null,
+  //           endDate: trekData.endDate ? new Date(trekData.endDate) : null,
+  //         }));
+  //         setLoading(false);
+  //       } catch (err) {
+  //         console.error("Failed to fetch trek details:", err);
+  //         setErrorMessage("Failed to load trek details for editing.");
+  //         setLoading(false);
+  //       }
+  //     };
+  //     fetchTrekDetails();
+  //   }
+  // }, [id, isEditMode]);
+
   useEffect(() => {
     if (isEditMode) {
       const fetchTrekDetails = async () => {
@@ -1245,6 +1287,9 @@ export default function TrekForm() {
             ? trekData.months.map((m) => (typeof m === "object" ? m.month : m))
             : [];
 
+          // For existing images, create file-like objects with URLs
+
+
           setFormData((prev) => ({
             ...prev,
             ...trekData,
@@ -1252,16 +1297,13 @@ export default function TrekForm() {
             months: monthsList,
             feeDetails: { ...prev.feeDetails, ...(trekData.feeDetails || {}) },
             links: { ...prev.links, ...(trekData.links || {}) },
-            trekInfo:
-              trekData.trekInfo && trekData.trekInfo.length > 0
-                ? trekData.trekInfo
-                : prev.trekInfo,
-            // startDate: trekData.startDate
-            //   ? trekData.startDate.split("T")[0]
-            //   : "",
-            // endDate: trekData.endDate ? trekData.endDate.split("T")[0] : "",
+            trekInfo: trekData.trekInfo && trekData.trekInfo.length > 0
+              ? trekData.trekInfo
+              : prev.trekInfo,
             startDate: trekData.startDate ? new Date(trekData.startDate) : null,
             endDate: trekData.endDate ? new Date(trekData.endDate) : null,
+            image: trekData.image?.cdnUrl || trekData.image || null,
+            gallery: trekData.gallery?.map(img => img.cdnUrl || img) || [],
           }));
           setLoading(false);
         } catch (err) {
@@ -1273,6 +1315,7 @@ export default function TrekForm() {
       fetchTrekDetails();
     }
   }, [id, isEditMode]);
+
 
   const tabs = [
     { id: "basic", label: "Basic Info", icon: FaInfoCircle },
@@ -1411,6 +1454,7 @@ export default function TrekForm() {
     setFormData({ ...formData, [section]: updated });
   };
 
+
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
 
@@ -1419,20 +1463,101 @@ export default function TrekForm() {
     setFieldErrors({});
 
     try {
-      // Validate entire form
-      // await trekValidationSchema.validate(formData, { abortEarly: false });
+      // Create FormData object
+      const formDataToSend = new FormData();
+
+      // System / read-only fields to EXCLUDE
+      const exclude = [
+        "_id", "createdAt", "updatedAt", "__v", "id",
+        "reviewsData", "rating", "reviews", "slots",
+      ];
+
+      Object.keys(formData).forEach(key => {
+        if (exclude.includes(key)) return;
+        if (key === "image" || key === "gallery") return; // handled below
+
+        const value = formData[key];
+
+        // 1. Category → send ID string only
+        if (key === "category") {
+          const catId = value?._id || value;
+          if (catId) formDataToSend.append("category", String(catId));
+        }
+        // 2. Nested simple objects: feeDetails, links → bracket notation
+        else if (key === "feeDetails" || key === "links") {
+          if (value && typeof value === "object") {
+            Object.keys(value).forEach(subKey => {
+              if (value[subKey] !== null && value[subKey] !== undefined) {
+                formDataToSend.append(`${key}[${subKey}]`, value[subKey]);
+              }
+            });
+          }
+        }
+        // 3. Arrays of objects: trekInfo, addons → indexed bracket notation
+        else if (key === "trekInfo" || key === "addons") {
+          if (Array.isArray(value) && value.length > 0) {
+            value.forEach((item, index) => {
+              Object.keys(item).forEach(subKey => {
+                if (item[subKey] !== null && item[subKey] !== undefined) {
+                  formDataToSend.append(`${key}[${index}][${subKey}]`, item[subKey]);
+                }
+              });
+            });
+          }
+        }
+        // 4. Simple string arrays: tags → multiple appends with same key
+        else if (Array.isArray(value)) {
+          if (value.length > 0) {
+            value.forEach(item => formDataToSend.append(key, item));
+          }
+        }
+        // 5. Primitives (string, number, boolean, Date)
+        else if (value !== null && value !== undefined && value !== "") {
+          formDataToSend.append(key, value);
+        }
+      });
+
+      // Hero Image — backend Multer expects field name: 'TrekImage'
+      if (formData.image instanceof File) {
+        formDataToSend.append("TrekImage", formData.image);
+      } else if (typeof formData.image === "string" && formData.image) {
+        formDataToSend.append("image", formData.image); // existing CDN URL in edit mode (text field)
+      }
+
+      // Gallery — backend Multer expects field name: 'TrekGallery'
+      if (Array.isArray(formData.gallery)) {
+        formData.gallery.forEach((item) => {
+          if (item instanceof File) {
+            formDataToSend.append("TrekGallery", item);
+          } else if (typeof item === "string" && item) {
+            formDataToSend.append("gallery", item); // existing CDN URL in edit mode (text field)
+          }
+        });
+      }
+
+      // Debug log - shows exactly what's being sent
+      console.log("📦 TrekForm FormData fields being sent:");
+      const debugFields = [];
+      for (let [key, val] of formDataToSend.entries()) {
+        debugFields.push(key);
+        if (val instanceof File) {
+          console.log(`  [FILE] ${key}: name="${val.name}", size=${val.size}b, type="${val.type}"`);
+        } else {
+          console.log(`  [TEXT] ${key}: "${val}"`);
+        }
+      }
+      console.log("📤 All field names:", debugFields);
 
       if (isEditMode) {
-        await updateTrek(id, formData);
+        await updateTrek(id, formDataToSend);
         alert("Trek updated successfully!");
       } else {
-        await createTrek(formData);
+        await createTrek(formDataToSend);
         alert("Trek created successfully!");
       }
       navigate("/treks/manage");
     } catch (err) {
       if (err.name === "ValidationError") {
-        // Yup validation errors
         const errors = {};
         err.inner.forEach((error) => {
           errors[error.path] = error.message;
@@ -1445,17 +1570,11 @@ export default function TrekForm() {
         setErrorMessage(errorMessages);
         alert(`Validation failed:\n\n${errorMessages}`);
       } else {
-        // API errors
         console.error("Submission error:", err);
-        // setErrorMessage(
-        //   err.message || "An error occurred while saving the trek.",
-        // );
-        // alert(`Failed to save trek: ${err.message || err}`);
         const apiMsg =
           err.response?.data?.message ||
           err.message ||
           "An error occurred while saving the trek.";
-
         setErrorMessage(apiMsg);
         alert(`Failed to save trek: ${apiMsg}`);
       }
@@ -1463,6 +1582,58 @@ export default function TrekForm() {
       setLoading(false);
     }
   };
+  // const handleSubmit = async (e) => {
+  //   if (e) e.preventDefault();
+
+  //   setLoading(true);
+  //   setErrorMessage("");
+  //   setFieldErrors({});
+
+  //   try {
+  //     // Validate entire form
+  //     // await trekValidationSchema.validate(formData, { abortEarly: false });
+
+  //     if (isEditMode) {
+  //       await updateTrek(id, formData);
+  //       alert("Trek updated successfully!");
+  //     } else {
+  //       await createTrek(formData);
+  //       alert("Trek created successfully!");
+  //     }
+  //     navigate("/treks/manage");
+  //   } catch (err) {
+  //     if (err.name === "ValidationError") {
+  //       // Yup validation errors
+  //       const errors = {};
+  //       err.inner.forEach((error) => {
+  //         errors[error.path] = error.message;
+  //       });
+  //       setFieldErrors(errors);
+
+  //       const errorMessages = err.inner
+  //         .map((error) => `${error.path}: ${error.message}`)
+  //         .join("\n");
+  //       setErrorMessage(errorMessages);
+  //       alert(`Validation failed:\n\n${errorMessages}`);
+  //     } else {
+  //       // API errors
+  //       console.error("Submission error:", err);
+  //       // setErrorMessage(
+  //       //   err.message || "An error occurred while saving the trek.",
+  //       // );
+  //       // alert(`Failed to save trek: ${err.message || err}`);
+  //       const apiMsg =
+  //         err.response?.data?.message ||
+  //         err.message ||
+  //         "An error occurred while saving the trek.";
+
+  //       setErrorMessage(apiMsg);
+  //       alert(`Failed to save trek: ${apiMsg}`);
+  //     }
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const SectionTitle = ({ icon: Icon, title }) => (
     <div className="flex items-center gap-2 mb-6 border-b pb-2">

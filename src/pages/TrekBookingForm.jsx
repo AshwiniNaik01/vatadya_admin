@@ -634,62 +634,62 @@ import { createBooking } from "../api/bookingApi";
 
 // Member validation schema (for additional members)
 const memberSchema = Yup.object().shape({
-  name: Yup.string()
-    .nullable()
-    .test(
-      "name-required-if-whatsapp",
-      "Member name is required when WhatsApp is provided",
-      function (value) {
-        const { whatsapp } = this.parent;
-        if (whatsapp && whatsapp.trim().length > 0) {
-          return value && value.trim().length >= 2;
-        }
-        return true;
-      },
-    )
-    .test(
-      "name-min-length",
-      "Member name must be at least 2 characters",
-      function (value) {
-        if (value && value.trim().length > 0) {
-          return value.trim().length >= 2;
-        }
-        return true;
-      },
-    )
-    .test(
-      "name-max-length",
-      "Member name must not exceed 100 characters",
-      function (value) {
-        if (value && value.trim().length > 0) {
-          return value.trim().length <= 100;
-        }
-        return true;
-      },
-    ),
-  whatsapp: Yup.string()
-    .nullable()
-    .test(
-      "whatsapp-required-if-name",
-      "WhatsApp number is required when name is provided",
-      function (value) {
-        const { name } = this.parent;
-        if (name && name.trim().length > 0) {
-          return value && /^[0-9]{10}$/.test(value);
-        }
-        return true;
-      },
-    )
-    .test(
-      "whatsapp-format",
-      "WhatsApp number must be exactly 10 digits",
-      function (value) {
-        if (value && value.trim().length > 0) {
-          return /^[0-9]{10}$/.test(value);
-        }
-        return true;
-      },
-    ),
+  // name: Yup.string()
+  //   .nullable()
+  //   .test(
+  //     "name-required-if-whatsapp",
+  //     "Member name is required when WhatsApp is provided",
+  //     function (value) {
+  //       const { whatsapp } = this.parent;
+  //       if (whatsapp && whatsapp.trim().length > 0) {
+  //         return value && value.trim().length >= 2;
+  //       }
+  //       return true;
+  //     },
+  //   )
+  //   .test(
+  //     "name-min-length",
+  //     "Member name must be at least 2 characters",
+  //     function (value) {
+  //       if (value && value.trim().length > 0) {
+  //         return value.trim().length >= 2;
+  //       }
+  //       return true;
+  //     },
+  //   )
+  //   .test(
+  //     "name-max-length",
+  //     "Member name must not exceed 100 characters",
+  //     function (value) {
+  //       if (value && value.trim().length > 0) {
+  //         return value.trim().length <= 100;
+  //       }
+  //       return true;
+  //     },
+  //   ),
+  // whatsapp: Yup.string()
+  //   .nullable()
+  //   .test(
+  //     "whatsapp-required-if-name",
+  //     "WhatsApp number is required when name is provided",
+  //     function (value) {
+  //       const { name } = this.parent;
+  //       if (name && name.trim().length > 0) {
+  //         return value && /^[0-9]{10}$/.test(value);
+  //       }
+  //       return true;
+  //     },
+  //   )
+  //   .test(
+  //     "whatsapp-format",
+  //     "WhatsApp number must be exactly 10 digits",
+  //     function (value) {
+  //       if (value && value.trim().length > 0) {
+  //         return /^[0-9]{10}$/.test(value);
+  //       }
+  //       return true;
+  //     },
+  //   ),
 });
 
 // Main booking form validation schema
@@ -1107,40 +1107,40 @@ export default function TrekBookingForm() {
         {/* Validation Errors Summary */}
         {(Object.keys(validationErrors).length > 0 ||
           Object.keys(memberErrors).length > 0) && (
-          <div className="mb-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-2xl">
-            <div className="flex items-start gap-3">
-              <FiAlertCircle className="text-amber-600 text-xl mt-0.5" />
-              <div className="flex-1">
-                <p className="text-amber-700 text-sm font-bold mb-2">
-                  Please fix the following errors:
-                </p>
-                <ul className="list-disc list-inside space-y-1">
-                  {Object.entries(validationErrors).map(([field, error]) => (
-                    <li key={field} className="text-amber-600 text-xs">
-                      <span className="font-semibold capitalize">
-                        {field.replace(/([A-Z])/g, " $1").trim()}:
-                      </span>{" "}
-                      {error}
-                    </li>
-                  ))}
-                  {Object.entries(memberErrors).map(([index, errors]) =>
-                    Object.entries(errors).map(([field, error]) => (
-                      <li
-                        key={`member-${index}-${field}`}
-                        className="text-amber-600 text-xs"
-                      >
-                        <span className="font-semibold">
-                          Member {parseInt(index) + 1} - {field}:
+            <div className="mb-6 p-4 bg-amber-50 border-2 border-amber-200 rounded-2xl">
+              <div className="flex items-start gap-3">
+                <FiAlertCircle className="text-amber-600 text-xl mt-0.5" />
+                <div className="flex-1">
+                  <p className="text-amber-700 text-sm font-bold mb-2">
+                    Please fix the following errors:
+                  </p>
+                  <ul className="list-disc list-inside space-y-1">
+                    {Object.entries(validationErrors).map(([field, error]) => (
+                      <li key={field} className="text-amber-600 text-xs">
+                        <span className="font-semibold capitalize">
+                          {field.replace(/([A-Z])/g, " $1").trim()}:
                         </span>{" "}
                         {error}
                       </li>
-                    )),
-                  )}
-                </ul>
+                    ))}
+                    {Object.entries(memberErrors).map(([index, errors]) =>
+                      Object.entries(errors).map(([field, error]) => (
+                        <li
+                          key={`member-${index}-${field}`}
+                          className="text-amber-600 text-xs"
+                        >
+                          <span className="font-semibold">
+                            Member {parseInt(index) + 1} - {field}:
+                          </span>{" "}
+                          {error}
+                        </li>
+                      )),
+                    )}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
         {/* Form */}
         <form
@@ -1160,11 +1160,10 @@ export default function TrekBookingForm() {
                 onChange={(e) => handleChange("fullName", e.target.value)}
                 placeholder="Enter your full name"
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.fullName
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.fullName
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               />
             </div>
             <ErrorMessage error={validationErrors.fullName} />
@@ -1184,11 +1183,10 @@ export default function TrekBookingForm() {
                 placeholder="XXXXXXXXXX"
                 maxLength="10"
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.whatsappNumber
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.whatsappNumber
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               />
             </div>
             <ErrorMessage error={validationErrors.whatsappNumber} />
@@ -1207,11 +1205,10 @@ export default function TrekBookingForm() {
                 onChange={(e) => handleChange("email", e.target.value)}
                 placeholder="your@email.com"
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.email
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.email
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               />
             </div>
             <ErrorMessage error={validationErrors.email} />
@@ -1236,11 +1233,10 @@ export default function TrekBookingForm() {
                     .split("T")[0]
                 }
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.dateOfBirth
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.dateOfBirth
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               />
             </div>
             <ErrorMessage error={validationErrors.dateOfBirth} />
@@ -1257,11 +1253,10 @@ export default function TrekBookingForm() {
                 value={formData.gender}
                 onChange={(e) => handleChange("gender", e.target.value)}
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.gender
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.gender
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               >
                 <option value="">Select Gender</option>
                 {genders.map((g) => (
@@ -1287,11 +1282,10 @@ export default function TrekBookingForm() {
                 onChange={(e) => handleChange("pickupPoint", e.target.value)}
                 placeholder="e.g., Kashmiri Gate, Delhi"
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.pickupPoint
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.pickupPoint
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               />
             </div>
             <ErrorMessage error={validationErrors.pickupPoint} />
@@ -1308,11 +1302,10 @@ export default function TrekBookingForm() {
                 value={formData.bloodGroup}
                 onChange={(e) => handleChange("bloodGroup", e.target.value)}
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.bloodGroup
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.bloodGroup
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               >
                 <option value="">Select Blood Group</option>
                 {bloodGroups.map((bg) => (
@@ -1342,11 +1335,10 @@ export default function TrekBookingForm() {
                 placeholder="XXXXXXXXXX"
                 maxLength="10"
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.emergencyNumber
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.emergencyNumber
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               />
             </div>
             <ErrorMessage error={validationErrors.emergencyNumber} />
@@ -1365,11 +1357,10 @@ export default function TrekBookingForm() {
                 onChange={(e) => handleChange("departureDate", e.target.value)}
                 min={new Date().toISOString().split("T")[0]}
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.departureDate
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.departureDate
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               />
             </div>
             <ErrorMessage error={validationErrors.departureDate} />
@@ -1389,11 +1380,10 @@ export default function TrekBookingForm() {
                 min="1"
                 max="50"
                 disabled={isLoading}
-                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                  validationErrors.numberOfPeople
-                    ? "border-red-500 focus:border-red-500 bg-red-50"
-                    : "border-gray-200 focus:border-green-500"
-                }`}
+                className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.numberOfPeople
+                  ? "border-red-500 focus:border-red-500 bg-red-50"
+                  : "border-gray-200 focus:border-green-500"
+                  }`}
               />
             </div>
             <ErrorMessage error={validationErrors.numberOfPeople} />
@@ -1427,11 +1417,10 @@ export default function TrekBookingForm() {
               placeholder="Any medical conditions we should know about..."
               rows="4"
               disabled={isLoading}
-              className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed resize-none ${
-                validationErrors.medicalHistory
-                  ? "border-red-500 focus:border-red-500 bg-red-50"
-                  : "border-gray-200 focus:border-green-500"
-              }`}
+              className={`w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed resize-none ${validationErrors.medicalHistory
+                ? "border-red-500 focus:border-red-500 bg-red-50"
+                : "border-gray-200 focus:border-green-500"
+                }`}
             />
             <ErrorMessage error={validationErrors.medicalHistory} />
           </div>
@@ -1495,11 +1484,10 @@ export default function TrekBookingForm() {
                       }
                       placeholder="Member Name"
                       disabled={isLoading}
-                      className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                        memberErrors[index]?.name
-                          ? "border-red-500 bg-red-50"
-                          : "border-gray-200"
-                      }`}
+                      className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${memberErrors[index]?.name
+                        ? "border-red-500 bg-red-50"
+                        : "border-gray-200"
+                        }`}
                     />
                   </div>
                   {memberErrors[index]?.name && (
@@ -1519,11 +1507,10 @@ export default function TrekBookingForm() {
                       placeholder="WhatsApp Number"
                       maxLength="10"
                       disabled={isLoading}
-                      className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${
-                        memberErrors[index]?.whatsapp
-                          ? "border-red-500 bg-red-50"
-                          : "border-gray-200"
-                      }`}
+                      className={`w-full pl-12 pr-4 py-3 border-2 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 outline-none transition disabled:opacity-50 disabled:cursor-not-allowed ${memberErrors[index]?.whatsapp
+                        ? "border-red-500 bg-red-50"
+                        : "border-gray-200"
+                        }`}
                     />
                   </div>
                   {memberErrors[index]?.whatsapp && (

@@ -49,7 +49,7 @@ export default function Header({ onToggleSidebar }) {
           </div>
           <div className="hidden sm:block">
             <p className="text-slate-900 font-black text-xs leading-none">
-              Ashwini Naik
+              Admin
             </p>
             <p className="text-[9px] text-emerald-600 font-black uppercase tracking-widest mt-1">
               Super Admin

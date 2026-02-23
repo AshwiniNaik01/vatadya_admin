@@ -7,9 +7,7 @@ import axiosInstance from "./axiosInstance";
  */
 export const createCategory = async (categoryData) => {
     try {
-        const response = await axiosInstance.post("/trekCategory", categoryData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        });
+        const response = await axiosInstance.post("/trekCategory", categoryData);
         return response.data;
     } catch (error) {
         console.error("API Error (createCategory):", error);
@@ -55,9 +53,7 @@ export const getCategoryById = async (id) => {
  */
 export const updateCategory = async (id, categoryData) => {
     try {
-        const response = await axiosInstance.put(`/trekCategory/${id}`, categoryData, {
-            headers: { "Content-Type": "multipart/form-data" },
-        });
+        const response = await axiosInstance.put(`/trekCategory/${id}`, categoryData);
         return response.data;
     } catch (error) {
         console.error("API Error (updateCategory):", error);
