@@ -920,7 +920,7 @@ const response = await loginAdmin({
                 </div> */}
 
                 {/* Remember Me & Forgot Password */}
-                <div className="flex items-center justify-between text-sm">
+                {/* <div className="flex items-center justify-between text-sm">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
@@ -937,7 +937,7 @@ const response = await loginAdmin({
                   >
                     Forgot password?
                   </a>
-                </div>
+                </div> */}
 
                 {/* Submit Button */}
                 <button

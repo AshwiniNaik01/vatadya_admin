@@ -100,7 +100,7 @@ const ManageContacts = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <button
+            {/* <button
               onClick={fetchContacts}
               disabled={loading}
               className="flex items-center gap-2 px-5 py-3 bg-white border-2 border-emerald-200 text-emerald-700 rounded-xl font-semibold hover:bg-emerald-50 transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
@@ -113,7 +113,7 @@ const ManageContacts = () => {
             <button className="flex items-center gap-2 px-5 py-3 bg-white border-2 border-emerald-200 text-emerald-700 rounded-xl font-semibold hover:bg-emerald-50 transition-all shadow-sm hover:shadow-md">
               <HiDownload className="w-5 h-5" />
               Export
-            </button>
+            </button> */}
             <div className="bg-emerald-100 text-emerald-700 px-5 py-3 rounded-xl font-bold">
               {contacts.length} Contacts
             </div>
@@ -159,7 +159,7 @@ const ManageContacts = () => {
             </div>
 
             {/* Status Filter */}
-            <div className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-xl border-2 border-gray-200">
+            {/* <div className="flex items-center gap-3 bg-gray-50 px-4 py-3 rounded-xl border-2 border-gray-200">
               <HiFilter className="w-5 h-5 text-gray-500" />
               <select
                 value={filterStatus}
@@ -170,7 +170,7 @@ const ManageContacts = () => {
                 <option value="new">New</option>
                 <option value="read">Read</option>
               </select>
-            </div>
+            </div> */}
 
             {/* Clear Button */}
             {(searchQuery || filterStatus !== "all") && (
@@ -311,8 +311,8 @@ const ManageContacts = () => {
                               <div className="text-gray-700 font-medium">
                                 {contact.createdAt
                                   ? new Date(
-                                      contact.createdAt,
-                                    ).toLocaleDateString()
+                                    contact.createdAt,
+                                  ).toLocaleDateString()
                                   : "N/A"}
                               </div>
                             </td>
@@ -322,11 +322,10 @@ const ManageContacts = () => {
                               <div className="flex justify-center">
                                 <button
                                   onClick={() => toggleRow(contact.id)}
-                                  className={`group flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
-                                    expandedRow === contact.id
-                                      ? "bg-emerald-600 text-white shadow-lg"
-                                      : "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
-                                  }`}
+                                  className={`group flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all ${expandedRow === contact.id
+                                    ? "bg-emerald-600 text-white shadow-lg"
+                                    : "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
+                                    }`}
                                 >
                                   {expandedRow === contact.id ? "Hide" : "View"}
                                   {expandedRow === contact.id ? (
@@ -397,13 +396,13 @@ const ManageContacts = () => {
                                           <HiCalendar className="w-4 h-4 text-emerald-600" />
                                           {contact.createdAt
                                             ? new Date(
-                                                contact.createdAt,
-                                              ).toLocaleDateString("en-US", {
-                                                weekday: "long",
-                                                year: "numeric",
-                                                month: "long",
-                                                day: "numeric",
-                                              })
+                                              contact.createdAt,
+                                            ).toLocaleDateString("en-US", {
+                                              weekday: "long",
+                                              year: "numeric",
+                                              month: "long",
+                                              day: "numeric",
+                                            })
                                             : "N/A"}
                                         </div>
                                       </div>

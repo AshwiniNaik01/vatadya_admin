@@ -86,12 +86,12 @@ export default function DataTable({
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-2.5 bg-white border border-emerald-100 rounded-2xl text-sm font-bold text-emerald-700 hover:bg-amber-50 hover:border-amber-200 transition-all shadow-sm">
+          {/* <button className="flex items-center gap-2 px-4 py-2.5 bg-white border border-emerald-100 rounded-2xl text-sm font-bold text-emerald-700 hover:bg-amber-50 hover:border-amber-200 transition-all shadow-sm">
             <FaFilter className="text-amber-500" /> Filter
           </button>
           <button className="flex items-center gap-2 px-4 py-2.5 bg-white border border-emerald-100 rounded-2xl text-sm font-bold text-emerald-700 hover:bg-amber-50 hover:border-amber-200 transition-all shadow-sm">
             <FaSortAmountDown className="text-amber-500" /> Sort
-          </button>
+          </button> */}
           <select
             className="px-4 py-2.5 bg-white border border-emerald-100 rounded-2xl text-sm font-bold text-emerald-800 outline-none focus:ring-4 focus:ring-emerald-500/10 transition-all"
             value={pageSize}
@@ -162,11 +162,10 @@ export default function DataTable({
                       >
                         <button
                           onClick={() => toggleDropdown(rowIdx)}
-                          className={`p-2 rounded-xl transition-all shadow-sm border ${
-                            activeDropdown === rowIdx
-                              ? "bg-amber-500 border-amber-400 text-white shadow-amber-500/20"
-                              : "text-emerald-200 border-transparent hover:text-amber-600 hover:bg-white hover:border-emerald-100"
-                          }`}
+                          className={`p-2 rounded-xl transition-all shadow-sm border ${activeDropdown === rowIdx
+                            ? "bg-amber-500 border-amber-400 text-white shadow-amber-500/20"
+                            : "text-emerald-200 border-transparent hover:text-amber-600 hover:bg-white hover:border-emerald-100"
+                            }`}
                         >
                           <FaEllipsisV />
                         </button>
@@ -182,10 +181,9 @@ export default function DataTable({
                                   setActiveDropdown(null);
                                 }}
                                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold transition-all text-left
-                                  ${
-                                    action.variant === "danger"
-                                      ? "text-red-500 hover:bg-red-50"
-                                      : "text-emerald-700 hover:bg-emerald-50"
+                                  ${action.variant === "danger"
+                                    ? "text-red-500 hover:bg-red-50"
+                                    : "text-emerald-700 hover:bg-emerald-50"
                                   }
                                 `}
                               >
@@ -256,10 +254,9 @@ export default function DataTable({
                     key={page}
                     onClick={() => handlePageChange(page)}
                     className={`min-w-[40px] h-10 rounded-xl text-sm font-black transition-all shadow-sm border
-                      ${
-                        currentPage === page
-                          ? "bg-amber-500 border-amber-400 text-white shadow-amber-500/20"
-                          : "bg-white border-emerald-100 text-emerald-700 hover:bg-emerald-50"
+                      ${currentPage === page
+                        ? "bg-amber-500 border-amber-400 text-white shadow-amber-500/20"
+                        : "bg-white border-emerald-100 text-emerald-700 hover:bg-emerald-50"
                       }`}
                   >
                     {page}

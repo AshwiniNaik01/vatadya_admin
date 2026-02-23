@@ -11,10 +11,15 @@ const RichTextEditor = ({ value, onChange, label }) => {
     const editorRef = useRef(null);
 
     useEffect(() => {
-        if (editorRef.current && editorRef.current.innerHTML !== value) {
-            editorRef.current.innerHTML = value || "";
+        if (editorRef.current && editorRef.current.innerHTML !== (value || "")) {
+            // Only sync from outside if the editor is NOT currently focused
+            // (i.e., the user is not actively typing). This avoids resetting
+            // cursor position mid-edit while still prefilling on load/fetch.
+            if (document.activeElement !== editorRef.current) {
+                editorRef.current.innerHTML = value || "";
+            }
         }
-    }, []);
+    }, [value]);
 
     const executeCommand = (command, value = null) => {
         document.execCommand(command, false, value);

@@ -31,10 +31,10 @@ export default function Header({ onToggleSidebar }) {
       {/* RIGHT: Actions */}
       <div className="flex items-center gap-6">
         {/* Notifications */}
-        <button className="p-3 rounded-xl hover:bg-slate-50 transition-all text-slate-400 relative border border-transparent hover:border-slate-100">
+        {/* <button className="p-3 rounded-xl hover:bg-slate-50 transition-all text-slate-400 relative border border-transparent hover:border-slate-100">
           <FaBell size={18} />
           <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
-        </button>
+        </button> */}
 
         <div className="h-8 w-px bg-slate-100"></div>
 

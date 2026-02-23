@@ -51,7 +51,7 @@ const menuItems = [
     ],
   },
   { name: "Reviews", path: "/reviews/manage", icon: <FaStar /> },
-  { name: "Payments", path: "/payments/manage", icon: <FaWallet /> },
+  // { name: "Payments", path: "/payments/manage", icon: <FaWallet /> },
   {
     name: "Slots",
     path: "/slots",

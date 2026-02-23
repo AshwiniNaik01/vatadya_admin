@@ -1652,11 +1652,7 @@ export default function TrekForm() {
             <h1 className="text-3xl font-black text-gray-900 tracking-tight">
               {isEditMode ? "Update Trek" : "Create New Trek"}
             </h1>
-            <p className="text-gray-500 font-medium italic">
-              {isEditMode
-                ? `Editing ID: ${id}`
-                : "Configure trek details as per the database schema"}
-            </p>
+
           </div>
           <div className="flex gap-4">
             <button
