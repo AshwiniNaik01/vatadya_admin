@@ -475,14 +475,11 @@ export default function Registration() {
       });
 
       // Step 2: If validation passes, prepare data for API
-      const registrationData = new FormData();
-      registrationData.append("fullName", formData.fullName);
-      registrationData.append("email", formData.email);
-      registrationData.append("password", formData.password);
-
-      // Step 3: Call the registration API
-      const response = await registerAdmin(registrationData);
-
+     const response = await registerAdmin({
+  name: formData.fullName, // map fullName → name
+  email: formData.email,
+  password: formData.password,
+});
       // Step 4: Handle successful registration
       setSuccessMessage("Registration successful! Welcome to the adventure!");
 

@@ -5,9 +5,22 @@ import axiosInstance from "./axiosInstance";
  * @param {FormData} formData - FormData containing admin registration data.
  * @returns {Promise<Object>} - The response data from the server.
  */
-export const registerAdmin = async (FormData) => {
+export const registerAdmin = async (data) => {
   try {
-    const response = await axiosInstance.post("/admin/register", FormData);
+    const response = await axiosInstance.post(
+      "/admin/register",
+      {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
     return response.data;
   } catch (error) {
     console.error("API Error (registerAdmin):", error);
@@ -21,12 +34,33 @@ export const registerAdmin = async (FormData) => {
  * @returns {Promise<Object>} - The response data from the server.
  */
 
-export const loginAdmin = async (formData) => {
+export const loginAdmin = async (data) => {
   try {
-    const response = await axiosInstance.post("/admin/login", formData);
+    const response = await axiosInstance.post(
+      "/admin/login",
+      {
+        email: data.email,
+        password: data.password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
     return response.data;
   } catch (error) {
     console.error("API Error (loginAdmin):", error);
     throw error.response?.data || error;
   }
 };
+// export const loginAdmin = async (formData) => {
+//   try {
+//     const response = await axiosInstance.post("/admin/login", formData);
+//     return response.data;
+//   } catch (error) {
+//     console.error("API Error (loginAdmin):", error);
+//     throw error.response?.data || error;
+//   }
+// };

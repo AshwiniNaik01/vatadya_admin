@@ -511,7 +511,7 @@ export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "user",
+    // role: "user",
   });
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState("");
@@ -542,26 +542,30 @@ export default function Login() {
       // Validate form data with Yup
       await loginValidationSchema.validate(formData, { abortEarly: false });
 
-      // Create FormData object for API
-      const loginData = new FormData();
-      loginData.append("email", formData.email);
-      loginData.append("password", formData.password);
-      loginData.append("role", formData.role);
+      // // Create FormData object for API
+      // const loginData = new FormData();
+      // loginData.append("email", formData.email);
+      // loginData.append("password", formData.password);
+      // loginData.append("role", formData.role);
 
-      // Call the API
-      const response = await loginAdmin(loginData);
+      // // Call the API
+      // const response = await loginAdmin(loginData);
+
+const response = await loginAdmin({
+  email: formData.email,
+  password: formData.password,
+});
 
       // Handle successful login
       setSuccessMessage("Login successful! Redirecting...");
 
       // Store admin ID in cookies if login is successful
-      if (response.success && response.data && response.data.admin) {
-        const adminId = response.data.admin._id;
-        // Store admin ID in cookie (expires in 7 days)
-        Cookies.set("adminId", adminId, { expires: 7 });
-        // Also store admin data in localStorage for reference
-        localStorage.setItem("adminData", JSON.stringify(response.data.admin));
-      }
+     if (response.success && response.data?.admin) {
+  const admin = response.data.admin;
+
+  Cookies.set("adminId", admin._id, { expires: 7 });
+  localStorage.setItem("adminData", JSON.stringify(admin));
+}
 
       // Redirect to dashboard after 1.5 seconds
       setTimeout(() => {
