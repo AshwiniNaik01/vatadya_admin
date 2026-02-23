@@ -161,7 +161,7 @@ export default function ManageBookings() {
             <FaTicketAlt />
           </div>
           <div>
-            <p className="font-black text-gray-900">{row._id}</p>
+            <p className="font-black text-gray-900">{row.title}</p>
             <p className="text-[10px] uppercase font-bold text-gray-400">
               {row.trek || "Trek Adventure"}
             </p>

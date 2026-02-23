@@ -793,11 +793,10 @@ export default function Login() {
                       onChange={handleChange}
                       placeholder="you@example.com"
                       disabled={loading}
-                      className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all text-gray-900 placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed ${
-                        validationErrors.email
-                          ? "border-red-500 focus:border-red-500"
-                          : "border-gray-200 focus:border-emerald-500"
-                      }`}
+                      className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all text-gray-900 placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.email
+                        ? "border-red-500 focus:border-red-500"
+                        : "border-gray-200 focus:border-emerald-500"
+                        }`}
                     />
                   </div>
                   {validationErrors.email && (
@@ -835,11 +834,10 @@ export default function Login() {
                       onChange={handleChange}
                       placeholder="••••••••"
                       disabled={loading}
-                      className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all text-gray-900 placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed ${
-                        validationErrors.password
-                          ? "border-red-500 focus:border-red-500"
-                          : "border-gray-200 focus:border-emerald-500"
-                      }`}
+                      className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all text-gray-900 placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.password
+                        ? "border-red-500 focus:border-red-500"
+                        : "border-gray-200 focus:border-emerald-500"
+                        }`}
                     />
                   </div>
                   {validationErrors.password && (
@@ -850,7 +848,7 @@ export default function Login() {
                 </div>
 
                 {/* Role Selection */}
-                <div>
+                {/* <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">
                     Role
                   </label>
@@ -915,7 +913,7 @@ export default function Login() {
                       {validationErrors.role}
                     </p>
                   )}
-                </div>
+                </div> */}
 
                 {/* Remember Me & Forgot Password */}
                 <div className="flex items-center justify-between text-sm">

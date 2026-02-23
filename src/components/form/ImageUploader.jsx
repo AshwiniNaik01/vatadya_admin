@@ -205,8 +205,8 @@ const ImageUploader = ({ label, value, onChange, isMultiple = false, maxFiles = 
                         </label>
                     )}
                     <p className="text-sm text-gray-500">
-                        {isMultiple 
-                            ? `Upload up to ${maxFiles} images (1MB each)` 
+                        {isMultiple
+                            ? `Upload up to ${maxFiles} images (1MB each)`
                             : "Upload a single image (1MB max)"
                         }
                     </p>
@@ -222,18 +222,17 @@ const ImageUploader = ({ label, value, onChange, isMultiple = false, maxFiles = 
             </div>
 
             {/* Main Upload Area */}
-            <div 
-                className={`relative rounded-2xl border-3 border-dashed transition-all duration-300 ${
-                    isDragging 
-                        ? 'border-purple-500 bg-purple-50 scale-[1.02] shadow-lg' 
-                        : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
-                } ${compressing ? 'opacity-60' : ''}`}
+            <div
+                className={`relative rounded-2xl border-3 border-dashed transition-all duration-300 ${isDragging
+                    ? 'border-purple-500 bg-purple-50 scale-[1.02] shadow-lg'
+                    : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
+                    } ${compressing ? 'opacity-60' : ''}`}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
             >
                 {/* Upload Zone */}
-                <div className="p-8 md:p-12">
+                <div className="p-6 md:p-8">
                     {(displayFiles.length === 0 || (isMultiple && displayFiles.length < maxFiles)) && (
                         <label className={`flex flex-col items-center justify-center cursor-pointer transition-all ${compressing ? 'pointer-events-none' : ''}`}>
                             <input
@@ -243,13 +242,13 @@ const ImageUploader = ({ label, value, onChange, isMultiple = false, maxFiles = 
                                 className="sr-only"
                                 onChange={handleFileChange}
                             />
-                            
+
                             {compressing ? (
                                 <div className="space-y-6 text-center">
                                     {/* Animated Progress Ring */}
                                     <div className="relative w-24 h-24">
                                         <div className="absolute inset-0 border-4 border-gray-200 rounded-full"></div>
-                                        <div 
+                                        <div
                                             className="absolute inset-0 border-4 border-blue-500 rounded-full border-t-transparent animate-spin"
                                             style={{ animationDuration: '1.5s' }}
                                         ></div>
@@ -272,7 +271,7 @@ const ImageUploader = ({ label, value, onChange, isMultiple = false, maxFiles = 
                                                 <HiOutlineCloudArrowUp className="relative text-blue-600" size={48} />
                                             </div>
                                         </div>
-                                        
+
                                         {/* Floating Icons */}
                                         <div className="absolute -top-2 -left-2 w-12 h-12 bg-white rounded-xl shadow-lg flex items-center justify-center animate-float-slow">
                                             <HiPhoto className="text-purple-500" size={20} />
@@ -288,22 +287,15 @@ const ImageUploader = ({ label, value, onChange, isMultiple = false, maxFiles = 
                                             {isMultiple ? "Drag & Drop Multiple Images" : "Click to Upload Image"}
                                         </h3>
                                         <p className="text-gray-600 max-w-md mx-auto">
-                                            {isMultiple 
+                                            {isMultiple
                                                 ? `Upload up to ${maxFiles} images at once or click to browse`
                                                 : "Select a single high-quality image for better results"
                                             }
                                         </p>
-                                   
+
                                     </div>
 
-                                    {/* Upload Button */}
-                                    <button
-                                        type="button"
-                                        className="inline-flex items-center gap-3 px-8 py-3.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 transition-all group"
-                                    >
-                                        <HiOutlineCloudArrowUp size={20} />
-                                        Browse Files
-                                    </button>
+
                                 </div>
                             )}
                         </label>
@@ -344,20 +336,19 @@ const ImageUploader = ({ label, value, onChange, isMultiple = false, maxFiles = 
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         {displayFiles.map((src, index) => (
-                            <div 
+                            <div
                                 key={index}
-                                className={`relative group aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 hover:scale-[1.02] ${
-                                    previewIndex === index 
-                                        ? 'border-blue-500 shadow-lg ring-2 ring-blue-200' 
-                                        : 'border-gray-200 hover:border-blue-300'
-                                }`}
+                                className={`relative group aspect-square rounded-xl overflow-hidden border-2 transition-all duration-300 hover:scale-[1.02] ${previewIndex === index
+                                    ? 'border-blue-500 shadow-lg ring-2 ring-blue-200'
+                                    : 'border-gray-200 hover:border-blue-300'
+                                    }`}
                                 onMouseEnter={() => setPreviewIndex(index)}
                                 onMouseLeave={() => setPreviewIndex(null)}
                             >
                                 {/* Progress Bar for Uploading Images */}
                                 {Object.values(uploadProgress).length > 0 && (
                                     <div className="absolute inset-x-0 bottom-0 h-1 bg-gray-200">
-                                        <div 
+                                        <div
                                             className="h-full bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-300"
                                             style={{ width: `${Object.values(uploadProgress)[0] || 0}%` }}
                                         />
@@ -365,9 +356,9 @@ const ImageUploader = ({ label, value, onChange, isMultiple = false, maxFiles = 
                                 )}
 
                                 {/* Image */}
-                                <img 
-                                    src={src} 
-                                    alt={`Preview ${index + 1}`} 
+                                <img
+                                    src={src}
+                                    alt={`Preview ${index + 1}`}
                                     className="w-full h-full object-cover"
                                 />
 
@@ -399,8 +390,8 @@ const ImageUploader = ({ label, value, onChange, isMultiple = false, maxFiles = 
                         {/* Empty Slot Indicators */}
                         {isMultiple && displayFiles.length < maxFiles && (
                             Array.from({ length: maxFiles - displayFiles.length }).map((_, index) => (
-                                <div 
-                                    key={`empty-${index}`} 
+                                <div
+                                    key={`empty-${index}`}
                                     className="aspect-square rounded-xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center text-gray-400 hover:text-gray-600 hover:border-gray-400 transition-all group/empty"
                                 >
                                     <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center mb-2 group-hover/empty:bg-gray-200">
@@ -412,7 +403,7 @@ const ImageUploader = ({ label, value, onChange, isMultiple = false, maxFiles = 
                         )}
                     </div>
 
-               
+
                 </div>
             )}
         </div>

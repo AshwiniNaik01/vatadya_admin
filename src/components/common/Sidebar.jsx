@@ -37,7 +37,7 @@ const menuItems = [
     path: "/bookings",
     icon: <FaClipboardList />,
     submenu: [
-      { name: "Create Bookings", path: "/bookings/create" },
+      // { name: "Create Bookings", path: "/bookings/create" },
       { name: "Manage Bookings", path: "/bookings/manage" },
     ],
   },
@@ -114,9 +114,8 @@ export default function Sidebar() {
                 </div>
                 {!collapsed && (
                   <FaChevronDown
-                    className={`transition-transform duration-300 ${
-                      openSubmenu === item.name ? "rotate-180" : ""
-                    }`}
+                    className={`transition-transform duration-300 ${openSubmenu === item.name ? "rotate-180" : ""
+                      }`}
                   />
                 )}
               </button>
@@ -131,10 +130,9 @@ export default function Sidebar() {
                       end
                       className={({ isActive }) =>
                         `px-4 py-2 rounded-lg transition-all duration-200
-                        ${
-                          isActive
-                            ? "bg-emerald-500 text-white font-semibold"
-                            : "text-emerald-200 hover:bg-white/10 hover:text-white"
+                        ${isActive
+                          ? "bg-emerald-500 text-white font-semibold"
+                          : "text-emerald-200 hover:bg-white/10 hover:text-white"
                         }`
                       }
                     >
@@ -151,10 +149,9 @@ export default function Sidebar() {
               end
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
-                ${
-                  isActive
-                    ? "bg-emerald-600 text-white shadow-lg shadow-emerald-900/40 font-semibold"
-                    : "text-emerald-200 hover:bg-white/10 hover:text-white"
+                ${isActive
+                  ? "bg-emerald-600 text-white shadow-lg shadow-emerald-900/40 font-semibold"
+                  : "text-emerald-200 hover:bg-white/10 hover:text-white"
                 }
                 ${collapsed ? "justify-center" : ""}`
               }

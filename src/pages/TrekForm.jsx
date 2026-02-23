@@ -1000,7 +1000,7 @@
 //   );
 // }
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as Yup from "yup";
 
 import {
@@ -1034,128 +1034,128 @@ import { getAllCategories } from "../api/trekCategoriesApi";
 
 // Yup Validation Schema
 const trekValidationSchema = Yup.object().shape({
-  title: Yup.string()
-    .required("Trek name is required")
-    .min(3, "Trek name must be at least 3 characters")
-    .max(100, "Trek name must be less than 100 characters"),
+  // title: Yup.string()
+  //   .required("Trek name is required")
+  //   .min(3, "Trek name must be at least 3 characters")
+  //   .max(100, "Trek name must be less than 100 characters"),
 
-  location: Yup.string()
-    .required("Location is required")
-    .min(3, "Location must be at least 3 characters"),
+  // location: Yup.string()
+  //   .required("Location is required")
+  //   .min(3, "Location must be at least 3 characters"),
 
-  difficulty: Yup.string()
-    .required("Difficulty level is required")
-    .oneOf(
-      ["Easy", "Moderate", "Challenging", "Difficult", "Extreme"],
-      "Invalid difficulty level",
-    ),
+  // difficulty: Yup.string()
+  //   .required("Difficulty level is required")
+  //   .oneOf(
+  //     ["Easy", "Moderate", "Challenging", "Difficult", "Extreme"],
+  //     "Invalid difficulty level",
+  //   ),
 
-  category: Yup.string().nullable().required("Category is required"),
+  // category: Yup.string().nullable().required("Category is required"),
 
-  duration: Yup.string().required("Duration is required"),
+  // duration: Yup.string().required("Duration is required"),
 
-  groupSize: Yup.string().required("Group size is required"),
+  // groupSize: Yup.string().required("Group size is required"),
 
-  price: Yup.number()
-    .required("Price is required")
-    .min(0, "Price must be a positive number"),
+  // price: Yup.number()
+  //   .required("Price is required")
+  //   .min(0, "Price must be a positive number"),
 
-  discount: Yup.number()
-    .min(0, "Discount cannot be negative")
-    .test(
-      "discount-less-than-price",
-      "Discount cannot exceed price",
-      function (value) {
-        return !value || value <= this.parent.price;
-      },
-    ),
+  // discount: Yup.number()
+  //   .min(0, "Discount cannot be negative")
+  //   .test(
+  //     "discount-less-than-price",
+  //     "Discount cannot exceed price",
+  //     function (value) {
+  //       return !value || value <= this.parent.price;
+  //     },
+  //   ),
 
-  altitude: Yup.string().required("Altitude is required"),
+  // altitude: Yup.string().required("Altitude is required"),
 
-  season: Yup.string().required("Season is required"),
+  // season: Yup.string().required("Season is required"),
 
-  tags: Yup.array().of(Yup.string()).min(1, "At least one tag is required"),
+  // tags: Yup.array().of(Yup.string()).min(1, "At least one tag is required"),
 
-  highlight: Yup.string()
-    .required("Trek highlights are required")
-    .min(10, "Highlights must be at least 10 characters"),
+  // highlight: Yup.string()
+  //   .required("Trek highlights are required")
+  //   .min(10, "Highlights must be at least 10 characters"),
 
-  description: Yup.string()
-    .required("Description is required")
-    .min(50, "Description must be at least 50 characters"),
+  // description: Yup.string()
+  //   .required("Description is required")
+  //   .min(50, "Description must be at least 50 characters"),
 
-  status: Yup.string()
-    .required("Status is required")
-    .oneOf(["Upcoming", "Ongoing", "Completed"], "Invalid status"),
+  // status: Yup.string()
+  //   .required("Status is required")
+  //   .oneOf(["Upcoming", "Ongoing", "Completed"], "Invalid status"),
 
-  bookingType: Yup.string()
-    .required("Booking type is required")
-    .oneOf(["Trek", "Trip", "Trek + Camping"], "Invalid booking type"),
+  // bookingType: Yup.string()
+  //   .required("Booking type is required")
+  //   .oneOf(["Trek", "Trip", "Trek + Camping"], "Invalid booking type"),
 
-  startDate: Yup.date().nullable().required("Start date is required"),
+  // startDate: Yup.date().nullable().required("Start date is required"),
 
-  endDate: Yup.date()
-    .nullable()
-    .required("End date is required")
-    .test(
-      "end-date-after-start",
-      "End date must be after start date",
-      function (value) {
-        const { startDate } = this.parent;
-        if (!startDate || !value) return true;
-        return new Date(value) >= new Date(startDate);
-      },
-    ),
+  // endDate: Yup.date()
+  //   .nullable()
+  //   .required("End date is required")
+  //   .test(
+  //     "end-date-after-start",
+  //     "End date must be after start date",
+  //     function (value) {
+  //       const { startDate } = this.parent;
+  //       if (!startDate || !value) return true;
+  //       return new Date(value) >= new Date(startDate);
+  //     },
+  //   ),
 
-  feeDetails: Yup.object().shape({
-    baseFee: Yup.number()
-      .required("Base fee is required")
-      .min(0, "Base fee must be positive"),
-    gstPercent: Yup.number()
-      .required("GST percentage is required")
-      .min(0, "GST cannot be negative")
-      .max(100, "GST cannot exceed 100%"),
-    insurance: Yup.number()
-      .required("Insurance cost is required")
-      .min(0, "Insurance cost must be positive"),
-    transport: Yup.number()
-      .required("Transport cost is required")
-      .min(0, "Transport cost must be positive"),
-  }),
+  // feeDetails: Yup.object().shape({
+  //   baseFee: Yup.number()
+  //     .required("Base fee is required")
+  //     .min(0, "Base fee must be positive"),
+  //   gstPercent: Yup.number()
+  //     .required("GST percentage is required")
+  //     .min(0, "GST cannot be negative")
+  //     .max(100, "GST cannot exceed 100%"),
+  //   insurance: Yup.number()
+  //     .required("Insurance cost is required")
+  //     .min(0, "Insurance cost must be positive"),
+  //   transport: Yup.number()
+  //     .required("Transport cost is required")
+  //     .min(0, "Transport cost must be positive"),
+  // }),
 
-  links: Yup.object().shape({
-    inclusions: Yup.string().url("Must be a valid URL"),
-    terms: Yup.string().url("Must be a valid URL"),
-    cancellation: Yup.string().url("Must be a valid URL"),
-    scholarships: Yup.string().url("Must be a valid URL"),
-  }),
+  // links: Yup.object().shape({
+  //   inclusions: Yup.string().url("Must be a valid URL"),
+  //   terms: Yup.string().url("Must be a valid URL"),
+  //   cancellation: Yup.string().url("Must be a valid URL"),
+  //   scholarships: Yup.string().url("Must be a valid URL"),
+  // }),
 
-  trekInfo: Yup.array()
-    .of(
-      Yup.object().shape({
-        title: Yup.string().required("Title is required"),
-        value: Yup.string().required("Value is required"),
-      }),
-    )
-    .min(1, "At least one trek info parameter is required"),
+  // trekInfo: Yup.array()
+  //   .of(
+  //     Yup.object().shape({
+  //       title: Yup.string().required("Title is required"),
+  //       value: Yup.string().required("Value is required"),
+  //     }),
+  //   )
+  //   .min(1, "At least one trek info parameter is required"),
 
-  addons: Yup.array().of(
-    Yup.object().shape({
-      name: Yup.string().required("Addon name is required"),
-      price: Yup.number()
-        .required("Addon price is required")
-        .min(0, "Price must be positive"),
-      description: Yup.string(),
-    }),
-  ),
+  // addons: Yup.array().of(
+  //   Yup.object().shape({
+  //     name: Yup.string().required("Addon name is required"),
+  //     price: Yup.number()
+  //       .required("Addon price is required")
+  //       .min(0, "Price must be positive"),
+  //     description: Yup.string(),
+  //   }),
+  // ),
 
-  months: Yup.array().of(Yup.string()).min(1, "At least one month is required"),
+  // months: Yup.array().of(Yup.string()).min(1, "At least one month is required"),
 
-  image: Yup.string().required("Hero image is required"),
+  // image: Yup.string().required("Hero image is required"),
 
-  gallery: Yup.array()
-    .of(Yup.string())
-    .max(10, "Maximum 10 gallery images allowed"),
+  // gallery: Yup.array()
+  //   .of(Yup.string())
+  //   .max(10, "Maximum 10 gallery images allowed"),
 });
 
 export default function TrekForm() {
@@ -1214,6 +1214,7 @@ export default function TrekForm() {
   const [categories, setCategories] = useState([]);
 
   const navigate = useNavigate();
+  const priceInputRef = useRef(null);
   const { id } = useParams();
   const isEditMode = !!id;
 
@@ -1419,7 +1420,7 @@ export default function TrekForm() {
 
     try {
       // Validate entire form
-      await trekValidationSchema.validate(formData, { abortEarly: false });
+      // await trekValidationSchema.validate(formData, { abortEarly: false });
 
       if (isEditMode) {
         await updateTrek(id, formData);
@@ -1497,11 +1498,10 @@ export default function TrekForm() {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className={`${
-                loading
-                  ? "bg-emerald-400 cursor-not-allowed"
-                  : "bg-emerald-600 hover:bg-emerald-700"
-              } text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95 transition-all flex items-center gap-2`}
+              className={`${loading
+                ? "bg-emerald-400 cursor-not-allowed"
+                : "bg-emerald-600 hover:bg-emerald-700"
+                } text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95 transition-all flex items-center gap-2`}
             >
               {loading ? (
                 <>
@@ -1531,10 +1531,9 @@ export default function TrekForm() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all
-                ${
-                  activeTab === tab.id
-                    ? "bg-white text-emerald-600 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
+                ${activeTab === tab.id
+                  ? "bg-white text-emerald-600 shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
                 }`}
             >
               <tab.icon className="text-lg" />
@@ -1706,24 +1705,7 @@ export default function TrekForm() {
                   )}
                 </div>
 
-                <div className="md:col-span-2 flex items-center gap-8 p-5 bg-emerald-50 rounded-2xl border border-emerald-100">
-                  <Checkbox
-                    id="feat"
-                    label="Mark as Featured (Landing Page)"
-                    checked={formData.featured}
-                    onChange={(val) =>
-                      setFormData({ ...formData, featured: val })
-                    }
-                  />
-                  <Checkbox
-                    id="act"
-                    label="Publicly Visible"
-                    checked={formData.isActive}
-                    onChange={(val) =>
-                      setFormData({ ...formData, isActive: val })
-                    }
-                  />
-                </div>
+
               </div>
 
               <div className="flex justify-end pt-6">
@@ -2016,34 +1998,48 @@ export default function TrekForm() {
               />
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-1 bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 rounded-[2rem] shadow-xl shadow-emerald-900/20 flex flex-col justify-center text-white relative overflow-hidden group">
+                <div
+                  className="lg:col-span-1 bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 rounded-[2rem] shadow-xl shadow-emerald-900/20 flex flex-col justify-center text-white relative overflow-hidden group cursor-pointer"
+                  onClick={() => {
+                    priceInputRef.current?.focus();
+                    priceInputRef.current?.select();
+                  }}
+                >
                   <div className="absolute top-0 right-0 p-8 opacity-10 scale-150 transform group-hover:rotate-12 transition-transform">
                     <FaRupeeSign size={100} />
                   </div>
+
                   <label className="block mb-2 text-[10px] uppercase font-black text-emerald-100 tracking-widest opacity-80">
                     Base Platform Fee
                   </label>
+
                   <div className="flex items-center gap-3">
                     <span className="text-4xl font-black opacity-60">₹</span>
+
                     <input
+                      ref={priceInputRef}
                       type="number"
                       value={formData.price}
+                      onClick={(e) => e.stopPropagation()} // ⛔ prevent double click
                       onChange={(e) =>
                         setFormData({
                           ...formData,
                           price: Number(e.target.value),
                         })
                       }
-                      className="bg-transparent text-5xl font-black border-none outline-none w-full focus:ring-0 placeholder:text-emerald-400/50"
+                      onFocus={(e) => e.target.select()}
+                      className="bg-transparent text-5xl font-black border-none outline-none w-full focus:ring-0 placeholder:text-emerald-400/50 cursor-pointer"
                       placeholder="0.00"
                     />
                   </div>
+
                   {fieldErrors.price && (
                     <p className="text-red-200 text-sm mt-2">
                       {fieldErrors.price}
                     </p>
                   )}
                 </div>
+
 
                 <div className="lg:col-span-2 grid grid-cols-2 gap-6 bg-gray-50 p-8 rounded-[2rem] border border-gray-100">
                   <div>
@@ -2253,152 +2249,153 @@ export default function TrekForm() {
 
           {/* --- MEDIA --- */}
           {activeTab === "media" && (
-            <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
               <SectionTitle icon={FaImage} title="Media Assets Management" />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="space-y-6">
-                  <div>
-                    <ImageUploader
-                      label="Hero Representation (Single)"
-                      value={formData.image}
-                      onChange={(img) =>
-                        setFormData({ ...formData, image: img })
-                      }
-                    />
-                    {fieldErrors.image && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {fieldErrors.image}
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="pt-4 border-t border-gray-100">
-                    <ImageUploader
-                      label="Expedition Gallery (Max 10)"
-                      isMultiple
-                      maxFiles={10}
-                      value={formData.gallery}
-                      onChange={(imgs) =>
-                        setFormData({ ...formData, gallery: imgs })
-                      }
-                    />
-                    {fieldErrors.gallery && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {fieldErrors.gallery}
-                      </p>
-                    )}
-                  </div>
+              {/* MEDIA UPLOADS */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm">
+                  <ImageUploader
+                    label="Hero Representation"
+                    value={formData.image}
+                    onChange={(img) => setFormData({ ...formData, image: img })}
+                  />
+                  <p className="text-xs text-gray-400 mt-2">
+                    This will be the primary display image
+                  </p>
+                  {fieldErrors.image && (
+                    <p className="text-red-500 text-sm mt-1">{fieldErrors.image}</p>
+                  )}
                 </div>
 
-                <div className="bg-gray-50 p-8 rounded-[2rem] border border-gray-100">
-                  <div className="flex items-center justify-between mb-6">
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-800">
-                        Add-on Services
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        Optional gear or porter services
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        addArrayItem("addons", {
-                          name: "",
-                          price: 0,
-                          description: "",
-                        })
-                      }
-                      className="p-2 bg-emerald-600 text-white rounded-xl shadow-lg shadow-emerald-500/20 hover:bg-emerald-700 transition-colors"
-                    >
-                      <FaPlus size={18} />
-                    </button>
-                  </div>
-
-                  <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-                    {formData.addons.map((addon, index) => (
-                      <div
-                        key={index}
-                        className="group p-5 bg-white rounded-2xl border border-gray-200 relative animate-in zoom-in duration-300"
-                      >
-                        <button
-                          type="button"
-                          onClick={() => removeArrayItem("addons", index)}
-                          className="absolute -top-2 -right-2 w-8 h-8 bg-red-50 text-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white border border-red-100 shadow-sm"
-                        >
-                          <FaTrash size={12} />
-                        </button>
-                        <div className="space-y-4">
-                          <input
-                            type="text"
-                            value={addon.name}
-                            onChange={(e) =>
-                              handleArrayChange(
-                                index,
-                                "name",
-                                e.target.value,
-                                "addons",
-                              )
-                            }
-                            className="w-full bg-transparent font-bold text-gray-800 outline-none border-b border-gray-100 focus:border-emerald-500 transition-colors"
-                            placeholder="Service Name (e.g. Sleeping Bag Rental)"
-                          />
-                          <div className="flex gap-4 items-center">
-                            <div className="flex-1 flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-100">
-                              <span className="text-emerald-600 font-black">
-                                ₹
-                              </span>
-                              <input
-                                type="number"
-                                value={addon.price}
-                                onChange={(e) =>
-                                  handleArrayChange(
-                                    index,
-                                    "price",
-                                    Number(e.target.value),
-                                    "addons",
-                                  )
-                                }
-                                className="w-full bg-transparent outline-none font-bold text-gray-700 placeholder:text-gray-300"
-                                placeholder="0"
-                              />
-                            </div>
-                          </div>
-                          <textarea
-                            value={addon.description}
-                            onChange={(e) =>
-                              handleArrayChange(
-                                index,
-                                "description",
-                                e.target.value,
-                                "addons",
-                              )
-                            }
-                            className="w-full bg-gray-50 border border-gray-100 rounded-xl text-sm px-4 py-2 outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[80px]"
-                            placeholder="Service description..."
-                          />
-                        </div>
-                      </div>
-                    ))}
-                    {formData.addons.length === 0 && (
-                      <div className="py-20 text-center space-y-2 opacity-30">
-                        <FaHiking className="mx-auto text-4xl" />
-                        <p className="text-sm font-bold">
-                          No optional services added
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                  {fieldErrors.addons && (
-                    <p className="text-red-500 text-sm mt-2">
-                      {fieldErrors.addons}
-                    </p>
+                <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm">
+                  <ImageUploader
+                    label="Expedition Gallery"
+                    isMultiple
+                    maxFiles={10}
+                    value={formData.gallery}
+                    onChange={(imgs) => setFormData({ ...formData, gallery: imgs })}
+                  />
+                  <p className="text-xs text-gray-400 mt-2">
+                    Up to 10 images showing the trek experience
+                  </p>
+                  {fieldErrors.gallery && (
+                    <p className="text-red-500 text-sm mt-1">{fieldErrors.gallery}</p>
                   )}
                 </div>
               </div>
+
+              {/* ADD-ONS */}
+              <div className="bg-gradient-to-br from-gray-50 to-white p-8 rounded-[2.5rem] border border-gray-100">
+                <div className="flex items-center justify-between mb-8">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800">
+                      Add-on Services
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      Optional gear, porter, or premium services
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      addArrayItem("addons", {
+                        name: "",
+                        price: 0,
+                        description: "",
+                      })
+                    }
+                    className="flex items-center gap-2 px-5 py-3 bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-500/30 hover:bg-emerald-700 transition-all"
+                  >
+                    <FaPlus size={14} />
+                    Add Service
+                  </button>
+                </div>
+
+                {/* ADDONS LIST */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[420px] overflow-y-auto pr-2 custom-scrollbar">
+                  {formData.addons.map((addon, index) => (
+                    <div
+                      key={index}
+                      className="relative group bg-white rounded-2xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition-all"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => removeArrayItem("addons", index)}
+                        className="absolute top-3 right-3 w-8 h-8 bg-red-50 text-red-500 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white"
+                      >
+                        <FaTrash size={12} />
+                      </button>
+
+                      <div className="space-y-4">
+                        <input
+                          type="text"
+                          value={addon.name}
+                          onChange={(e) =>
+                            handleArrayChange(index, "name", e.target.value, "addons")
+                          }
+                          className="w-full text-lg font-bold text-gray-800 outline-none border-b border-gray-200 focus:border-emerald-500 transition-colors"
+                          placeholder="Service name"
+                        />
+
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-100">
+                            <span className="text-emerald-600 font-black">₹</span>
+                            <input
+                              type="number"
+                              value={addon.price}
+                              onChange={(e) =>
+                                handleArrayChange(
+                                  index,
+                                  "price",
+                                  Number(e.target.value),
+                                  "addons",
+                                )
+                              }
+                              onFocus={(e) => e.target.select()}
+                              className="w-full bg-transparent outline-none font-bold text-gray-700"
+                              placeholder="0"
+                            />
+                          </div>
+                        </div>
+
+                        <textarea
+                          value={addon.description}
+                          onChange={(e) =>
+                            handleArrayChange(
+                              index,
+                              "description",
+                              e.target.value,
+                              "addons",
+                            )
+                          }
+                          className="w-full bg-gray-50 border border-gray-100 rounded-xl text-sm px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[90px]"
+                          placeholder="Short description of this service..."
+                        />
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* EMPTY STATE */}
+                  {formData.addons.length === 0 && (
+                    <div className="col-span-full py-20 text-center text-gray-400 space-y-3">
+                      <FaHiking className="mx-auto text-5xl opacity-30" />
+                      <p className="font-bold">No add-on services added</p>
+                      <p className="text-sm">
+                        Click “Add Service” to create optional offerings
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {fieldErrors.addons && (
+                  <p className="text-red-500 text-sm mt-4">{fieldErrors.addons}</p>
+                )}
+              </div>
             </div>
           )}
+
         </form>
       </div>
     </div>
