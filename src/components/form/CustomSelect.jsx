@@ -28,6 +28,7 @@ const CustomSelect = ({ options, isMulti, value, onChange, placeholder = "Select
       setIsOpen(false);
     }
   };
+  
 
   const removeOption = (e, option) => {
     e.stopPropagation();

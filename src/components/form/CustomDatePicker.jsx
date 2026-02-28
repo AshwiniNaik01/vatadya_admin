@@ -17,7 +17,15 @@ const CustomDatePicker = ({ startDate, endDate, onChange, placeholder = "Select 
 
     const formatDateForInput = (date) => {
         if (!date) return "";
-        return date.toISOString().split("T")[0];
+        // If it's already a string in YYYY-MM-DD format, return it
+        if (typeof date === "string") {
+            return date.split("T")[0];
+        }
+        // If it's a Date object, use toISOString
+        if (date instanceof Date && !isNaN(date)) {
+            return date.toISOString().split("T")[0];
+        }
+        return "";
     };
 
     return (
