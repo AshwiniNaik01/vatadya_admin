@@ -676,7 +676,7 @@ const response = await loginAdmin({
                     />
                   </svg>
                   <span className="font-bold text-lg text-yellow-400 tracking-widest uppercase animate-sparkle-text relative z-10">
-                    TrekVede
+                    Vatadya
                   </span>
                 </div>
 
@@ -692,10 +692,7 @@ const response = await loginAdmin({
                 </p>
 
                 <div className="flex items-center gap-6 text-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    <span className="text-white/70">12 Active Treks</span>
-                  </div>
+                  
                   <div className="flex items-center gap-2">
                     <div
                       className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"

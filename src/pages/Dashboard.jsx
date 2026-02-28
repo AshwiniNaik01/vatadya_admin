@@ -203,7 +203,7 @@ export default function Dashboard() {
             {/* Text */}
             <div>
               <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                TREKK<span className="text-emerald-600">VEDE</span>
+                VATA<span className="text-emerald-600">DYA</span>
               </h1>
               <p className="text-slate-400 font-semibold text-[9px] uppercase tracking-[0.2em] mt-1 shrink-0">
                 Adventure Hub • Explorer v1.0

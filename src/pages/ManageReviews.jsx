@@ -230,7 +230,7 @@ function generateMockReviews() {
       profilePhoto: "https://i.pravatar.cc/150?u=1",
       rating: 4.8,
       description:
-        "My first and only trek ordered on Treekvede, and I'm beyond delighted! I requested a custom trail based on two summits I was called to invite together in this kind of creation.",
+        "My first and only trek ordered on Vatadya, and I'm beyond delighted! I requested a custom trail based on two summits I was called to invite together in this kind of creation.",
       createdAt: "2025-10-24T10:00:00Z",
       trekId: { _id: "t1", title: "Kalsubai Peak Trek" },
       isLiked: true,

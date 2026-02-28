@@ -23,7 +23,7 @@ export default function Header({ onToggleSidebar }) {
             <FaBars className="cursor-pointer" onClick={onToggleSidebar} />
           </div> */}
           <h2 className="font-black text-xl text-slate-800 tracking-tight">
-            TreekVede <span className="text-emerald-600">Console</span>
+            VataDya <span className="text-emerald-600">Console</span>
           </h2>
         </div>
       </div>

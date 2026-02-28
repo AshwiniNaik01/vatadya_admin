@@ -77,9 +77,14 @@ export default function Sidebar() {
       <div className="flex items-center justify-between p-4 border-b border-emerald-700">
         {!collapsed && (
           <div>
-            <h1 className="text-xl font-black flex items-center gap-2">
-              🏔️ Trek Admin
-            </h1>
+           <h1 className="text-xl font-black flex items-center gap-2">
+  <img 
+    src="/vatadya_logo.jpeg" 
+    alt="Vatadya Logo" 
+    className="h-8 w-8 object-contain"
+  />
+  Admin Panel
+</h1>
             <p className="text-[10px] text-emerald-300 uppercase tracking-widest">
               Management Panel
             </p>
