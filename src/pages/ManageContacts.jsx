@@ -86,12 +86,12 @@ const ManageContacts = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 p-8">
       {/* Header Section */}
       <div className="max-w-7xl mx-auto mb-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-700 via-blue-600 to-blue-600 bg-clip-text text-transparent mb-2">
               Contact Management
             </h1>
             <p className="text-gray-600 text-lg">
@@ -103,18 +103,18 @@ const ManageContacts = () => {
             {/* <button
               onClick={fetchContacts}
               disabled={loading}
-              className="flex items-center gap-2 px-5 py-3 bg-white border-2 border-emerald-200 text-emerald-700 rounded-xl font-semibold hover:bg-emerald-50 transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center gap-2 px-5 py-3 bg-white border-2 border-blue-200 text-blue-700 rounded-xl font-semibold hover:bg-blue-50 transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <HiRefresh
                 className={`w-5 h-5 ${loading ? "animate-spin" : ""}`}
               />
               Refresh
             </button>
-            <button className="flex items-center gap-2 px-5 py-3 bg-white border-2 border-emerald-200 text-emerald-700 rounded-xl font-semibold hover:bg-emerald-50 transition-all shadow-sm hover:shadow-md">
+            <button className="flex items-center gap-2 px-5 py-3 bg-white border-2 border-blue-200 text-blue-700 rounded-xl font-semibold hover:bg-blue-50 transition-all shadow-sm hover:shadow-md">
               <HiDownload className="w-5 h-5" />
               Export
             </button> */}
-            <div className="bg-emerald-100 text-emerald-700 px-5 py-3 rounded-xl font-bold">
+            <div className="bg-blue-100 text-blue-700 px-5 py-3 rounded-xl font-bold">
               {contacts.length} Contacts
             </div>
           </div>
@@ -154,7 +154,7 @@ const ManageContacts = () => {
                 placeholder="Search by name, email, or phone..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 transition-all"
+                className="w-full pl-12 pr-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-all"
               />
             </div>
 
@@ -191,7 +191,7 @@ const ManageContacts = () => {
         {loading ? (
           <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-12">
             <div className="flex flex-col items-center justify-center">
-              <div className="w-16 h-16 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mb-4"></div>
+              <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
               <p className="text-gray-600 font-semibold">Loading contacts...</p>
             </div>
           </div>
@@ -202,7 +202,7 @@ const ManageContacts = () => {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   {/* Table Header */}
-                  <thead className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
+                  <thead className="bg-gradient-to-r from-blue-600 to-blue-600 text-white">
                     <tr>
                       <th className="px-6 py-5 text-left text-sm font-bold uppercase tracking-wider">
                         <div className="flex items-center gap-2">
@@ -259,11 +259,11 @@ const ManageContacts = () => {
                     ) : (
                       filteredContacts.map((contact) => (
                         <React.Fragment key={contact.id}>
-                          <tr className="hover:bg-emerald-50/30 transition-colors">
+                          <tr className="hover:bg-blue-50/30 transition-colors">
                             {/* Name */}
                             <td className="px-6 py-5">
                               <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-bold shadow-md">
+                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-500 flex items-center justify-center text-white font-bold shadow-md">
                                   {contact.name?.charAt(0).toUpperCase() || "?"}
                                 </div>
                                 <div>
@@ -323,8 +323,8 @@ const ManageContacts = () => {
                                 <button
                                   onClick={() => toggleRow(contact.id)}
                                   className={`group flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all ${expandedRow === contact.id
-                                    ? "bg-emerald-600 text-white shadow-lg"
-                                    : "bg-emerald-100 text-emerald-700 hover:bg-emerald-200"
+                                    ? "bg-blue-600 text-white shadow-lg"
+                                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
                                     }`}
                                 >
                                   {expandedRow === contact.id ? "Hide" : "View"}
@@ -340,12 +340,12 @@ const ManageContacts = () => {
 
                           {/* Expanded Details Row */}
                           {expandedRow === contact.id && (
-                            <tr className="bg-gradient-to-r from-emerald-50 to-teal-50">
+                            <tr className="bg-gradient-to-r from-blue-50 to-blue-50">
                               <td colSpan="6" className="px-6 py-6">
-                                <div className="bg-white rounded-xl p-6 shadow-inner border-2 border-emerald-100">
+                                <div className="bg-white rounded-xl p-6 shadow-inner border-2 border-blue-100">
                                   <div className="flex items-start justify-between mb-4">
                                     <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                                      <HiChatAlt2 className="w-5 h-5 text-emerald-600" />
+                                      <HiChatAlt2 className="w-5 h-5 text-blue-600" />
                                       Full Message Details
                                     </h3>
                                     <button
@@ -373,7 +373,7 @@ const ManageContacts = () => {
                                           Email Address
                                         </div>
                                         <div className="text-gray-900 font-medium flex items-center gap-2">
-                                          <HiMail className="w-4 h-4 text-emerald-600" />
+                                          <HiMail className="w-4 h-4 text-blue-600" />
                                           {contact.email || "N/A"}
                                         </div>
                                       </div>
@@ -383,7 +383,7 @@ const ManageContacts = () => {
                                           Mobile Number
                                         </div>
                                         <div className="text-gray-900 font-medium flex items-center gap-2">
-                                          <HiPhone className="w-4 h-4 text-emerald-600" />
+                                          <HiPhone className="w-4 h-4 text-blue-600" />
                                           {contact.mobile_no || "N/A"}
                                         </div>
                                       </div>
@@ -393,7 +393,7 @@ const ManageContacts = () => {
                                           Contact Date
                                         </div>
                                         <div className="text-gray-900 font-medium flex items-center gap-2">
-                                          <HiCalendar className="w-4 h-4 text-emerald-600" />
+                                          <HiCalendar className="w-4 h-4 text-blue-600" />
                                           {contact.createdAt
                                             ? new Date(
                                               contact.createdAt,
@@ -409,8 +409,8 @@ const ManageContacts = () => {
                                     </div>
 
                                     {/* Full Message */}
-                                    <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg p-6 border-2 border-emerald-100">
-                                      <div className="text-xs text-emerald-700 uppercase font-semibold mb-3 flex items-center gap-2">
+                                    <div className="bg-gradient-to-br from-blue-50 to-blue-50 rounded-lg p-6 border-2 border-blue-100">
+                                      <div className="text-xs text-blue-700 uppercase font-semibold mb-3 flex items-center gap-2">
                                         <HiChatAlt2 className="w-4 h-4" />
                                         Complete Message
                                       </div>
@@ -425,7 +425,7 @@ const ManageContacts = () => {
                                   <div className="flex gap-3 pt-4 border-t border-gray-200">
                                     <a
                                       href={`mailto:${contact.email}?subject=Regarding your inquiry&body=Hello ${contact.name},`}
-                                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold hover:from-emerald-700 hover:to-teal-700 transition-all shadow-md hover:shadow-lg"
+                                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-600 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
                                     >
                                       <HiMail className="w-5 h-5" />
                                       Reply via Email
@@ -433,7 +433,7 @@ const ManageContacts = () => {
 
                                     <a
                                       href={`tel:${contact.mobile_no}`}
-                                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all shadow-md hover:shadow-lg"
+                                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-xl font-semibold hover:from-green-700 hover:to-blue-700 transition-all shadow-md hover:shadow-lg"
                                     >
                                       <HiPhone className="w-5 h-5" />
                                       Call Now
@@ -457,8 +457,8 @@ const ManageContacts = () => {
 
             {/* Footer Stats */}
             <div className="mt-6 grid grid-cols-3 gap-4">
-              <div className="bg-white rounded-xl p-6 border-2 border-emerald-100 shadow-md">
-                <div className="text-emerald-600 text-sm font-semibold mb-1">
+              <div className="bg-white rounded-xl p-6 border-2 border-blue-100 shadow-md">
+                <div className="text-blue-600 text-sm font-semibold mb-1">
                   Total Contacts
                 </div>
                 <div className="text-3xl font-bold text-gray-900">

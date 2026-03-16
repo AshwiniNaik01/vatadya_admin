@@ -79,13 +79,13 @@ export default function ManageTreks() {
                 <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
                         <h1 className="text-4xl font-black text-gray-900 tracking-tight flex items-center gap-4">
-                            <div className="p-4 bg-emerald-100 text-emerald-600 rounded-[2rem] shadow-sm shadow-emerald-100">
+                            <div className="p-4 bg-blue-100 text-blue-600 rounded-[2rem] shadow-sm shadow-blue-100">
                                 <FaMountain size={28} />
                             </div>
                             Manage Treks
                         </h1>
                         <p className="text-gray-500 font-bold mt-2 ml-1 text-sm uppercase tracking-widest flex items-center gap-2">
-                            <span className="w-8 h-[2px] bg-emerald-500 rounded-full"></span>
+                            <span className="w-8 h-[2px] bg-blue-500 rounded-full"></span>
                             {data.length} Total Expeditions
                         </p>
                     </div>
@@ -93,7 +93,7 @@ export default function ManageTreks() {
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                         <Link
                             to="/treks/create"
-                            className="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-6 py-3.5 rounded-[1.25rem] shadow-xl shadow-emerald-500/20 active:scale-95 transition-all flex items-center justify-center gap-2"
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-black px-6 py-3.5 rounded-[1.25rem] shadow-xl shadow-blue-500/20 active:scale-95 transition-all flex items-center justify-center gap-2"
                         >
                             <FaPlus /> Create New Trek
                         </Link>
@@ -149,7 +149,7 @@ export default function ManageTreks() {
                     </div>
                 ) : (
                     <div className="bg-white rounded-[2.5rem] p-12 text-center border border-gray-100 shadow-sm">
-                        <div className="bg-emerald-50 text-emerald-500 w-20 h-20 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
+                        <div className="bg-blue-50 text-blue-500 w-20 h-20 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
                             <FaMountain size={32} />
                         </div>
                         <h3 className="text-xl font-black text-gray-900 mb-2">No Treks Found</h3>
@@ -159,7 +159,7 @@ export default function ManageTreks() {
                         {searchQuery && (
                             <button
                                 onClick={() => setSearchQuery("")}
-                                className="mt-6 text-emerald-600 font-black hover:text-emerald-700 transition-colors underline"
+                                className="mt-6 text-blue-600 font-black hover:text-blue-700 transition-colors underline"
                             >
                                 Clear Search
                             </button>
@@ -192,7 +192,7 @@ export default function ManageTreks() {
                 </div>
                 <div className="flex-1 space-y-3">
                     <div className="flex gap-2">
-                        <span className="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold uppercase">
+                        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase">
                             {selectedTrek.difficulty}
                         </span>
                         <span className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-bold uppercase">
@@ -209,7 +209,7 @@ export default function ManageTreks() {
                     </h2>
                     <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
                         <div className="flex items-center gap-1.5">
-                            <FaMapMarkerAlt className="text-emerald-500" /> {selectedTrek.location}
+                            <FaMapMarkerAlt className="text-blue-500" /> {selectedTrek.location}
                         </div>
                         <div className="flex items-center gap-1.5">
                             <FaCalendarAlt className="text-amber-500" /> {selectedTrek.duration}
@@ -247,7 +247,7 @@ export default function ManageTreks() {
             {/* Highlights & Description */}
             <div className="space-y-2">
                 <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                    <FaInfoCircle className="text-emerald-500" /> Highlights & Description
+                    <FaInfoCircle className="text-blue-500" /> Highlights & Description
                 </h4>
                 <div className="text-sm text-gray-600 leading-relaxed font-medium bg-white p-4 rounded-xl border border-gray-100">
                     {selectedTrek.highlight || selectedTrek.description || "No specific highlights provided."}
@@ -258,7 +258,7 @@ export default function ManageTreks() {
             {selectedTrek.gallery?.length > 0 && (
                 <div className="space-y-2">
                     <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                        <FiImage className="text-emerald-500" /> Trek Gallery
+                        <FiImage className="text-blue-500" /> Trek Gallery
                     </h4>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {selectedTrek.gallery.map((img, index) => (
@@ -277,7 +277,7 @@ export default function ManageTreks() {
             {selectedTrek.addons?.length > 0 && (
                 <div className="space-y-2">
                     <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                        <FiPlusCircle className="text-emerald-500" /> Addons & Benefits
+                        <FiPlusCircle className="text-blue-500" /> Addons & Benefits
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {selectedTrek.addons.map((addon) => (
@@ -301,7 +301,7 @@ export default function ManageTreks() {
                 </button>
                 <button
                     onClick={() => handleEdit(selectedTrek)}
-                    className="bg-emerald-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-emerald-700 transition-all shadow-md flex items-center gap-2"
+                    className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-all shadow-md flex items-center gap-2"
                 >
                     <FaEdit size={14} /> Edit Catalog
                 </button>

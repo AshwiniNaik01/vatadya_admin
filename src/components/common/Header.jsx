@@ -19,30 +19,21 @@ export default function Header({ onToggleSidebar }) {
       {/* LEFT: Branding */}
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-3">
-          {/* <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-100">
-            <FaBars className="cursor-pointer" onClick={onToggleSidebar} />
-          </div> */}
           <h2 className="font-black text-xl text-slate-800 tracking-tight">
-            VataDya <span className="text-emerald-600">Console</span>
+            VataDya <span className="text-blue-600">Console</span>
           </h2>
         </div>
       </div>
 
       {/* RIGHT: Actions */}
       <div className="flex items-center gap-6">
-        {/* Notifications */}
-        {/* <button className="p-3 rounded-xl hover:bg-slate-50 transition-all text-slate-400 relative border border-transparent hover:border-slate-100">
-          <FaBell size={18} />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-rose-500 rounded-full border-2 border-white"></span>
-        </button> */}
-
-        <div className="h-8 w-px bg-slate-100"></div>
+        <div className="h-8 w-px bg-slate-200/50"></div>
 
         {/* User Profile */}
-        <div className="flex items-center gap-3 group cursor-pointer">
-          <div className="w-10 h-10 rounded-xl overflow-hidden border-2 border-emerald-50 shadow-sm group-hover:border-emerald-200 transition-all">
+        <div className="flex items-center gap-4 group cursor-pointer bg-slate-50/50 p-1.5 pr-4 rounded-2xl hover:bg-slate-100/50 transition-all border border-transparent hover:border-slate-200">
+          <div className="w-10 h-10 rounded-xl overflow-hidden border-2 border-white shadow-sm transition-all group-hover:scale-105">
             <img
-              src="https://ui-avatars.com/api/?name=Admin&background=059669&color=fff"
+              src="https://ui-avatars.com/api/?name=Admin&background=2563eb&color=fff"
               alt="Admin Avatar"
               className="w-full h-full object-cover"
             />
@@ -51,7 +42,7 @@ export default function Header({ onToggleSidebar }) {
             <p className="text-slate-900 font-black text-xs leading-none">
               Admin
             </p>
-            <p className="text-[9px] text-emerald-600 font-black uppercase tracking-widest mt-1">
+            <p className="text-[9px] text-blue-600 font-black uppercase tracking-widest mt-1.5">
               Super Admin
             </p>
           </div>
@@ -60,7 +51,7 @@ export default function Header({ onToggleSidebar }) {
         {/* Logout */}
         <button
           onClick={handleLogout}
-          className="text-[10px] font-black uppercase tracking-widest bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-xl transition-all shadow-lg active:scale-95"
+          className="text-[10px] font-black uppercase tracking-widest bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl transition-all shadow-lg shadow-blue-200 active:scale-95"
         >
           Sign Out
         </button>

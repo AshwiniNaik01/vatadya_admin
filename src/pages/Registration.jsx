@@ -157,12 +157,12 @@
 //   };
 
 //   return (
-//     <div className="min-h-screen bg-linear-to-br from-teal-900 via-emerald-800 to-teal-950 flex items-center justify-center p-4">
+//     <div className="min-h-screen bg-linear-to-br from-blue-900 via-blue-800 to-blue-950 flex items-center justify-center p-4">
 //       {/* Registration Card */}
-//       <div className="w-full max-w-md bg-linear-to-b from-teal-800/40 to-teal-900/40 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-teal-700/50">
+//       <div className="w-full max-w-md bg-linear-to-b from-blue-800/40 to-blue-900/40 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-blue-700/50">
 //         {/* Logo */}
 //         <div className="flex justify-center mb-6">
-//           <div className="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
+//           <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center shadow-lg">
 //             <FaMountain className="text-white text-2xl" />
 //           </div>
 //         </div>
@@ -172,15 +172,15 @@
 //           <h1 className="text-3xl font-bold text-white mb-2">
 //             Start Your Journey
 //           </h1>
-//           <p className="text-teal-200 text-sm">
+//           <p className="text-blue-200 text-sm">
 //             Create an account to explore the peaks
 //           </p>
 //         </div>
 
 //         {/* Success Message */}
 //         {successMessage && (
-//           <div className="mb-4 p-3 bg-emerald-500/20 border border-emerald-500/50 rounded-lg">
-//             <p className="text-emerald-200 text-sm text-center">
+//           <div className="mb-4 p-3 bg-blue-500/20 border border-blue-500/50 rounded-lg">
+//             <p className="text-blue-200 text-sm text-center">
 //               {successMessage}
 //             </p>
 //           </div>
@@ -204,7 +204,7 @@
 //               Full Name
 //             </label>
 //             <div className="relative">
-//               <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-300 text-sm" />
+//               <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-300 text-sm" />
 //               <input
 //                 type="text"
 //                 id="fullName"
@@ -214,7 +214,7 @@
 //                 onBlur={() => handleBlur("fullName")}
 //                 placeholder="Enter your full name"
 //                 disabled={isLoading}
-//                 className="w-full pl-11 pr-4 py-3.5 bg-teal-700/30 border-2 border-amber-500/40 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:border-amber-400 focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+//                 className="w-full pl-11 pr-4 py-3.5 bg-blue-700/30 border-2 border-amber-500/40 rounded-xl text-white placeholder-blue-300/60 focus:outline-none focus:border-amber-400 focus:bg-blue-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
 //               />
 //             </div>
 //             {touched.fullName && errors.fullName && (
@@ -231,7 +231,7 @@
 //               Email Address
 //             </label>
 //             <div className="relative">
-//               <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-300 text-sm" />
+//               <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-300 text-sm" />
 //               <input
 //                 type="email"
 //                 id="email"
@@ -241,7 +241,7 @@
 //                 onBlur={() => handleBlur("email")}
 //                 placeholder="your.email@example.com"
 //                 disabled={isLoading}
-//                 className="w-full pl-11 pr-4 py-3.5 bg-teal-700/30 border-2 border-amber-500/40 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:border-amber-400 focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+//                 className="w-full pl-11 pr-4 py-3.5 bg-blue-700/30 border-2 border-amber-500/40 rounded-xl text-white placeholder-blue-300/60 focus:outline-none focus:border-amber-400 focus:bg-blue-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
 //               />
 //             </div>
 //             {touched.email && errors.email && (
@@ -258,7 +258,7 @@
 //               Password
 //             </label>
 //             <div className="relative">
-//               <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-300 text-sm" />
+//               <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-300 text-sm" />
 //               <input
 //                 type={showPassword ? "text" : "password"}
 //                 id="password"
@@ -268,13 +268,13 @@
 //                 onBlur={() => handleBlur("password")}
 //                 placeholder="Create a strong password"
 //                 disabled={isLoading}
-//                 className="w-full pl-11 pr-12 py-3.5 bg-teal-700/30 border-2 border-amber-500/40 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:border-amber-400 focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+//                 className="w-full pl-11 pr-12 py-3.5 bg-blue-700/30 border-2 border-amber-500/40 rounded-xl text-white placeholder-blue-300/60 focus:outline-none focus:border-amber-400 focus:bg-blue-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
 //               />
 //               <button
 //                 type="button"
 //                 onClick={() => setShowPassword(!showPassword)}
 //                 disabled={isLoading}
-//                 className="absolute right-4 top-1/2 -translate-y-1/2 text-teal-300 hover:text-teal-200 transition-colors disabled:opacity-50"
+//                 className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200 transition-colors disabled:opacity-50"
 //               >
 //                 {showPassword ? (
 //                   <FaEyeSlash className="text-sm" />
@@ -297,7 +297,7 @@
 //               Confirm Password
 //             </label>
 //             <div className="relative">
-//               <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-300 text-sm" />
+//               <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-300 text-sm" />
 //               <input
 //                 type={showConfirmPassword ? "text" : "password"}
 //                 id="confirmPassword"
@@ -307,13 +307,13 @@
 //                 onBlur={() => handleBlur("confirmPassword")}
 //                 placeholder="Re-enter your password"
 //                 disabled={isLoading}
-//                 className="w-full pl-11 pr-12 py-3.5 bg-teal-700/30 border-2 border-amber-500/40 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:border-amber-400 focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+//                 className="w-full pl-11 pr-12 py-3.5 bg-blue-700/30 border-2 border-amber-500/40 rounded-xl text-white placeholder-blue-300/60 focus:outline-none focus:border-amber-400 focus:bg-blue-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
 //               />
 //               <button
 //                 type="button"
 //                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
 //                 disabled={isLoading}
-//                 className="absolute right-4 top-1/2 -translate-y-1/2 text-teal-300 hover:text-teal-200 transition-colors disabled:opacity-50"
+//                 className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200 transition-colors disabled:opacity-50"
 //               >
 //                 {showConfirmPassword ? (
 //                   <FaEyeSlash className="text-sm" />
@@ -333,7 +333,7 @@
 //           <button
 //             type="submit"
 //             disabled={isLoading}
-//             className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-500"
+//             className="w-full py-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-500"
 //           >
 //             {isLoading ? "Creating Account..." : "Create Account"}
 //           </button>
@@ -342,19 +342,19 @@
 //         {/* Divider */}
 //         <div className="relative my-6">
 //           <div className="absolute inset-0 flex items-center">
-//             <div className="w-full border-t border-teal-600/50"></div>
+//             <div className="w-full border-t border-blue-600/50"></div>
 //           </div>
 //           <div className="relative flex justify-center text-sm">
-//             <span className="px-4 bg-transparent text-teal-300">or</span>
+//             <span className="px-4 bg-transparent text-blue-300">or</span>
 //           </div>
 //         </div>
 
 //         {/* Sign In Link */}
-//         <p className="text-center text-teal-200 text-sm">
+//         <p className="text-center text-blue-200 text-sm">
 //           Already have an account?{" "}
 //           <a
 //             href="/"
-//             className="text-emerald-400 font-semibold hover:text-emerald-300 transition-colors"
+//             className="text-blue-400 font-semibold hover:text-blue-300 transition-colors"
 //           >
 //             Sign In
 //           </a>
@@ -523,12 +523,12 @@ export default function Registration() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-teal-900 via-emerald-800 to-teal-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-900 via-blue-800 to-blue-950 flex items-center justify-center p-4">
       {/* Registration Card Container */}
-      <div className="w-full max-w-md bg-linear-to-b from-teal-800/40 to-teal-900/40 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-teal-700/50">
+      <div className="w-full max-w-md bg-linear-to-b from-blue-800/40 to-blue-900/40 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-blue-700/50">
         {/* Logo Section */}
         <div className="flex justify-center mb-6">
-          <div className="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center shadow-lg">
+          <div className="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center shadow-lg">
             <FaMountain className="text-white text-2xl" />
           </div>
         </div>
@@ -538,15 +538,15 @@ export default function Registration() {
           <h1 className="text-3xl font-bold text-white mb-2">
             Start Your Journey
           </h1>
-          <p className="text-teal-200 text-sm">
+          <p className="text-blue-200 text-sm">
             Create an account to explore the peaks
           </p>
         </div>
 
         {/* Success Message Display */}
         {successMessage && (
-          <div className="mb-4 p-3 bg-emerald-500/20 border border-emerald-500/50 rounded-lg">
-            <p className="text-emerald-200 text-sm text-center">
+          <div className="mb-4 p-3 bg-blue-500/20 border border-blue-500/50 rounded-lg">
+            <p className="text-blue-200 text-sm text-center">
               {successMessage}
             </p>
           </div>
@@ -571,7 +571,7 @@ export default function Registration() {
             </label>
             <div className="relative">
               {/* Icon */}
-              <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-300 text-sm" />
+              <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-300 text-sm" />
 
               {/* Input */}
               <input
@@ -582,7 +582,7 @@ export default function Registration() {
                 onChange={handleChange}
                 placeholder="Enter your full name"
                 disabled={isLoading}
-                className={`w-full pl-11 pr-4 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.fullName
+                className={`w-full pl-11 pr-4 py-3.5 bg-blue-700/30 border-2 rounded-xl text-white placeholder-blue-300/60 focus:outline-none focus:bg-blue-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.fullName
                   ? "border-red-500 focus:border-red-500"
                   : "border-amber-500/40 focus:border-amber-400"
                   }`}
@@ -607,7 +607,7 @@ export default function Registration() {
             </label>
             <div className="relative">
               {/* Icon */}
-              <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-300 text-sm" />
+              <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-300 text-sm" />
 
               {/* Input */}
               <input
@@ -618,7 +618,7 @@ export default function Registration() {
                 onChange={handleChange}
                 placeholder="your.email@example.com"
                 disabled={isLoading}
-                className={`w-full pl-11 pr-4 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.email
+                className={`w-full pl-11 pr-4 py-3.5 bg-blue-700/30 border-2 rounded-xl text-white placeholder-blue-300/60 focus:outline-none focus:bg-blue-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.email
                   ? "border-red-500 focus:border-red-500"
                   : "border-amber-500/40 focus:border-amber-400"
                   }`}
@@ -643,7 +643,7 @@ export default function Registration() {
             </label>
             <div className="relative">
               {/* Icon */}
-              <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-300 text-sm" />
+              <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-300 text-sm" />
 
               {/* Input */}
               <input
@@ -654,7 +654,7 @@ export default function Registration() {
                 onChange={handleChange}
                 placeholder="Create a strong password"
                 disabled={isLoading}
-                className={`w-full pl-11 pr-12 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.password
+                className={`w-full pl-11 pr-12 py-3.5 bg-blue-700/30 border-2 rounded-xl text-white placeholder-blue-300/60 focus:outline-none focus:bg-blue-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.password
                   ? "border-red-500 focus:border-red-500"
                   : "border-amber-500/40 focus:border-amber-400"
                   }`}
@@ -665,7 +665,7 @@ export default function Registration() {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isLoading}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-teal-300 hover:text-teal-200 transition-colors disabled:opacity-50"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200 transition-colors disabled:opacity-50"
               >
                 {showPassword ? (
                   <FaEyeSlash className="text-sm" />
@@ -693,7 +693,7 @@ export default function Registration() {
             </label>
             <div className="relative">
               {/* Icon */}
-              <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-teal-300 text-sm" />
+              <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-300 text-sm" />
 
               {/* Input */}
               <input
@@ -704,7 +704,7 @@ export default function Registration() {
                 onChange={handleChange}
                 placeholder="Re-enter your password"
                 disabled={isLoading}
-                className={`w-full pl-11 pr-12 py-3.5 bg-teal-700/30 border-2 rounded-xl text-white placeholder-teal-300/60 focus:outline-none focus:bg-teal-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.confirmPassword
+                className={`w-full pl-11 pr-12 py-3.5 bg-blue-700/30 border-2 rounded-xl text-white placeholder-blue-300/60 focus:outline-none focus:bg-blue-700/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.confirmPassword
                   ? "border-red-500 focus:border-red-500"
                   : "border-amber-500/40 focus:border-amber-400"
                   }`}
@@ -715,7 +715,7 @@ export default function Registration() {
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 disabled={isLoading}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-teal-300 hover:text-teal-200 transition-colors disabled:opacity-50"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200 transition-colors disabled:opacity-50"
               >
                 {showConfirmPassword ? (
                   <FaEyeSlash className="text-sm" />
@@ -737,7 +737,7 @@ export default function Registration() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-emerald-500"
+            className="w-full py-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl mt-6 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-blue-500"
           >
             {isLoading ? "Creating Account..." : "Create Account"}
           </button>
@@ -746,19 +746,19 @@ export default function Registration() {
         {/* Divider */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-teal-600/50"></div>
+            <div className="w-full border-t border-blue-600/50"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-4 bg-transparent text-teal-300">or</span>
+            <span className="px-4 bg-transparent text-blue-300">or</span>
           </div>
         </div>
 
         {/* Sign In Link */}
-        <p className="text-center text-teal-200 text-sm">
+        <p className="text-center text-blue-200 text-sm">
           Already have an account?{" "}
           <a
             href="/"
-            className="text-emerald-400 font-semibold hover:text-emerald-300 transition-colors"
+            className="text-blue-400 font-semibold hover:text-blue-300 transition-colors"
           >
             Sign In
           </a>

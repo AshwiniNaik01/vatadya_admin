@@ -106,7 +106,7 @@
 
 //     const SectionTitle = ({ icon: Icon, title }) => (
 //         <div className="flex items-center gap-2 mb-6 border-b pb-2">
-//             <Icon className="text-emerald-600 text-xl" />
+//             <Icon className="text-blue-600 text-xl" />
 //             <h2 className="text-xl font-bold text-gray-800 tracking-tight">{title}</h2>
 //         </div>
 //     );
@@ -117,7 +117,7 @@
 //                 <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
 //                     <div>
 //                         <h1 className="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-3">
-//                             <div className="p-3 bg-emerald-100 text-emerald-600 rounded-2xl">
+//                             <div className="p-3 bg-blue-100 text-blue-600 rounded-2xl">
 //                                 <FaLayerGroup />
 //                             </div>
 //                             {isEditMode ? "Update Category" : "Create Category"}
@@ -129,7 +129,7 @@
 //                 </header>
 
 //                 <form onSubmit={handleSubmit} className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-//                     <div className="bg-white rounded-3xl shadow-xl shadow-emerald-900/5 border border-emerald-50/50 p-8 md:p-10 space-y-10">
+//                     <div className="bg-white rounded-3xl shadow-xl shadow-blue-900/5 border border-blue-50/50 p-8 md:p-10 space-y-10">
 
 //                         {/* Section: Basic Metadata */}
 //                         <div>
@@ -176,7 +176,7 @@
 //                                             onChange={(val) => setFormData({ ...formData, difficulty: val.value })}
 //                                         />
 //                                     </div>
-//                                     <div className="pt-4 p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50">
+//                                     <div className="pt-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-100/50">
 //                                         <Checkbox
 //                                             id="cat-active"
 //                                             label="Publicly Active Category"
@@ -208,7 +208,7 @@
 //                             <button
 //                                 type="submit"
 //                                 disabled={loading}
-//                                 className={`flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20 active:scale-95 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+//                                 className={`flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 active:scale-95 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
 //                             >
 //                                 {loading ? "Proccessing..." : isEditMode ? "Update Category" : "Save Category"}
 //                                 <FaChevronRight size={12} />
@@ -521,7 +521,7 @@ export default function CategoryForm() {
    */
   const SectionTitle = ({ icon: Icon, title }) => (
     <div className="flex items-center gap-2 mb-6 border-b pb-2">
-      <Icon className="text-emerald-600 text-xl" />
+      <Icon className="text-blue-600 text-xl" />
       <h2 className="text-xl font-bold text-gray-800 tracking-tight">
         {title}
       </h2>
@@ -549,7 +549,7 @@ export default function CategoryForm() {
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-3">
-              <div className="p-3 bg-emerald-100 text-emerald-600 rounded-2xl">
+              <div className="p-3 bg-blue-100 text-blue-600 rounded-2xl">
                 <FaLayerGroup />
               </div>
               {isEditMode ? "Update Category" : "Create Category"}
@@ -567,7 +567,7 @@ export default function CategoryForm() {
           onSubmit={handleSubmit}
           className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500"
         >
-          <div className="bg-white rounded-3xl shadow-xl shadow-emerald-900/5 border border-emerald-50/50 p-8 md:p-10 space-y-10">
+          <div className="bg-white rounded-3xl shadow-xl shadow-blue-900/5 border border-blue-50/50 p-8 md:p-10 space-y-10">
             {/* Section: Basic Metadata */}
             <div>
               <SectionTitle icon={FaInfoCircle} title="Primary Details" />
@@ -659,7 +659,7 @@ export default function CategoryForm() {
                   </div>
 
                   {/* Active Status Checkbox */}
-                  <div className="pt-4 p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50">
+                  <div className="pt-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-100/50">
                     <Checkbox
                       id="cat-active"
                       label="Publicly Active Category"
@@ -698,7 +698,7 @@ export default function CategoryForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20 active:scale-95 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 active:scale-95 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
               >
                 {loading
                   ? "Processing..."

@@ -23,17 +23,17 @@ const TagsInput = ({ label, value = [], onChange, placeholder = "Type and press 
     return (
         <div className="w-full space-y-1.5">
             {label && <label className="block text-sm font-bold text-gray-700 ml-1">{label}</label>}
-            <div className="flex flex-wrap gap-2 p-2 min-h-[50px] bg-white border border-gray-200 rounded-xl focus-within:ring-4 focus-within:ring-emerald-500/10 focus-within:border-emerald-500 transition-all">
+            <div className="flex flex-wrap gap-2 p-2 min-h-[50px] bg-white border border-gray-200 rounded-xl focus-within:ring-4 focus-within:ring-blue-500/10 focus-within:border-blue-500 transition-all">
                 {value.map((tag, index) => (
                     <div
                         key={index}
-                        className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg font-bold text-sm border border-emerald-100 animate-in fade-in zoom-in duration-200"
+                        className="flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-blue-700 rounded-lg font-bold text-sm border border-blue-100 animate-in fade-in zoom-in duration-200"
                     >
                         {tag}
                         <button
                             type="button"
                             onClick={() => removeTag(index)}
-                            className="text-emerald-400 hover:text-emerald-600 transition-colors"
+                            className="text-blue-400 hover:text-blue-600 transition-colors"
                         >
                             <HiXMark size={14} />
                         </button>

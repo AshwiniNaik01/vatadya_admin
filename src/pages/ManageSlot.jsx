@@ -65,8 +65,8 @@ const ManageSlot = () => {
   const getStatusBadge = (status) => {
     const configs = {
       AVBL: {
-        bg: "bg-emerald-100",
-        text: "text-emerald-700",
+        bg: "bg-blue-100",
+        text: "text-blue-700",
         label: "Available",
         icon: FiCheckCircle,
       },
@@ -249,19 +249,19 @@ const ManageSlot = () => {
   };
 
   const getAvailabilityColor = (percentage) => {
-    if (percentage >= 70) return "bg-emerald-500";
+    if (percentage >= 70) return "bg-blue-500";
     if (percentage >= 40) return "bg-amber-500";
     if (percentage >= 20) return "bg-orange-500";
     return "bg-red-500";
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-emerald-50/30 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 p-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-emerald-700 via-emerald-600 to-teal-600 bg-clip-text text-transparent mb-2">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-700 via-blue-600 to-blue-600 bg-clip-text text-transparent mb-2">
               Slot Management
             </h1>
             <p className="text-gray-600 text-lg">
@@ -273,14 +273,14 @@ const ManageSlot = () => {
             {/* <button
               onClick={fetchSlots}
               disabled={fetchingSlots}
-              className="flex items-center gap-2 px-5 py-3 bg-white border-2 border-emerald-200 text-emerald-700 rounded-xl font-semibold hover:bg-emerald-50 transition-all shadow-sm hover:shadow-md disabled:opacity-50"
+              className="flex items-center gap-2 px-5 py-3 bg-white border-2 border-blue-200 text-blue-700 rounded-xl font-semibold hover:bg-blue-50 transition-all shadow-sm hover:shadow-md disabled:opacity-50"
             >
               <FiRefreshCw
                 className={`w-5 h-5 ${fetchingSlots ? "animate-spin" : ""}`}
               />
               Refresh
             </button> */}
-            <div className="bg-emerald-100 text-emerald-700 px-5 py-3 rounded-xl font-bold">
+            <div className="bg-blue-100 text-blue-700 px-5 py-3 rounded-xl font-bold">
               {slots.length} Slots
             </div>
           </div>
@@ -290,7 +290,7 @@ const ManageSlot = () => {
         {fetchingSlots ? (
           <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-12">
             <div className="flex flex-col items-center justify-center">
-              <div className="w-16 h-16 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mb-4"></div>
+              <div className="w-16 h-16 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
               <p className="text-gray-600 font-semibold">Loading slots...</p>
             </div>
           </div>
@@ -301,7 +301,7 @@ const ManageSlot = () => {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   {/* Table Header */}
-                  <thead className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
+                  <thead className="bg-gradient-to-r from-blue-600 to-blue-600 text-white">
                     <tr>
                       <th className="px-6 py-5 text-left text-sm font-bold uppercase tracking-wider">
                         <div className="flex items-center gap-2">
@@ -359,7 +359,7 @@ const ManageSlot = () => {
                         return (
                           <tr
                             key={slot._id}
-                            className="hover:bg-emerald-50/30 transition-colors"
+                            className="hover:bg-blue-50/30 transition-colors"
                           >
                             {/* Date Range */}
                             <td className="px-6 py-5">
@@ -398,7 +398,7 @@ const ManageSlot = () => {
                                 </div>
                                 <div className="text-sm font-semibold text-gray-700">
                                   Available:{" "}
-                                  <span className="text-emerald-600">
+                                  <span className="text-blue-600">
                                     {available}
                                   </span>
                                 </div>
@@ -438,7 +438,7 @@ const ManageSlot = () => {
                               <div className="flex justify-center gap-2">
                                 <button
                                   onClick={() => handleEdit(slot)}
-                                  className="p-2.5 bg-emerald-100 text-emerald-700 rounded-lg hover:bg-emerald-200 transition-all font-semibold"
+                                  className="p-2.5 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-all font-semibold"
                                   title="Edit Slot"
                                 >
                                   <FiEdit2 className="w-5 h-5" />
@@ -465,8 +465,8 @@ const ManageSlot = () => {
             </div>
             {/* Footer Stats
             <div className="mt-6 grid grid-cols-4 gap-4">
-              <div className="bg-white rounded-xl p-6 border-2 border-emerald-100 shadow-md">
-                <div className="text-emerald-600 text-sm font-semibold mb-1">
+              <div className="bg-white rounded-xl p-6 border-2 border-blue-100 shadow-md">
+                <div className="text-blue-600 text-sm font-semibold mb-1">
                   Total Slots
                 </div>
                 <div className="text-3xl font-bold text-gray-900">
@@ -489,8 +489,8 @@ const ManageSlot = () => {
                   {slots.reduce((sum, slot) => sum + slot.bookedSeats, 0)}
                 </div>
               </div>
-              <div className="bg-white rounded-xl p-6 border-2 border-emerald-100 shadow-md">
-                <div className="text-emerald-600 text-sm font-semibold mb-1">
+              <div className="bg-white rounded-xl p-6 border-2 border-blue-100 shadow-md">
+                <div className="text-blue-600 text-sm font-semibold mb-1">
                   Available
                 </div>
                 <div className="text-3xl font-bold text-gray-900">
@@ -571,8 +571,8 @@ const ManageSlot = () => {
           <div className="bg-white rounded-2xl p-8 w-full max-w-2xl shadow-2xl my-8">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
-                  <FiEdit2 className="w-6 h-6 text-emerald-600" />
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                  <FiEdit2 className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900">
@@ -602,7 +602,7 @@ const ManageSlot = () => {
                   name="displayRange"
                   value={editFormData.displayRange}
                   onChange={handleEditFormChange}
-                  className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all ${formErrors.displayRange
+                  className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.displayRange
                     ? "border-red-300 bg-red-50"
                     : "border-gray-200"
                     }`}
@@ -627,7 +627,7 @@ const ManageSlot = () => {
                     name="startDate"
                     value={editFormData.startDate}
                     onChange={handleEditFormChange}
-                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all ${formErrors.startDate
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.startDate
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
                       }`}
@@ -649,7 +649,7 @@ const ManageSlot = () => {
                     name="endDate"
                     value={editFormData.endDate}
                     onChange={handleEditFormChange}
-                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all ${formErrors.endDate
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.endDate
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
                       }`}
@@ -675,7 +675,7 @@ const ManageSlot = () => {
                     value={editFormData.totalSeats}
                     onChange={handleEditFormChange}
                     min="1"
-                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all ${formErrors.totalSeats
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.totalSeats
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
                       }`}
@@ -698,7 +698,7 @@ const ManageSlot = () => {
                     value={editFormData.bookedSeats}
                     onChange={handleEditFormChange}
                     min="0"
-                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all ${formErrors.bookedSeats
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.bookedSeats
                       ? "border-red-300 bg-red-50"
                       : "border-gray-200"
                       }`}
@@ -721,7 +721,7 @@ const ManageSlot = () => {
                   name="status"
                   value={editFormData.status}
                   onChange={handleEditFormChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 transition-all font-medium"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all font-medium"
                 >
                   <option value="AVBL">Available</option>
                   <option value="FAST FILLING">Fast Filling</option>
@@ -743,7 +743,7 @@ const ManageSlot = () => {
                 <button
                   type="submit"
                   disabled={updating}
-                  className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold hover:from-emerald-700 hover:to-teal-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="flex-1 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-blue-600 text-white font-semibold hover:from-blue-700 hover:to-blue-700 transition-all shadow-md hover:shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   {updating ? (
                     <>

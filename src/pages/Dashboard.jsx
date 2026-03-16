@@ -72,7 +72,7 @@ export default function Dashboard() {
       const paymentsData = paymentsRes.data || paymentsRes || [];
       const totalRevenue = paymentsData.reduce(
         (sum, p) => sum + (p.totalAmount || p.amount || 0),
-        0,
+        0
       );
 
       setStats({
@@ -90,12 +90,14 @@ export default function Dashboard() {
         { name: "Feb", val: 25 },
         { name: "Mar", val: 18 },
         { name: "Apr", val: 32 },
+        { name: "May", val: 45 },
+        { name: "Jun", val: 38 },
       ]);
 
       setTrekDistribution([
-        { name: "Easy", value: 35, color: "#10b981" },
-        { name: "Moderate", value: 45, color: "#f59e0b" },
-        { name: "Difficult", value: 20, color: "#ef4444" },
+        { name: "Easy", value: 35, color: "#3b82f6" },
+        { name: "Moderate", value: 45, color: "#2563eb" },
+        { name: "Difficult", value: 20, color: "#1d4ed8" },
       ]);
     } catch (error) {
       console.error("Dashboard Load Error:", error);
@@ -108,25 +110,25 @@ export default function Dashboard() {
       label: "Expeditions",
       value: stats.treks,
       icon: <FaMountain />,
-      color: "from-blue-600 to-indigo-600",
+      color: "from-blue-600 to-blue-800",
     },
     {
       label: "Reservations",
       value: stats.bookings,
       icon: <FaTicketAlt />,
-      color: "from-emerald-500 to-teal-600",
+      color: "from-indigo-500 to-indigo-700",
     },
     {
       label: "Net Revenue",
       value: `₹${stats.revenue.toLocaleString()}`,
       icon: <FaWallet />,
-      color: "from-amber-500 to-orange-600",
+      color: "from-blue-700 to-blue-900",
     },
     {
       label: "Advocacy",
       value: `${stats.reviews} ★`,
       icon: <FaStar />,
-      color: "from-purple-500 to-pink-600",
+      color: "from-slate-700 to-slate-900",
     },
   ];
 
@@ -142,36 +144,29 @@ export default function Dashboard() {
       label: "Manage Treks",
       path: "/treks/manage",
       icon: <FaMountain />,
-      color: "text-indigo-600",
-      bg: "bg-indigo-50",
+      color: "text-blue-700",
+      bg: "bg-blue-50/50",
     },
     {
       label: "Bookings",
       path: "/bookings/manage",
       icon: <FaTicketAlt />,
-      color: "text-emerald-600",
-      bg: "bg-emerald-50",
+      color: "text-indigo-600",
+      bg: "bg-indigo-50",
     },
     {
       label: "Feedback",
       path: "/reviews/manage",
       icon: <FaStar />,
-      color: "text-amber-600",
-      bg: "bg-amber-50",
+      color: "text-slate-600",
+      bg: "bg-slate-50",
     },
-    // {
-    //   label: "Finances",
-    //   path: "/payments/manage",
-    //   icon: <FaWallet />,
-    //   color: "text-rose-600",
-    //   bg: "bg-rose-50",
-    // },
     {
       label: "Media Hub",
       path: "/gallery/manage",
       icon: <FaImages />,
-      color: "text-purple-600",
-      bg: "bg-purple-50",
+      color: "text-blue-800",
+      bg: "bg-blue-50/80",
     },
   ];
 
@@ -189,46 +184,58 @@ export default function Dashboard() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-screen bg-[#fcfdfe] pb-20"
+      className="min-h-screen bg-white pb-20"
     >
-      <div className="max-w-7xl mx-auto px-2 py-2 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 py-8 space-y-12">
         {/* 1. TOP HEADER */}
-        <header className="flex flex-col xl:flex-row xl:items-center justify-between gap-8 rounded-lg p-2">
-          <div className="flex items-center gap-3">
+        <header className="flex flex-col xl:flex-row xl:items-center justify-between gap-8 rounded-2xl bg-slate-50 p-8 border border-slate-100 shadow-sm">
+          <div className="flex items-center gap-5">
             {/* Icon */}
-            <div className="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center text-white rotate-3 shadow-lg">
-              <FaCompass size={24} className="animate-spin-slow" />
+            <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-200">
+              <FaCompass size={28} className="animate-spin-slow" />
             </div>
 
             {/* Text */}
             <div>
-              <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-                VATA<span className="text-emerald-600">DYA</span>
+              <h1 className="text-3xl font-black text-slate-900 tracking-tight">
+                VATA<span className="text-blue-600">DYA</span>
               </h1>
-              <p className="text-slate-400 font-semibold text-[9px] uppercase tracking-[0.2em] mt-1 shrink-0">
-                Adventure Hub • Explorer v1.0
+              <p className="text-slate-400 font-bold text-[10px] uppercase tracking-[0.3em] mt-1.5 shrink-0">
+                Performance Dashboard • Explorer v2.0
               </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden md:block">
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">System Status</p>
+              <p className="text-sm font-bold text-blue-600">All Nodes Active</p>
+            </div>
+            <div className="w-12 h-12 bg-white rounded-xl border border-slate-200 flex items-center justify-center text-blue-600 shadow-sm">
+              <FaChartLine size={20} />
             </div>
           </div>
         </header>
 
         {/* 2. STATS OVERVIEW */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {statCards.map((card, idx) => (
             <motion.div
               key={idx}
               variants={itemVariants}
-              whileHover={{ y: -5 }}
-              className="bg-white p-8 rounded-xl border border-slate-100 shadow-xl relative group"
+              whileHover={{ y: -8, scale: 1.02 }}
+              className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/50 relative overflow-hidden group transition-all"
             >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-transparent to-blue-50/30 rounded-full translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-700"></div>
+
               <div className="flex items-start justify-between relative z-10">
                 <div
-                  className={`p-4 rounded-lg bg-linear-to-br ${card.color} text-white shadow-xl shadow-blue-100/50`}
+                  className={`p-4 rounded-2xl bg-linear-to-br ${card.color} text-white shadow-2xl shadow-blue-200/50 group-hover:rotate-6 transition-transform`}
                 >
                   {card.icon}
                 </div>
                 <div className="text-right">
-                  <p className="text-slate-400 font-black uppercase text-[10px] tracking-widest mb-1">
+                  <p className="text-slate-400 font-black uppercase text-[10px] tracking-widest mb-1.5">
                     {card.label}
                   </p>
                   <h3 className="text-4xl font-black text-slate-900 tracking-tighter">
@@ -240,25 +247,28 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* 3. QUICK LINKS ROW (Horizontal Section) */}
-        <motion.div variants={itemVariants} className="space-y-6">
-          <h4 className="text-md font-black text-amber-600 uppercase tracking-[0.4em] flex items-center gap-3">
-            <span className="w-2 h-2 bg-amber-600 rounded-full"></span> Quick
-            Actions Hub
+        {/* 3. QUICK LINKS ROW */}
+        <motion.div variants={itemVariants} className="space-y-8 bg-slate-900 rounded-[3rem] p-12 text-white overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
+
+          <h4 className="text-xs font-black text-blue-400 uppercase tracking-[0.4em] flex items-center gap-4 relative z-10">
+            <span className="w-2.5 h-2.5 bg-blue-400 rounded-full animate-pulse"></span>
+            Operational Command Center
           </h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 relative z-10">
             {allQuickLinks.map((link, idx) => (
               <Link
                 key={idx}
                 to={link.path}
-                className="group bg-white p-6 rounded-[2.25rem] border border-slate-100 hover:border-indigo-200 hover:bg-white hover:shadow-2xl hover:shadow-indigo-900/5 transition-all flex flex-col items-center gap-4 text-center"
+                className="group bg-white/5 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/10 hover:border-blue-500/50 hover:bg-white/10 transition-all flex flex-col items-center gap-5 text-center"
               >
                 <div
-                  className={`w-14 h-14 flex items-center justify-center rounded-2xl ${link.bg} ${link.color} transition-transform group-hover:scale-110 shadow-sm`}
+                  className={`w-16 h-16 flex items-center justify-center rounded-2xl bg-white text-blue-600 transition-transform group-hover:scale-110 group-hover:rotate-3 shadow-xl`}
                 >
                   {link.icon}
                 </div>
-                <span className="text-[11px] font-black text-slate-700 uppercase tracking-widest">
+                <span className="text-[11px] font-black text-white/80 uppercase tracking-widest group-hover:text-blue-400 transition-colors">
                   {link.label}
                 </span>
               </Link>
@@ -266,45 +276,45 @@ export default function Dashboard() {
           </div>
         </motion.div>
 
-        {/* 4. CHARTS SECTION (Area & Pie Below Links) */}
+        {/* 4. CHARTS SECTION */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Momentum Chart */}
           <motion.div
             variants={itemVariants}
-            className="lg:col-span-8 bg-white p-10 rounded-[3.5rem] border border-slate-100 shadow-2xl relative"
+            className="lg:col-span-8 bg-white p-12 rounded-[3.5rem] border border-slate-100 shadow-2xl shadow-slate-200/40 relative"
           >
             <div className="flex items-center justify-between mb-12">
               <div>
                 <h3 className="text-2xl font-black text-slate-900 tracking-tight">
                   Booking Momentum
                 </h3>
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">
-                  Growth Progression Engine
+                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1.5">
+                  Growth Analytics Engine
                 </p>
               </div>
-              <div className="bg-emerald-50 px-4 py-2 rounded-2xl flex items-center gap-2">
-                <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                <span className="text-[10px] font-black text-emerald-700 uppercase">
-                  Snapshot Mode
+              <div className="bg-blue-50 px-5 py-2.5 rounded-2xl flex items-center gap-3 border border-blue-100">
+                <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                <span className="text-[10px] font-black text-blue-700 uppercase">
+                  Real-time Sync
                 </span>
               </div>
             </div>
 
-            <div className="h-87.5 w-full">
+            <div className="h-80 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={bookingTrend}>
                   <defs>
                     <linearGradient id="colorVal" x1="0" y1="0" x2="0" y2="1">
                       <stop
                         offset="5%"
-                        stopColor="#6366f1"
-                        stopOpacity={0.15}
+                        stopColor="#2563eb"
+                        stopOpacity={0.2}
                       />
-                      <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                      <stop offset="95%" stopColor="#2563eb" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid
-                    strokeDasharray="5 5"
+                    strokeDasharray="4 4"
                     vertical={false}
                     stroke="#f1f5f9"
                   />
@@ -312,21 +322,23 @@ export default function Dashboard() {
                     dataKey="name"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fill: "#94a3b8", fontWeight: 700, fontSize: 10 }}
+                    tick={{ fill: "#94a3b8", fontWeight: 800, fontSize: 10 }}
                     dy={15}
                   />
                   <Tooltip
                     contentStyle={{
-                      borderRadius: "24px",
+                      borderRadius: "20px",
                       border: "none",
-                      shadow: "0 25px 50px -12px rgba(0,0,0,0.1)",
+                      boxShadow: "0 20px 40px -10px rgba(0,0,0,0.1)",
+                      fontWeight: 800,
+                      fontSize: "12px"
                     }}
                   />
                   <Area
                     type="monotone"
                     dataKey="val"
-                    stroke="#6366f1"
-                    strokeWidth={5}
+                    stroke="#2563eb"
+                    strokeWidth={6}
                     fillOpacity={1}
                     fill="url(#colorVal)"
                   />
@@ -338,25 +350,25 @@ export default function Dashboard() {
           {/* Expedition Mix Pie Chart */}
           <motion.div
             variants={itemVariants}
-            className="lg:col-span-4 bg-slate-900 rounded-[3.5rem] p-10 text-white shadow-2xl relative overflow-hidden group"
+            className="lg:col-span-4 bg-white rounded-[3.5rem] p-12 border border-slate-100 shadow-2xl shadow-slate-200/40 relative overflow-hidden group"
           >
-            <h4 className="text-xs font-black uppercase tracking-[0.4em] text-cyan-400 mb-8">
+            <h4 className="text-xs font-black uppercase tracking-[0.4em] text-blue-600 mb-10">
               Expedition Mix
             </h4>
-            <div className="h-62.5 w-full relative">
+            <div className="h-64 w-full relative">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={trekDistribution}
                     cx="50%"
                     cy="50%"
-                    innerRadius={70}
-                    outerRadius={95}
-                    paddingAngle={10}
+                    innerRadius={75}
+                    outerRadius={100}
+                    paddingAngle={8}
                     dataKey="value"
                   >
                     {trekDistribution.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
+                      <Cell key={`cell-${index}`} fill={entry.color} stroke="none" />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -364,31 +376,31 @@ export default function Dashboard() {
               </ResponsiveContainer>
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none">
                 <FaHiking
-                  size={32}
-                  className="mx-auto mb-1 text-emerald-500 opacity-50"
+                  size={36}
+                  className="mx-auto mb-2 text-blue-600 opacity-20"
                 />
-                <p className="text-2xl font-black">{stats.treks}</p>
-                <p className="text-[8px] font-black uppercase text-slate-500">
-                  Total Treks
+                <p className="text-3xl font-black text-slate-900">{stats.treks}</p>
+                <p className="text-[9px] font-black uppercase text-slate-400">
+                  Active
                 </p>
               </div>
             </div>
-            <div className="space-y-4 mt-8">
+            <div className="space-y-3 mt-10">
               {trekDistribution.map((d, i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between bg-white/5 p-4 rounded-3xl border border-white/5"
+                  className="flex items-center justify-between bg-slate-50 p-4 rounded-2xl border border-slate-100 group-hover:bg-blue-50 group-hover:border-blue-100 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-4">
                     <div
-                      className="w-2 h-2 rounded-full"
+                      className="w-3 h-3 rounded-full shadow-sm"
                       style={{ backgroundColor: d.color }}
                     ></div>
-                    <span className="text-[10px] font-black uppercase tracking-widest">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-600">
                       {d.name}
                     </span>
                   </div>
-                  <span className="text-xs font-black opacity-60">
+                  <span className="text-xs font-black text-slate-900">
                     {d.value}%
                   </span>
                 </div>
@@ -396,48 +408,6 @@ export default function Dashboard() {
             </div>
           </motion.div>
         </div>
-
-        {/* 5. ACTIVITY TIMELINE */}
-        {/* <div className="bg-white rounded-[4rem] p-12 border border-slate-100 shadow-2xl relative overflow-hidden">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-            <div className="flex items-center gap-5">
-              <div className="p-5 bg-emerald-100 text-emerald-600 rounded-3xl shadow-lg shadow-emerald-50">
-                <FaHistory size={24} />
-              </div>
-              <div>
-                <h3 className="text-3xl font-black text-slate-900 tracking-tight">Global Activity stream</h3>
-                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Live Reservation Engine Output</p>
-              </div>
-            </div>
-            <Link to="/bookings/manage" className="px-10 py-5 bg-slate-900 text-white font-black text-[11px] uppercase tracking-widest rounded-[2rem] hover:bg-emerald-600 transition-all shadow-2xl shadow-slate-300">Open Access Ledger</Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {recentBookings.length > 0 ? recentBookings.map((booking, idx) => (
-              <motion.div key={idx} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: idx * 0.05 }} className="bg-slate-50/50 p-8 rounded-[3rem] border border-transparent hover:border-emerald-100 hover:bg-white hover:shadow-2xl hover:shadow-emerald-900/5 transition-all group">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex flex-col items-center justify-center border border-slate-100">
-                    <span className="text-[9px] font-black text-slate-400 uppercase">{new Date(booking.createdAt).toLocaleString('default', { month: 'short' })}</span>
-                    <span className="text-2xl font-black text-slate-900">{new Date(booking.createdAt).getDate()}</span>
-                  </div>
-                  <div className="bg-emerald-50 text-emerald-600 px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest">Captured</div>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-lg font-black text-slate-900 truncate">{booking.name || booking.user || "Expedition Member"}</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.1em] flex items-center gap-2">
-                    <FaMountain className="text-emerald-500" /> {booking.trekId?.title || booking.trek}
-                  </p>
-                </div>
-                <div className="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[10px] font-black text-slate-300 uppercase tracking-widest">Fee</span>
-                  <span className="text-xl font-black text-emerald-600">₹{(booking.totalAmount || booking.amount || 0).toLocaleString()}</span>
-                </div>
-              </motion.div>
-            )) : (
-              <div className="col-span-full py-20 text-center opacity-20 italic font-black text-2xl uppercase tracking-[0.4em]">Engine Standby...</div>
-            )}
-          </div>
-        </div> */}
       </div>
     </motion.div>
   );

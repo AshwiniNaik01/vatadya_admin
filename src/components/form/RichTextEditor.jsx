@@ -40,13 +40,13 @@ const RichTextEditor = ({ value, onChange, label }) => {
     };
 
     return (
-        <div className="flex flex-col w-full border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm focus-within:ring-2 focus-within:ring-emerald-500 transition-all">
+        <div className="flex flex-col w-full border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm focus-within:ring-2 focus-within:ring-blue-500 transition-all">
             {/* Toolbar */}
             <div className="flex items-center gap-1 p-2 bg-gray-50 border-b border-gray-200 flex-wrap">
                 <button
                     type="button"
                     onClick={() => executeCommand("bold")}
-                    className="p-2 hover:bg-emerald-100 rounded-lg text-gray-600 transition-colors"
+                    className="p-2 hover:bg-blue-100 rounded-lg text-gray-600 transition-colors"
                     title="Bold"
                 >
                     <HiOutlineBold size={18} />
@@ -54,7 +54,7 @@ const RichTextEditor = ({ value, onChange, label }) => {
                 <button
                     type="button"
                     onClick={() => executeCommand("italic")}
-                    className="p-2 hover:bg-emerald-100 rounded-lg text-gray-600 transition-colors"
+                    className="p-2 hover:bg-blue-100 rounded-lg text-gray-600 transition-colors"
                     title="Italic"
                 >
                     <HiOutlineItalic size={18} />
@@ -63,7 +63,7 @@ const RichTextEditor = ({ value, onChange, label }) => {
                 <button
                     type="button"
                     onClick={() => executeCommand("insertUnorderedList")}
-                    className="p-2 hover:bg-emerald-100 rounded-lg text-gray-600 transition-colors"
+                    className="p-2 hover:bg-blue-100 rounded-lg text-gray-600 transition-colors"
                     title="Bullet List"
                 >
                     <HiOutlineListBullet size={18} />
@@ -71,7 +71,7 @@ const RichTextEditor = ({ value, onChange, label }) => {
                 <button
                     type="button"
                     onClick={() => executeCommand("insertOrderedList")}
-                    className="p-2 hover:bg-emerald-100 rounded-lg text-gray-600 transition-colors"
+                    className="p-2 hover:bg-blue-100 rounded-lg text-gray-600 transition-colors"
                     title="Numbered List"
                 >
                     <HiOutlineQueueList size={18} />
@@ -79,7 +79,7 @@ const RichTextEditor = ({ value, onChange, label }) => {
                 <button
                     type="button"
                     onClick={addLink}
-                    className="p-2 hover:bg-emerald-100 rounded-lg text-gray-600 transition-colors"
+                    className="p-2 hover:bg-blue-100 rounded-lg text-gray-600 transition-colors"
                     title="Add Link"
                 >
                     <HiOutlineLink size={18} />

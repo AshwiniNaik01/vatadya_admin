@@ -30,7 +30,7 @@ export default function ReviewCard({ review, onDelete }) {
                     </div>
                     <div className="md:space-y-1">
                         <h4 className="text-lg font-black text-gray-900 leading-tight">{name}</h4>
-                        <p className="text-[10px] font-black text-emerald-600 uppercase tracking-wider">{trekName}</p>
+                        <p className="text-[10px] font-black text-blue-600 uppercase tracking-wider">{trekName}</p>
                         <p className="text-[10px] font-bold text-gray-400 uppercase">Review Date: {date}</p>
                     </div>
                 </div>
@@ -60,10 +60,10 @@ export default function ReviewCard({ review, onDelete }) {
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-3 pt-4 border-t border-gray-50">
-                        <button className="px-5 py-2.5 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-emerald-700 rounded-xl text-xs font-black transition-all flex items-center gap-2">
+                        <button className="px-5 py-2.5 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-700 rounded-xl text-xs font-black transition-all flex items-center gap-2">
                             <FaReply size={12} /> Public Comment
                         </button>
-                        <button className="px-5 py-2.5 bg-gray-50 hover:bg-emerald-50 text-gray-700 hover:text-emerald-700 rounded-xl text-xs font-black transition-all flex items-center gap-2">
+                        <button className="px-5 py-2.5 bg-gray-50 hover:bg-blue-50 text-gray-700 hover:text-blue-700 rounded-xl text-xs font-black transition-all flex items-center gap-2">
                             <FaCommentDots size={12} /> Direct Message
                         </button>
                         <button className={`p-2.5 rounded-xl transition-all ${isLiked ? 'bg-red-50 text-red-500' : 'bg-gray-50 text-gray-300 hover:text-red-400'}`}>

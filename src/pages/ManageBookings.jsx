@@ -200,7 +200,7 @@ const columns = [
     label: "Booking",
     render: (row) => (
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600">
+        <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
           <FaTicketAlt />
         </div>
         <div>
@@ -229,7 +229,7 @@ const columns = [
     label: "Date / PAX",
     render: (row) => (
       <div className="space-y-1">
-        <div className="flex items-center gap-2 text-xs font-bold text-emerald-600">
+        <div className="flex items-center gap-2 text-xs font-bold text-blue-600">
           <FaCalendarCheck /> {new Date(row.departureDate).toLocaleDateString()}
         </div>
         <div className="text-[10px] text-gray-400 font-bold uppercase">
@@ -244,7 +244,7 @@ const columns = [
       const status = row.status;
       if (status === "Confirmed") {
         return (
-          <span className="flex items-center gap-2 px-3 py-1.5 bg-emerald-50 text-emerald-600 rounded-xl border border-emerald-100 text-[10px] font-black uppercase">
+          <span className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-100 text-[10px] font-black uppercase">
             <FaCheckCircle /> Confirmed
           </span>
         );
@@ -282,7 +282,7 @@ const columns = [
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Header */}
         <header className="flex items-center gap-4">
-          <div className="p-4 rounded-2xl bg-emerald-100 text-emerald-600">
+          <div className="p-4 rounded-2xl bg-blue-100 text-blue-600">
             <FaTicketAlt size={22} />
           </div>
           <div>
@@ -318,7 +318,7 @@ const columns = [
         {/* Loading State */}
         {isLoading ? (
           <div className="flex flex-col items-center justify-center py-20">
-            <FaSpinner className="text-5xl text-emerald-600 animate-spin mb-4" />
+            <FaSpinner className="text-5xl text-blue-600 animate-spin mb-4" />
             <p className="text-gray-600 font-semibold">Loading bookings...</p>
           </div>
         ) : data.length === 0 ? (
@@ -522,7 +522,7 @@ const columns = [
                     })
                   }
                   disabled={isUpdating}
-                  className="mt-2 w-full px-4 py-3 rounded-xl border border-gray-200 font-bold focus:ring-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="mt-2 w-full px-4 py-3 rounded-xl border border-gray-200 font-bold focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <option>Confirmed</option>
                   <option>Pending</option>
@@ -543,7 +543,7 @@ const columns = [
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-2xl font-black shadow-lg shadow-emerald-500/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-2xl font-black shadow-lg shadow-blue-500/20 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isUpdating ? (
                   <>
@@ -574,7 +574,7 @@ const EditField = ({ label, type = "text", ...props }) => (
     <input
       type={type}
       {...props}
-      className="mt-2 w-full px-4 py-3 rounded-xl border border-gray-200 font-bold focus:ring-2 focus:ring-emerald-500"
+      className="mt-2 w-full px-4 py-3 rounded-xl border border-gray-200 font-bold focus:ring-2 focus:ring-blue-500"
     />
   </div>
 );

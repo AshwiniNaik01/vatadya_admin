@@ -27,7 +27,7 @@ export default function TrekCard({ trek, onEdit, onView, onDelete }) {
                 {/* Overlays/Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
                     {trek.isActive ? (
-                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/90 text-white backdrop-blur-sm shadow-sm">
+                        <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/90 text-white backdrop-blur-sm shadow-sm">
                             <FaCheckCircle size={10} />
                             <span className="text-[10px] font-black uppercase tracking-wider">Active</span>
                         </div>
@@ -55,17 +55,17 @@ export default function TrekCard({ trek, onEdit, onView, onDelete }) {
             {/* Content Section */}
             <div className="p-5 flex-1 flex flex-col">
                 <div className="mb-4">
-                    <h3 className="text-lg font-black text-gray-900 line-clamp-1 group-hover:text-emerald-600 transition-colors">
+                    <h3 className="text-lg font-black text-gray-900 line-clamp-1 group-hover:text-blue-600 transition-colors">
                         {trek.title}
                     </h3>
                     <div className="text-[11px] text-gray-400 font-bold uppercase mt-1 flex items-center gap-1">
-                        <FaMapMarkerAlt size={10} className="text-emerald-500" /> {trek.location}
+                        <FaMapMarkerAlt size={10} className="text-blue-500" /> {trek.location}
                     </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mb-6">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+                        <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center text-blue-600">
                             <FaCalendarAlt size={12} />
                         </div>
                         <div>
@@ -90,7 +90,7 @@ export default function TrekCard({ trek, onEdit, onView, onDelete }) {
                         <div className="flex items-baseline gap-1">
                             <span className="text-lg font-black text-gray-900">₹{trek.price.toLocaleString()}</span>
                             {trek.discount > 0 && (
-                                <span className="text-[10px] text-emerald-500 font-black">-{trek.discount}%</span>
+                                <span className="text-[10px] text-blue-500 font-black">-{trek.discount}%</span>
                             )}
                         </div>
                     </div>
@@ -98,7 +98,7 @@ export default function TrekCard({ trek, onEdit, onView, onDelete }) {
                     <div className="flex gap-2">
                         <button
                             onClick={() => onView(trek)}
-                            className="p-2.5 rounded-xl bg-gray-50 text-gray-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all active:scale-95"
+                            className="p-2.5 rounded-xl bg-gray-50 text-gray-400 hover:bg-blue-50 hover:text-blue-600 transition-all active:scale-95"
                             title="View Details"
                         >
                             <FaEye size={14} />

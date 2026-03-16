@@ -166,9 +166,9 @@
 //         )}
 
 //         {successMessage && (
-//           <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex gap-3">
-//             <FiCheck className="text-emerald-600 mt-1" />
-//             <p className="text-sm text-emerald-700">{successMessage}</p>
+//           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3">
+//             <FiCheck className="text-blue-600 mt-1" />
+//             <p className="text-sm text-blue-700">{successMessage}</p>
 //           </div>
 //         )}
 
@@ -243,7 +243,7 @@
 //             <button
 //               type="submit"
 //               disabled={loading}
-//               className="px-8 py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-500 transition flex items-center gap-2 disabled:opacity-70"
+//               className="px-8 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-500 transition flex items-center gap-2 disabled:opacity-70"
 //             >
 //               {loading ? (
 //                 <>
@@ -593,9 +593,9 @@ const CreateSlotForm = () => {
 
         {/* Success Message */}
         {successMessage && (
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 flex gap-3">
-            <FiCheck className="text-emerald-600 mt-1 flex-shrink-0" />
-            <p className="text-sm text-emerald-700">{successMessage}</p>
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3">
+            <FiCheck className="text-blue-600 mt-1 flex-shrink-0" />
+            <p className="text-sm text-blue-700">{successMessage}</p>
           </div>
         )}
 
@@ -720,7 +720,7 @@ const CreateSlotForm = () => {
                 name="status"
                 value={formData.status}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 outline-none transition"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition"
               >
                 <option value="AVBL">Available</option>
                 <option value="FULL">Full</option>
@@ -757,7 +757,7 @@ const CreateSlotForm = () => {
             <button
               type="submit"
               disabled={loading}
-              className="px-8 py-3 rounded-xl bg-emerald-600 text-white font-semibold hover:bg-emerald-500 transition flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="px-8 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-500 transition flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {loading ? (
                 <>

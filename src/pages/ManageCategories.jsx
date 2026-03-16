@@ -93,7 +93,7 @@ export default function ManageCategories() {
       label: "Category Info",
       render: (row) => (
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl border-2 border-emerald-100 overflow-hidden flex-shrink-0 bg-gray-50 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl border-2 border-blue-100 overflow-hidden flex-shrink-0 bg-gray-50 flex items-center justify-center">
             {getImageSrc(row.catImage) ? (
               <img
                 src={getImageSrc(row.catImage)}
@@ -101,7 +101,7 @@ export default function ManageCategories() {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <FaImage className="text-emerald-200 text-xl" />
+              <FaImage className="text-blue-200 text-xl" />
             )}
           </div>
           <div>
@@ -140,7 +140,7 @@ export default function ManageCategories() {
       label: "Trek Count",
       render: (row) => (
         <div className="flex items-center gap-2">
-          <span className="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-lg text-xs font-black border border-emerald-100">
+          <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-lg text-xs font-black border border-blue-100">
             {row.trekCount} Treks
           </span>
         </div>
@@ -151,7 +151,7 @@ export default function ManageCategories() {
       render: (row) => (
         <div className="flex items-center gap-2">
           {row.isActive ? (
-            <div className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100">
+            <div className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 border border-blue-100">
               <FaCheckCircle size={10} />
               <span className="text-[10px] font-black uppercase tracking-wider">
                 Active
@@ -176,7 +176,7 @@ export default function ManageCategories() {
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-3">
-              <div className="p-3 bg-emerald-100 text-emerald-600 rounded-2xl">
+              <div className="p-3 bg-blue-100 text-blue-600 rounded-2xl">
                 <FaLayerGroup />
               </div>
               Manage Categories
@@ -187,7 +187,7 @@ export default function ManageCategories() {
           </div>
           <Link
             to="/categories/create"
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95 transition-all flex items-center gap-2 w-fit"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-lg shadow-blue-500/20 active:scale-95 transition-all flex items-center gap-2 w-fit"
           >
             <FaPlus /> Create New Category
           </Link>
@@ -229,14 +229,14 @@ export default function ManageCategories() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full bg-emerald-50 flex items-center justify-center text-emerald-200">
+                  <div className="w-full h-full bg-blue-50 flex items-center justify-center text-blue-200">
                     <FaImage size={32} />
                   </div>
                 )}
               </div>
               <div className="flex-1 space-y-3">
                 <div className="flex gap-2">
-                  <span className="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-md text-[10px] font-bold uppercase">
+                  <span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-md text-[10px] font-bold uppercase">
                     {selectedCategory.difficulty}
                   </span>
                   <span className="px-2 py-0.5 bg-amber-100 text-amber-700 rounded-md text-[10px] font-bold uppercase">
@@ -252,8 +252,8 @@ export default function ManageCategories() {
                     {selectedCategory.categoryId}
                   </span>
                 </p>
-                <div className="p-3 bg-emerald-50 rounded-lg border border-emerald-100 inline-block">
-                  <span className="text-xs font-black text-emerald-700 uppercase">
+                <div className="p-3 bg-blue-50 rounded-lg border border-blue-100 inline-block">
+                  <span className="text-xs font-black text-blue-700 uppercase">
                     {selectedCategory.trekCount} Total Treks Linked
                   </span>
                 </div>
@@ -262,7 +262,7 @@ export default function ManageCategories() {
 
             <div className="space-y-2">
               <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest flex items-center gap-2">
-                <FaInfoCircle className="text-emerald-500" /> Description
+                <FaInfoCircle className="text-blue-500" /> Description
               </h4>
               <div className="text-sm text-gray-600 leading-relaxed font-medium bg-gray-50 p-4 rounded-xl border border-gray-100">
                 {selectedCategory.description ||
@@ -279,7 +279,7 @@ export default function ManageCategories() {
               </button>
               <button
                 onClick={() => handleEdit(selectedCategory)}
-                className="bg-emerald-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-emerald-700 transition-all shadow-md flex items-center gap-2"
+                className="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-blue-700 transition-all shadow-md flex items-center gap-2"
               >
                 <FaEdit size={14} /> Edit Category
               </button>

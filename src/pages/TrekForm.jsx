@@ -244,7 +244,7 @@
 
 //   const SectionTitle = ({ icon: Icon, title }) => (
 //     <div className="flex items-center gap-2 mb-6 border-b pb-2">
-//       <Icon className="text-emerald-600 text-xl" />
+//       <Icon className="text-blue-600 text-xl" />
 //       <h2 className="text-xl font-bold text-gray-800 tracking-tight">
 //         {title}
 //       </h2>
@@ -278,9 +278,9 @@
 //               disabled={loading}
 //               className={`${
 //                 loading
-//                   ? "bg-emerald-400 cursor-not-allowed"
-//                   : "bg-emerald-600 hover:bg-emerald-700"
-//               } text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95 transition-all flex items-center gap-2`}
+//                   ? "bg-blue-400 cursor-not-allowed"
+//                   : "bg-blue-600 hover:bg-blue-700"
+//               } text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-blue-500/20 active:scale-95 transition-all flex items-center gap-2`}
 //             >
 //               {loading ? (
 //                 <>
@@ -303,7 +303,7 @@
 //               className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all
 //                 ${
 //                   activeTab === tab.id
-//                     ? "bg-white text-emerald-600 shadow-sm"
+//                     ? "bg-white text-blue-600 shadow-sm"
 //                     : "text-gray-500 hover:text-gray-700"
 //                 }`}
 //             >
@@ -430,7 +430,7 @@
 //                   </div>
 //                 </div>
 
-//                 <div className="md:col-span-2 flex items-center gap-8 p-5 bg-emerald-50 rounded-2xl border border-emerald-100">
+//                 <div className="md:col-span-2 flex items-center gap-8 p-5 bg-blue-50 rounded-2xl border border-blue-100">
 //                   <Checkbox
 //                     id="feat"
 //                     label="Mark as Featured (Landing Page)"
@@ -454,7 +454,7 @@
 //                 <button
 //                   type="button"
 //                   onClick={handleNextTab}
-//                   className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+//                   className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
 //                 >
 //                   Next Step <FaChevronRight size={14} />
 //                 </button>
@@ -508,7 +508,7 @@
 //                           value: "",
 //                         })
 //                       }
-//                       className="flex items-center gap-1.5 text-xs font-black text-emerald-600 bg-emerald-100 px-3 py-1.5 rounded-lg hover:bg-emerald-200 transition-colors"
+//                       className="flex items-center gap-1.5 text-xs font-black text-blue-600 bg-blue-100 px-3 py-1.5 rounded-lg hover:bg-blue-200 transition-colors"
 //                     >
 //                       <FaPlus /> Add Parameter
 //                     </button>
@@ -530,7 +530,7 @@
 //                               "trekInfo",
 //                             )
 //                           }
-//                           className="w-full text-sm font-black text-emerald-600 bg-transparent border-none outline-none mb-2 focus:ring-0"
+//                           className="w-full text-sm font-black text-blue-600 bg-transparent border-none outline-none mb-2 focus:ring-0"
 //                         >
 //                           {trekInfoTitles.map((t) => (
 //                             <option key={t} value={t}>
@@ -550,7 +550,7 @@
 //                                 "trekInfo",
 //                               )
 //                             }
-//                             className="flex-1 bg-gray-50 border-none rounded-xl text-sm px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500/20"
+//                             className="flex-1 bg-gray-50 border-none rounded-xl text-sm px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500/20"
 //                             placeholder="Data value..."
 //                           />
 //                           <button
@@ -571,7 +571,7 @@
 //                 <button
 //                   type="button"
 //                   onClick={handleNextTab}
-//                   className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+//                   className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
 //                 >
 //                   Next Step <FaChevronRight size={14} />
 //                 </button>
@@ -679,7 +679,7 @@
 //                 <button
 //                   type="button"
 //                   onClick={handleNextTab}
-//                   className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+//                   className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
 //                 >
 //                   Next Step <FaChevronRight size={14} />
 //                 </button>
@@ -696,11 +696,11 @@
 //               />
 
 //               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-//                 <div className="lg:col-span-1 bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 rounded-[2rem] shadow-xl shadow-emerald-900/20 flex flex-col justify-center text-white relative overflow-hidden group">
+//                 <div className="lg:col-span-1 bg-gradient-to-br from-blue-600 to-blue-800 p-8 rounded-[2rem] shadow-xl shadow-blue-900/20 flex flex-col justify-center text-white relative overflow-hidden group">
 //                   <div className="absolute top-0 right-0 p-8 opacity-10 scale-150 transform group-hover:rotate-12 transition-transform">
 //                     <FaRupeeSign size={100} />
 //                   </div>
-//                   <label className="block mb-2 text-[10px] uppercase font-black text-emerald-100 tracking-widest opacity-80">
+//                   <label className="block mb-2 text-[10px] uppercase font-black text-blue-100 tracking-widest opacity-80">
 //                     Base Platform Fee
 //                   </label>
 //                   <div className="flex items-center gap-3">
@@ -714,7 +714,7 @@
 //                           price: Number(e.target.value),
 //                         })
 //                       }
-//                       className="bg-transparent text-5xl font-black border-none outline-none w-full focus:ring-0 placeholder:text-emerald-400/50"
+//                       className="bg-transparent text-5xl font-black border-none outline-none w-full focus:ring-0 placeholder:text-blue-400/50"
 //                       placeholder="0.00"
 //                     />
 //                   </div>
@@ -857,7 +857,7 @@
 //                 <button
 //                   type="button"
 //                   onClick={handleNextTab}
-//                   className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+//                   className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
 //                 >
 //                   Next Step <FaChevronRight size={14} />
 //                 </button>
@@ -910,7 +910,7 @@
 //                           description: "",
 //                         })
 //                       }
-//                       className="p-2 bg-emerald-600 text-white rounded-xl shadow-lg shadow-emerald-500/20 hover:bg-emerald-700 transition-colors"
+//                       className="p-2 bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-500/20 hover:bg-blue-700 transition-colors"
 //                     >
 //                       <FaPlus size={18} />
 //                     </button>
@@ -941,12 +941,12 @@
 //                                 "addons",
 //                               )
 //                             }
-//                             className="w-full bg-transparent font-bold text-gray-800 outline-none border-b border-gray-100 focus:border-emerald-500 transition-colors"
+//                             className="w-full bg-transparent font-bold text-gray-800 outline-none border-b border-gray-100 focus:border-blue-500 transition-colors"
 //                             placeholder="Service Name (e.g. Sleeping Bag Rental)"
 //                           />
 //                           <div className="flex gap-4 items-center">
 //                             <div className="flex-1 flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-100">
-//                               <span className="text-emerald-600 font-black">
+//                               <span className="text-blue-600 font-black">
 //                                 ₹
 //                               </span>
 //                               <input
@@ -975,7 +975,7 @@
 //                                 "addons",
 //                               )
 //                             }
-//                             className="w-full bg-gray-50 border border-gray-100 rounded-xl text-sm px-4 py-2 outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[80px]"
+//                             className="w-full bg-gray-50 border border-gray-100 rounded-xl text-sm px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500/20 min-h-[80px]"
 //                             placeholder="Service description..."
 //                           />
 //                         </div>
@@ -1464,58 +1464,99 @@ export default function TrekForm() {
 
     try {
       // Create FormData object
-      const formDataToSend = new FormData();
+      // const formDataToSend = new FormData();
 
-      // System / read-only fields to EXCLUDE
-      const exclude = [
-        "_id", "createdAt", "updatedAt", "__v", "id",
-        "reviewsData", "rating", "reviews", "slots",
-      ];
+      // // System / read-only fields to EXCLUDE
+      // const exclude = [
+      //   "_id", "createdAt", "updatedAt", "__v", "id",
+      //   "reviewsData", "rating", "reviews", "slots",
+      // ];
 
-      Object.keys(formData).forEach(key => {
-        if (exclude.includes(key)) return;
-        if (key === "image" || key === "gallery") return; // handled below
+      // Object.keys(formData).forEach(key => {
+      //   if (exclude.includes(key)) return;
+      //   if (key === "image" || key === "gallery") return; // handled below
 
-        const value = formData[key];
+      //   const value = formData[key];
 
-        // 1. Category → send ID string only
-        if (key === "category") {
-          const catId = value?._id || value;
-          if (catId) formDataToSend.append("category", String(catId));
-        }
-        // 2. Nested simple objects: feeDetails, links → bracket notation
-        else if (key === "feeDetails" || key === "links") {
-          if (value && typeof value === "object") {
-            Object.keys(value).forEach(subKey => {
-              if (value[subKey] !== null && value[subKey] !== undefined) {
-                formDataToSend.append(`${key}[${subKey}]`, value[subKey]);
-              }
-            });
-          }
-        }
-        // 3. Arrays of objects: trekInfo, addons → indexed bracket notation
-        else if (key === "trekInfo" || key === "addons") {
-          if (Array.isArray(value) && value.length > 0) {
-            value.forEach((item, index) => {
-              Object.keys(item).forEach(subKey => {
-                if (item[subKey] !== null && item[subKey] !== undefined) {
-                  formDataToSend.append(`${key}[${index}][${subKey}]`, item[subKey]);
-                }
-              });
-            });
-          }
-        }
-        // 4. Simple string arrays: tags → multiple appends with same key
-        else if (Array.isArray(value)) {
-          if (value.length > 0) {
-            value.forEach(item => formDataToSend.append(key, item));
-          }
-        }
-        // 5. Primitives (string, number, boolean, Date)
-        else if (value !== null && value !== undefined && value !== "") {
-          formDataToSend.append(key, value);
-        }
-      });
+      //   // 1. Category → send ID string only
+      //   if (key === "category") {
+      //     const catId = value?._id || value;
+      //     if (catId) formDataToSend.append("category", String(catId));
+      //   }
+      //   // 2. Nested simple objects: feeDetails, links → bracket notation
+      //   else if (key === "feeDetails" || key === "links") {
+      //     if (value && typeof value === "object") {
+      //       Object.keys(value).forEach(subKey => {
+      //         if (value[subKey] !== null && value[subKey] !== undefined) {
+      //           formDataToSend.append(`${key}[${subKey}]`, value[subKey]);
+      //         }
+      //       });
+      //     }
+      //   }
+      //   // 3. Arrays of objects: trekInfo, addons → indexed bracket notation
+      //   else if (key === "trekInfo" || key === "addons") {
+      //     if (Array.isArray(value) && value.length > 0) {
+      //       value.forEach((item, index) => {
+      //         Object.keys(item).forEach(subKey => {
+      //           if (item[subKey] !== null && item[subKey] !== undefined) {
+      //             formDataToSend.append(`${key}[${index}][${subKey}]`, item[subKey]);
+      //           }
+      //         });
+      //       });
+      //     }
+      //   }
+      //   // 4. Simple string arrays: tags → multiple appends with same key
+      //   else if (Array.isArray(value)) {
+      //     if (value.length > 0) {
+      //       value.forEach(item => formDataToSend.append(key, item));
+      //     }
+      //   }
+      //   // 5. Primitives (string, number, boolean, Date)
+      //   else if (value !== null && value !== undefined && value !== "") {
+      //     formDataToSend.append(key, value);
+      //   }
+      // });
+
+      
+const formDataToSend = new FormData();
+
+// fields we don't want to send
+const exclude = [
+  "_id",
+  "createdAt",
+  "updatedAt",
+  "__v",
+  "id",
+  "reviewsData",
+  "rating",
+  "reviews",
+  "slots",
+  "image",
+  "gallery",
+];
+
+// append primitive fields
+Object.keys(formData).forEach((key) => {
+  if (exclude.includes(key)) return;
+
+  const value = formData[key];
+
+  if (
+    key === "trekInfo" ||
+    key === "addons" ||
+    key === "feeDetails" ||
+    key === "links"
+  ) {
+    // send as JSON string
+    formDataToSend.append(key, JSON.stringify(value));
+  } else if (Array.isArray(value)) {
+    formDataToSend.append(key, JSON.stringify(value));
+  } else if (value !== null && value !== undefined) {
+    formDataToSend.append(key, value);
+  }
+});
+
+
 
       // Hero Image — backend Multer expects field name: 'TrekImage'
       if (formData.image instanceof File) {
@@ -1637,7 +1678,7 @@ export default function TrekForm() {
 
   const SectionTitle = ({ icon: Icon, title }) => (
     <div className="flex items-center gap-2 mb-6 border-b pb-2">
-      <Icon className="text-emerald-600 text-xl" />
+      <Icon className="text-blue-600 text-xl" />
       <h2 className="text-xl font-bold text-gray-800 tracking-tight">
         {title}
       </h2>
@@ -1666,9 +1707,9 @@ export default function TrekForm() {
               onClick={handleSubmit}
               disabled={loading}
               className={`${loading
-                ? "bg-emerald-400 cursor-not-allowed"
-                : "bg-emerald-600 hover:bg-emerald-700"
-                } text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95 transition-all flex items-center gap-2`}
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+                } text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-blue-500/20 active:scale-95 transition-all flex items-center gap-2`}
             >
               {loading ? (
                 <>
@@ -1699,7 +1740,7 @@ export default function TrekForm() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all
                 ${activeTab === tab.id
-                  ? "bg-white text-emerald-600 shadow-sm"
+                  ? "bg-white text-blue-600 shadow-sm"
                   : "text-gray-500 hover:text-gray-700"
                 }`}
             >
@@ -1879,7 +1920,7 @@ export default function TrekForm() {
                 <button
                   type="button"
                   onClick={handleNextTab}
-                  className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+                  className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
                 >
                   Next Step <FaChevronRight size={14} />
                 </button>
@@ -1952,7 +1993,7 @@ export default function TrekForm() {
                           value: "",
                         })
                       }
-                      className="flex items-center gap-1.5 text-xs font-black text-emerald-600 bg-emerald-100 px-3 py-1.5 rounded-lg hover:bg-emerald-200 transition-colors"
+                      className="flex items-center gap-1.5 text-xs font-black text-blue-600 bg-blue-100 px-3 py-1.5 rounded-lg hover:bg-blue-200 transition-colors"
                     >
                       <FaPlus /> Add Parameter
                     </button>
@@ -1974,7 +2015,7 @@ export default function TrekForm() {
                               "trekInfo",
                             )
                           }
-                          className="w-full text-sm font-black text-emerald-600 bg-transparent border-none outline-none mb-2 focus:ring-0"
+                          className="w-full text-sm font-black text-blue-600 bg-transparent border-none outline-none mb-2 focus:ring-0"
                         >
                           {trekInfoTitles.map((t) => (
                             <option key={t} value={t}>
@@ -1994,7 +2035,7 @@ export default function TrekForm() {
                                 "trekInfo",
                               )
                             }
-                            className="flex-1 bg-gray-50 border-none rounded-xl text-sm px-3 py-2 outline-none focus:ring-2 focus:ring-emerald-500/20"
+                            className="flex-1 bg-gray-50 border-none rounded-xl text-sm px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500/20"
                             placeholder="Data value..."
                           />
                           <button
@@ -2020,7 +2061,7 @@ export default function TrekForm() {
                 <button
                   type="button"
                   onClick={handleNextTab}
-                  className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+                  className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
                 >
                   Next Step <FaChevronRight size={14} />
                 </button>
@@ -2148,7 +2189,7 @@ export default function TrekForm() {
                 <button
                   type="button"
                   onClick={handleNextTab}
-                  className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+                  className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
                 >
                   Next Step <FaChevronRight size={14} />
                 </button>
@@ -2166,7 +2207,7 @@ export default function TrekForm() {
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div
-                  className="lg:col-span-1 bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 rounded-[2rem] shadow-xl shadow-emerald-900/20 flex flex-col justify-center text-white relative overflow-hidden group cursor-pointer"
+                  className="lg:col-span-1 bg-gradient-to-br from-blue-600 to-blue-800 p-8 rounded-[2rem] shadow-xl shadow-blue-900/20 flex flex-col justify-center text-white relative overflow-hidden group cursor-pointer"
                   onClick={() => {
                     priceInputRef.current?.focus();
                     priceInputRef.current?.select();
@@ -2176,7 +2217,7 @@ export default function TrekForm() {
                     <FaRupeeSign size={100} />
                   </div>
 
-                  <label className="block mb-2 text-[10px] uppercase font-black text-emerald-100 tracking-widest opacity-80">
+                  <label className="block mb-2 text-[10px] uppercase font-black text-blue-100 tracking-widest opacity-80">
                     Base Platform Fee
                   </label>
 
@@ -2195,7 +2236,7 @@ export default function TrekForm() {
                         })
                       }
                       onFocus={(e) => e.target.select()}
-                      className="bg-transparent text-5xl font-black border-none outline-none w-full focus:ring-0 placeholder:text-emerald-400/50 cursor-pointer"
+                      className="bg-transparent text-5xl font-black border-none outline-none w-full focus:ring-0 placeholder:text-blue-400/50 cursor-pointer"
                       placeholder="0.00"
                     />
                   </div>
@@ -2406,7 +2447,7 @@ export default function TrekForm() {
                 <button
                   type="button"
                   onClick={handleNextTab}
-                  className="flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20"
+                  className="flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20"
                 >
                   Next Step <FaChevronRight size={14} />
                 </button>
@@ -2473,7 +2514,7 @@ export default function TrekForm() {
                         description: "",
                       })
                     }
-                    className="flex items-center gap-2 px-5 py-3 bg-emerald-600 text-white rounded-xl font-bold shadow-lg shadow-emerald-500/30 hover:bg-emerald-700 transition-all"
+                    className="flex items-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-xl font-bold shadow-lg shadow-blue-500/30 hover:bg-blue-700 transition-all"
                   >
                     <FaPlus size={14} />
                     Add Service
@@ -2502,13 +2543,13 @@ export default function TrekForm() {
                           onChange={(e) =>
                             handleArrayChange(index, "name", e.target.value, "addons")
                           }
-                          className="w-full text-lg font-bold text-gray-800 outline-none border-b border-gray-200 focus:border-emerald-500 transition-colors"
+                          className="w-full text-lg font-bold text-gray-800 outline-none border-b border-gray-200 focus:border-blue-500 transition-colors"
                           placeholder="Service name"
                         />
 
                         <div className="flex items-center gap-3">
                           <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl border border-gray-100">
-                            <span className="text-emerald-600 font-black">₹</span>
+                            <span className="text-blue-600 font-black">₹</span>
                             <input
                               type="number"
                               value={addon.price}
@@ -2537,7 +2578,7 @@ export default function TrekForm() {
                               "addons",
                             )
                           }
-                          className="w-full bg-gray-50 border border-gray-100 rounded-xl text-sm px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500/20 min-h-[90px]"
+                          className="w-full bg-gray-50 border border-gray-100 rounded-xl text-sm px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500/20 min-h-[90px]"
                           placeholder="Short description of this service..."
                         />
                       </div>

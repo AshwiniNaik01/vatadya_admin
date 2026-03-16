@@ -1072,7 +1072,7 @@ export default function TrekBookingForm() {
             Book Your Trek Adventure
           </h1>
           <p className="text-gray-500 mt-2">
-            Fill in your details to confirm your TrekVede booking
+            Fill in your details to confirm your Vatadya booking
           </p>
         </div>
 

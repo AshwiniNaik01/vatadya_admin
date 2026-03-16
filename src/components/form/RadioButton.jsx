@@ -18,8 +18,8 @@ const RadioButton = ({ label, name, value, checked, onChange, id }) => {
                 />
                 <div className={`w-6 h-6 border-2 rounded-full transition-all duration-200 flex items-center justify-center
           ${checked
-                        ? "border-emerald-500 bg-emerald-500 shadow-lg shadow-emerald-500/20"
-                        : "border-gray-300 bg-white group-hover:border-emerald-400"}`}
+                        ? "border-blue-500 bg-blue-500 shadow-lg shadow-blue-500/20"
+                        : "border-gray-300 bg-white group-hover:border-blue-400"}`}
                 >
                     {checked && (
                         <div className="w-2.5 h-2.5 bg-white rounded-full animate-in zoom-in duration-200" />
@@ -27,7 +27,7 @@ const RadioButton = ({ label, name, value, checked, onChange, id }) => {
                 </div>
             </div>
             {label && (
-                <span className={`text-sm font-bold transition-colors ${checked ? "text-emerald-900" : "text-gray-600"}`}>
+                <span className={`text-sm font-bold transition-colors ${checked ? "text-blue-900" : "text-gray-600"}`}>
                     {label}
                 </span>
             )}

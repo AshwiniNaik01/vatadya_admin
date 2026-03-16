@@ -99,7 +99,7 @@ export default function Gallery() {
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-3">
-            <div className="p-3 bg-emerald-100 text-emerald-600 rounded-2xl">
+            <div className="p-3 bg-blue-100 text-blue-600 rounded-2xl">
               <FaImages />
             </div>
             Media Gallery
@@ -127,7 +127,7 @@ export default function Gallery() {
             <button
               onClick={handleUpload}
               disabled={uploading}
-              className="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-emerald-700 transition shadow-lg shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold flex items-center gap-2 hover:bg-blue-700 transition shadow-lg shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <FaCloudUploadAlt />
               {uploading ? "Uploading..." : `Upload (${selectedFiles.length})`}
@@ -138,19 +138,19 @@ export default function Gallery() {
 
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-emerald-600 border-t-transparent"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"></div>
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {/* Upload Card */}
           <label
             htmlFor="bulk-upload-input"
-            className="aspect-square rounded-3xl border-2 border-dashed border-emerald-100 bg-emerald-50/30 flex flex-col items-center justify-center gap-3 hover:bg-emerald-100 hover:border-emerald-300 transition-all cursor-pointer group"
+            className="aspect-square rounded-3xl border-2 border-dashed border-blue-100 bg-blue-50/30 flex flex-col items-center justify-center gap-3 hover:bg-blue-100 hover:border-blue-300 transition-all cursor-pointer group"
           >
-            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-emerald-600 shadow-sm group-hover:scale-110 transition-transform">
+            <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-blue-600 shadow-sm group-hover:scale-110 transition-transform">
               <FaPlus />
             </div>
-            <span className="text-xs font-black text-emerald-800 uppercase tracking-widest">
+            <span className="text-xs font-black text-blue-800 uppercase tracking-widest">
               Add Media
             </span>
           </label>
