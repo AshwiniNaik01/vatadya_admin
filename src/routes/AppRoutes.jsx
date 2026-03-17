@@ -18,6 +18,7 @@ import RegistrationPage from "../pages/Registration";
 import CreateSlotForm from "../pages/CreateSlotForm";
 import ManageContacts from "../pages/ManageContacts";
 import ManageSlot from "../pages/ManageSlot";
+import BookingTreks from "../pages/BookingTreks";
 
 export default function AppRoutes() {
   return (
@@ -58,6 +59,9 @@ export default function AppRoutes() {
 
           {/* Contacts */}
           <Route path="/contacts" element={<ManageContacts />} />
+
+          {/* Booking treks */}
+          <Route path="/bookingTreks" element={<BookingTreks />} />
         </Route>
       </Route>
     </Routes>
