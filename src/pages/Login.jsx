@@ -1,5 +1,3 @@
-
-
 import { useState } from "react";
 import Cookies from "js-cookie";
 import * as Yup from "yup";
@@ -74,6 +72,7 @@ export default function Login() {
       if (response.success && response.data?.admin) {
         const admin = response.data.admin;
 
+        Cookies.set("adminToken", response?.data?.token);
         Cookies.set("adminId", admin._id, { expires: 7 });
         localStorage.setItem("adminData", JSON.stringify(admin));
       }
@@ -110,7 +109,7 @@ export default function Login() {
   };
 
   return (
-    <div className="max-h-screen relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-slate-950 overflow-y-scroll">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-blue-950 via-blue-900 to-slate-950">
       {/* Animated Background Layers */}
       <div className="absolute inset-0 opacity-20">
         <div
@@ -153,7 +152,7 @@ export default function Login() {
       </div>
 
       {/* Main Container */}
-      <div className="relative z-10 max-h-screen flex items-center justify-center p-4 m-10">
+      <div className="relative z-10 min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-6xl grid md:grid-cols-2 gap-0 bg-white/5 backdrop-blur-2xl rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
           {/* Left Panel - Hero Image */}
           <div className="relative hidden md:block overflow-hidden">
@@ -203,7 +202,6 @@ export default function Login() {
                 </p>
 
                 <div className="flex items-center gap-6 text-sm">
-
                   <div className="flex items-center gap-2">
                     <div
                       className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"
@@ -305,10 +303,11 @@ export default function Login() {
                       onChange={handleChange}
                       placeholder="you@example.com"
                       disabled={loading}
-                      className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-gray-900 placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.email
-                        ? "border-red-500 focus:border-red-500"
-                        : "border-gray-200 focus:border-blue-500"
-                        }`}
+                      className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-gray-900 placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed ${
+                        validationErrors.email
+                          ? "border-red-500 focus:border-red-500"
+                          : "border-gray-200 focus:border-blue-500"
+                      }`}
                     />
                   </div>
                   {validationErrors.email && (
@@ -346,10 +345,11 @@ export default function Login() {
                       onChange={handleChange}
                       placeholder="••••••••"
                       disabled={loading}
-                      className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-gray-900 placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed ${validationErrors.password
-                        ? "border-red-500 focus:border-red-500"
-                        : "border-gray-200 focus:border-blue-500"
-                        }`}
+                      className={`w-full pl-12 pr-4 py-4 bg-white border-2 rounded-2xl focus:ring-4 focus:ring-blue-500/10 outline-none transition-all text-gray-900 placeholder:text-gray-400 disabled:opacity-50 disabled:cursor-not-allowed ${
+                        validationErrors.password
+                          ? "border-red-500 focus:border-red-500"
+                          : "border-gray-200 focus:border-blue-500"
+                      }`}
                     />
                   </div>
                   {validationErrors.password && (
