@@ -62,6 +62,7 @@ const menuItems = [
     ],
   },
   { name: "Contacts", path: "/contacts", icon: <FaUsers /> },
+  { name: "Booking Treks", path: "/bookingTreks", icon: <FaMountain /> },
 ];
 
 export default function Sidebar() {
@@ -114,16 +115,18 @@ export default function Sidebar() {
                   setOpenSubmenu(openSubmenu === item.name ? "" : item.name)
                 }
                 className={`flex items-center justify-between w-full px-5 py-3.5 rounded-2xl transition-all duration-300 group
-                ${openSubmenu === item.name
+                ${
+                  openSubmenu === item.name
                     ? "bg-blue-600/20 text-blue-100 shadow-inner"
                     : "text-blue-300/80 hover:bg-white/5 hover:text-white"
-                  }
+                }
                 ${collapsed ? "justify-center px-0" : ""}`}
               >
                 <div className="flex items-center gap-4">
                   <span
-                    className={`text-xl transition-transform duration-300 group-hover:scale-110 ${openSubmenu === item.name ? "text-blue-400" : ""
-                      }`}
+                    className={`text-xl transition-transform duration-300 group-hover:scale-110 ${
+                      openSubmenu === item.name ? "text-blue-400" : ""
+                    }`}
                   >
                     {item.icon}
                   </span>
@@ -135,8 +138,11 @@ export default function Sidebar() {
                 </div>
                 {!collapsed && (
                   <FaChevronDown
-                    className={`text-xs transition-transform duration-500 ${openSubmenu === item.name ? "rotate-180 text-blue-400" : "opacity-40"
-                      }`}
+                    className={`text-xs transition-transform duration-500 ${
+                      openSubmenu === item.name
+                        ? "rotate-180 text-blue-400"
+                        : "opacity-40"
+                    }`}
                   />
                 )}
               </button>
@@ -151,9 +157,10 @@ export default function Sidebar() {
                       end
                       className={({ isActive }) =>
                         `px-4 py-2.5 rounded-xl text-sm transition-all duration-200
-                        ${isActive
-                          ? "bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/40"
-                          : "text-blue-300/60 hover:text-white hover:bg-white/5"
+                        ${
+                          isActive
+                            ? "bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/40"
+                            : "text-blue-300/60 hover:text-white hover:bg-white/5"
                         }`
                       }
                     >
@@ -170,16 +177,18 @@ export default function Sidebar() {
               end
               className={({ isActive }) =>
                 `flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all duration-300 group
-                ${isActive
-                  ? "bg-blue-600 text-white shadow-xl shadow-blue-950/50 font-bold"
-                  : "text-blue-300/80 hover:bg-white/5 hover:text-white"
+                ${
+                  isActive
+                    ? "bg-blue-600 text-white shadow-xl shadow-blue-950/50 font-bold"
+                    : "text-blue-300/80 hover:bg-white/5 hover:text-white"
                 }
                 ${collapsed ? "justify-center px-0" : ""}`
               }
             >
               <span
-                className={`text-xl transition-transform duration-300 group-hover:scale-110 ${collapsed ? "" : ""
-                  }`}
+                className={`text-xl transition-transform duration-300 group-hover:scale-110 ${
+                  collapsed ? "" : ""
+                }`}
               >
                 {item.icon}
               </span>
@@ -187,11 +196,9 @@ export default function Sidebar() {
                 <span className="font-semibold tracking-wide">{item.name}</span>
               )}
             </NavLink>
-          )
+          ),
         )}
       </nav>
-
-
     </aside>
   );
 }
