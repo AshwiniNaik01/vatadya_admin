@@ -265,25 +265,21 @@ const categoryValidationSchema = Yup.object().shape({
   //     "Category ID must be lowercase letters, numbers, and hyphens only (no spaces)",
   //   )
   //   .required("Category ID is required"),
-
   // // Title validation - display name for the category
   // title: Yup.string()
   //   .min(3, "Title must be at least 3 characters")
   //   .max(100, "Title must not exceed 100 characters")
   //   .required("Title is required"),
-
   // // Description validation - rich text content
   // description: Yup.string()
   //   .min(10, "Description must be at least 10 characters")
   //   .max(5000, "Description must not exceed 5000 characters")
   //   .required("Description is required"),
-
   // // Tags validation - array of season/characteristic tags
   // tags: Yup.array()
   //   .of(Yup.string())
   //   .min(1, "At least one tag is required")
   //   .max(10, "Maximum 10 tags allowed"),
-
   // // Difficulty validation - must be one of predefined values
   // difficulty: Yup.string()
   //   .oneOf(
@@ -291,10 +287,8 @@ const categoryValidationSchema = Yup.object().shape({
   //     "Invalid difficulty level",
   //   )
   //   .required("Difficulty level is required"),
-
   // // Category image validation - optional but recommended
   // catImage: Yup.string().nullable().notRequired(),
-
   // // Active status validation
   // isActive: Yup.boolean().required("Active status is required"),
 });
@@ -365,7 +359,10 @@ export default function CategoryForm() {
             tags: data.tag ? data.tag.split(",").map((t) => t.trim()) : [],
             difficulty: data.difficulty || "Easy",
             catImage: data.catImage
-              ? (data.catImage.cdnUrl || data.catImage.fullS3URL || data.catImage || null)
+              ? data.catImage.cdnUrl ||
+                data.catImage.fullS3URL ||
+                data.catImage ||
+                null
               : null,
             isActive: data.isActive ?? true,
           });
@@ -397,14 +394,23 @@ export default function CategoryForm() {
     try {
       // Step 1: Validate form data (optional check for schema defined)
       if (categoryValidationSchema.validate) {
-        await categoryValidationSchema.validate(formData, { abortEarly: false });
+        await categoryValidationSchema.validate(formData, {
+          abortEarly: false,
+        });
       }
 
       // Step 2: Prepare FormData for API
       const data = new FormData();
 
       // System fields to EXCLUDE from the payload
-      const exclude = ["_id", "createdAt", "updatedAt", "__v", "trekCount", "id"];
+      const exclude = [
+        "_id",
+        "createdAt",
+        "updatedAt",
+        "__v",
+        "trekCount",
+        "id",
+      ];
 
       Object.keys(formData).forEach((key) => {
         // Skip excluded fields and special ones
@@ -432,9 +438,13 @@ export default function CategoryForm() {
         // New binary file — rename so Multer can identify extension
         const ext = catImageValue.type?.split("/")?.[1] || "jpg";
         const properName = `category_image.${ext === "jpeg" ? "jpg" : ext}`;
-        const properFile = new File([catImageValue], properName, { type: catImageValue.type });
+        const properFile = new File([catImageValue], properName, {
+          type: catImageValue.type,
+        });
         data.append("TrekCategoryImage", properFile);
-        console.log(`  [FILE appended] TrekCategoryImage: ${properName}, ${properFile.size}b`);
+        console.log(
+          `  [FILE appended] TrekCategoryImage: ${properName}, ${properFile.size}b`,
+        );
       } else if (catImageValue && catImageValue.file instanceof File) {
         // Legacy fallback: {file: File, preview: ..., url: ...}
         data.append("TrekCategoryImage", catImageValue.file);
@@ -457,7 +467,9 @@ export default function CategoryForm() {
       for (let [key, value] of data.entries()) {
         sentFields.push(key);
         if (value instanceof File) {
-          console.log(`  [FILE] ${key}: name="${value.name}", size=${value.size}b, type="${value.type}"`);
+          console.log(
+            `  [FILE] ${key}: name="${value.name}", size=${value.size}b, type="${value.type}"`,
+          );
         } else {
           console.log(`  [TEXT] ${key}: "${value}"`);
         }
@@ -490,7 +502,10 @@ export default function CategoryForm() {
         console.error("❌ Submission error:", error);
         console.error("❌ Error response:", error.response);
         console.error("❌ Error response data:", error.response?.data);
-        const apiMsg = error.message || error.response?.data?.message || "Failed to save category.";
+        const apiMsg =
+          error.message ||
+          error.response?.data?.message ||
+          "Failed to save category.";
         setErrorMessage(apiMsg);
         alert(`Error: ${apiMsg}`);
       }

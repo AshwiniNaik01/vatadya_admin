@@ -63,6 +63,7 @@ const menuItems = [
   },
   { name: "Contacts", path: "/contacts", icon: <FaUsers /> },
   { name: "Booking Treks", path: "/bookingTreks", icon: <FaMountain /> },
+  { name: "User Insights", path: "/userInsights", icon: <FaMountain /> },
 ];
 
 export default function Sidebar() {

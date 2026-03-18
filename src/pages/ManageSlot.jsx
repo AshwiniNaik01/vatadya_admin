@@ -602,10 +602,11 @@ const ManageSlot = () => {
                   name="displayRange"
                   value={editFormData.displayRange}
                   onChange={handleEditFormChange}
-                  className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.displayRange
-                    ? "border-red-300 bg-red-50"
-                    : "border-gray-200"
-                    }`}
+                  className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${
+                    formErrors.displayRange
+                      ? "border-red-300 bg-red-50"
+                      : "border-gray-200"
+                  }`}
                   placeholder="e.g., 2nd Feb - 19th Feb"
                 />
                 {formErrors.displayRange && (
@@ -627,10 +628,11 @@ const ManageSlot = () => {
                     name="startDate"
                     value={editFormData.startDate}
                     onChange={handleEditFormChange}
-                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.startDate
-                      ? "border-red-300 bg-red-50"
-                      : "border-gray-200"
-                      }`}
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${
+                      formErrors.startDate
+                        ? "border-red-300 bg-red-50"
+                        : "border-gray-200"
+                    }`}
                   />
                   {formErrors.startDate && (
                     <p className="text-red-600 text-sm mt-1 flex items-center gap-1">
@@ -649,10 +651,11 @@ const ManageSlot = () => {
                     name="endDate"
                     value={editFormData.endDate}
                     onChange={handleEditFormChange}
-                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.endDate
-                      ? "border-red-300 bg-red-50"
-                      : "border-gray-200"
-                      }`}
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${
+                      formErrors.endDate
+                        ? "border-red-300 bg-red-50"
+                        : "border-gray-200"
+                    }`}
                   />
                   {formErrors.endDate && (
                     <p className="text-red-600 text-sm mt-1 flex items-center gap-1">
@@ -675,10 +678,11 @@ const ManageSlot = () => {
                     value={editFormData.totalSeats}
                     onChange={handleEditFormChange}
                     min="1"
-                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.totalSeats
-                      ? "border-red-300 bg-red-50"
-                      : "border-gray-200"
-                      }`}
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${
+                      formErrors.totalSeats
+                        ? "border-red-300 bg-red-50"
+                        : "border-gray-200"
+                    }`}
                   />
                   {formErrors.totalSeats && (
                     <p className="text-red-600 text-sm mt-1 flex items-center gap-1">
@@ -698,10 +702,11 @@ const ManageSlot = () => {
                     value={editFormData.bookedSeats}
                     onChange={handleEditFormChange}
                     min="0"
-                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${formErrors.bookedSeats
-                      ? "border-red-300 bg-red-50"
-                      : "border-gray-200"
-                      }`}
+                    className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all ${
+                      formErrors.bookedSeats
+                        ? "border-red-300 bg-red-50"
+                        : "border-gray-200"
+                    }`}
                   />
                   {formErrors.bookedSeats && (
                     <p className="text-red-600 text-sm mt-1 flex items-center gap-1">
