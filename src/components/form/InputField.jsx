@@ -6,7 +6,7 @@ const InputField = ({ label, icon: Icon, type = "text", value, onChange, placeho
             {label && <label className="block text-sm font-bold text-gray-700 ml-1">{label}</label>}
             <div className="relative group">
                 {Icon && (
-                    <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-emerald-500 transition-colors">
+                    <div className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors">
                         <Icon size={18} />
                     </div>
                 )}
@@ -17,7 +17,7 @@ const InputField = ({ label, icon: Icon, type = "text", value, onChange, placeho
                     onFocus={(e) => e.target.select()}
                     placeholder={placeholder}
                     className={`w-full ${Icon ? "pl-11" : "px-4"} py-3 bg-white border ${error ? "border-red-400 bg-red-50" : "border-gray-200 group-hover:border-gray-300"
-                        } rounded-xl outline-none focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 transition-all text-gray-700 placeholder:text-gray-400 font-medium`}
+                        } rounded-xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all text-gray-700 placeholder:text-gray-400 font-medium`}
                     {...props}
                 />
             </div>

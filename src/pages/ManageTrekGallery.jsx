@@ -127,7 +127,7 @@ export default function ManageTrekGallery() {
       <div className="flex flex-col md:flex-row justify-between items-center mb-8">
         <div>
           <h1 className="text-3xl md:text-4xl font-black text-gray-900 flex items-center gap-3">
-            <FiImage className="text-emerald-500 bg-emerald-100 p-2 rounded-2xl" />
+            <FiImage className="text-blue-500 bg-blue-100 p-2 rounded-2xl" />
             Trek Gallery
           </h1>
           <p className="text-gray-500 mt-1">
@@ -136,7 +136,7 @@ export default function ManageTrekGallery() {
         </div>
         <button
           onClick={() => navigate("/gallery/create")}
-          className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow-md flex items-center gap-2 mt-4 md:mt-0"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-md flex items-center gap-2 mt-4 md:mt-0"
         >
           <FiUpload /> Add New Photo
         </button>
@@ -145,7 +145,7 @@ export default function ManageTrekGallery() {
       {/* Loading State */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-4 border-emerald-600 border-t-transparent"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent"></div>
         </div>
       ) : data.length === 0 ? (
         /* Empty State */
@@ -159,7 +159,7 @@ export default function ManageTrekGallery() {
           </p>
           <button
             onClick={() => navigate("/gallery/create")}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3 rounded-xl shadow-md inline-flex items-center gap-2"
           >
             <FiUpload /> Add New Photo
           </button>
@@ -210,7 +210,7 @@ export default function ManageTrekGallery() {
                 <div className="flex justify-end gap-2 mt-2">
                   <button
                     onClick={() => handleEdit(item)}
-                    className="px-3 py-2 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 transition text-sm flex items-center gap-1"
+                    className="px-3 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition text-sm flex items-center gap-1"
                   >
                     <FiEdit /> Edit
                   </button>

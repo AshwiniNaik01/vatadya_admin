@@ -106,7 +106,7 @@
 
 //     const SectionTitle = ({ icon: Icon, title }) => (
 //         <div className="flex items-center gap-2 mb-6 border-b pb-2">
-//             <Icon className="text-emerald-600 text-xl" />
+//             <Icon className="text-blue-600 text-xl" />
 //             <h2 className="text-xl font-bold text-gray-800 tracking-tight">{title}</h2>
 //         </div>
 //     );
@@ -117,7 +117,7 @@
 //                 <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
 //                     <div>
 //                         <h1 className="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-3">
-//                             <div className="p-3 bg-emerald-100 text-emerald-600 rounded-2xl">
+//                             <div className="p-3 bg-blue-100 text-blue-600 rounded-2xl">
 //                                 <FaLayerGroup />
 //                             </div>
 //                             {isEditMode ? "Update Category" : "Create Category"}
@@ -129,7 +129,7 @@
 //                 </header>
 
 //                 <form onSubmit={handleSubmit} className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-//                     <div className="bg-white rounded-3xl shadow-xl shadow-emerald-900/5 border border-emerald-50/50 p-8 md:p-10 space-y-10">
+//                     <div className="bg-white rounded-3xl shadow-xl shadow-blue-900/5 border border-blue-50/50 p-8 md:p-10 space-y-10">
 
 //                         {/* Section: Basic Metadata */}
 //                         <div>
@@ -176,7 +176,7 @@
 //                                             onChange={(val) => setFormData({ ...formData, difficulty: val.value })}
 //                                         />
 //                                     </div>
-//                                     <div className="pt-4 p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50">
+//                                     <div className="pt-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-100/50">
 //                                         <Checkbox
 //                                             id="cat-active"
 //                                             label="Publicly Active Category"
@@ -208,7 +208,7 @@
 //                             <button
 //                                 type="submit"
 //                                 disabled={loading}
-//                                 className={`flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20 active:scale-95 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+//                                 className={`flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 active:scale-95 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
 //                             >
 //                                 {loading ? "Proccessing..." : isEditMode ? "Update Category" : "Save Category"}
 //                                 <FaChevronRight size={12} />
@@ -265,25 +265,21 @@ const categoryValidationSchema = Yup.object().shape({
   //     "Category ID must be lowercase letters, numbers, and hyphens only (no spaces)",
   //   )
   //   .required("Category ID is required"),
-
   // // Title validation - display name for the category
   // title: Yup.string()
   //   .min(3, "Title must be at least 3 characters")
   //   .max(100, "Title must not exceed 100 characters")
   //   .required("Title is required"),
-
   // // Description validation - rich text content
   // description: Yup.string()
   //   .min(10, "Description must be at least 10 characters")
   //   .max(5000, "Description must not exceed 5000 characters")
   //   .required("Description is required"),
-
   // // Tags validation - array of season/characteristic tags
   // tags: Yup.array()
   //   .of(Yup.string())
   //   .min(1, "At least one tag is required")
   //   .max(10, "Maximum 10 tags allowed"),
-
   // // Difficulty validation - must be one of predefined values
   // difficulty: Yup.string()
   //   .oneOf(
@@ -291,10 +287,8 @@ const categoryValidationSchema = Yup.object().shape({
   //     "Invalid difficulty level",
   //   )
   //   .required("Difficulty level is required"),
-
   // // Category image validation - optional but recommended
   // catImage: Yup.string().nullable().notRequired(),
-
   // // Active status validation
   // isActive: Yup.boolean().required("Active status is required"),
 });
@@ -365,7 +359,10 @@ export default function CategoryForm() {
             tags: data.tag ? data.tag.split(",").map((t) => t.trim()) : [],
             difficulty: data.difficulty || "Easy",
             catImage: data.catImage
-              ? (data.catImage.cdnUrl || data.catImage.fullS3URL || data.catImage || null)
+              ? data.catImage.cdnUrl ||
+                data.catImage.fullS3URL ||
+                data.catImage ||
+                null
               : null,
             isActive: data.isActive ?? true,
           });
@@ -397,14 +394,23 @@ export default function CategoryForm() {
     try {
       // Step 1: Validate form data (optional check for schema defined)
       if (categoryValidationSchema.validate) {
-        await categoryValidationSchema.validate(formData, { abortEarly: false });
+        await categoryValidationSchema.validate(formData, {
+          abortEarly: false,
+        });
       }
 
       // Step 2: Prepare FormData for API
       const data = new FormData();
 
       // System fields to EXCLUDE from the payload
-      const exclude = ["_id", "createdAt", "updatedAt", "__v", "trekCount", "id"];
+      const exclude = [
+        "_id",
+        "createdAt",
+        "updatedAt",
+        "__v",
+        "trekCount",
+        "id",
+      ];
 
       Object.keys(formData).forEach((key) => {
         // Skip excluded fields and special ones
@@ -432,9 +438,13 @@ export default function CategoryForm() {
         // New binary file — rename so Multer can identify extension
         const ext = catImageValue.type?.split("/")?.[1] || "jpg";
         const properName = `category_image.${ext === "jpeg" ? "jpg" : ext}`;
-        const properFile = new File([catImageValue], properName, { type: catImageValue.type });
+        const properFile = new File([catImageValue], properName, {
+          type: catImageValue.type,
+        });
         data.append("TrekCategoryImage", properFile);
-        console.log(`  [FILE appended] TrekCategoryImage: ${properName}, ${properFile.size}b`);
+        console.log(
+          `  [FILE appended] TrekCategoryImage: ${properName}, ${properFile.size}b`,
+        );
       } else if (catImageValue && catImageValue.file instanceof File) {
         // Legacy fallback: {file: File, preview: ..., url: ...}
         data.append("TrekCategoryImage", catImageValue.file);
@@ -457,7 +467,9 @@ export default function CategoryForm() {
       for (let [key, value] of data.entries()) {
         sentFields.push(key);
         if (value instanceof File) {
-          console.log(`  [FILE] ${key}: name="${value.name}", size=${value.size}b, type="${value.type}"`);
+          console.log(
+            `  [FILE] ${key}: name="${value.name}", size=${value.size}b, type="${value.type}"`,
+          );
         } else {
           console.log(`  [TEXT] ${key}: "${value}"`);
         }
@@ -490,7 +502,10 @@ export default function CategoryForm() {
         console.error("❌ Submission error:", error);
         console.error("❌ Error response:", error.response);
         console.error("❌ Error response data:", error.response?.data);
-        const apiMsg = error.message || error.response?.data?.message || "Failed to save category.";
+        const apiMsg =
+          error.message ||
+          error.response?.data?.message ||
+          "Failed to save category.";
         setErrorMessage(apiMsg);
         alert(`Error: ${apiMsg}`);
       }
@@ -521,7 +536,7 @@ export default function CategoryForm() {
    */
   const SectionTitle = ({ icon: Icon, title }) => (
     <div className="flex items-center gap-2 mb-6 border-b pb-2">
-      <Icon className="text-emerald-600 text-xl" />
+      <Icon className="text-blue-600 text-xl" />
       <h2 className="text-xl font-bold text-gray-800 tracking-tight">
         {title}
       </h2>
@@ -549,7 +564,7 @@ export default function CategoryForm() {
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-3">
-              <div className="p-3 bg-emerald-100 text-emerald-600 rounded-2xl">
+              <div className="p-3 bg-blue-100 text-blue-600 rounded-2xl">
                 <FaLayerGroup />
               </div>
               {isEditMode ? "Update Category" : "Create Category"}
@@ -567,7 +582,7 @@ export default function CategoryForm() {
           onSubmit={handleSubmit}
           className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500"
         >
-          <div className="bg-white rounded-3xl shadow-xl shadow-emerald-900/5 border border-emerald-50/50 p-8 md:p-10 space-y-10">
+          <div className="bg-white rounded-3xl shadow-xl shadow-blue-900/5 border border-blue-50/50 p-8 md:p-10 space-y-10">
             {/* Section: Basic Metadata */}
             <div>
               <SectionTitle icon={FaInfoCircle} title="Primary Details" />
@@ -659,7 +674,7 @@ export default function CategoryForm() {
                   </div>
 
                   {/* Active Status Checkbox */}
-                  <div className="pt-4 p-5 bg-emerald-50/50 rounded-2xl border border-emerald-100/50">
+                  <div className="pt-4 p-5 bg-blue-50/50 rounded-2xl border border-blue-100/50">
                     <Checkbox
                       id="cat-active"
                       label="Publicly Active Category"
@@ -698,7 +713,7 @@ export default function CategoryForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`flex items-center gap-2 bg-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-lg shadow-emerald-500/20 active:scale-95 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                className={`flex items-center gap-2 bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-500/20 active:scale-95 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
               >
                 {loading
                   ? "Processing..."

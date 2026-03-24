@@ -146,13 +146,13 @@ export default function ManageReviews() {
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
             <h1 className="text-3xl font-black text-gray-900 tracking-tight flex items-center gap-4">
-              <div className="p-4 bg-emerald-100 text-emerald-600 rounded-[2rem] shadow-sm shadow-emerald-100">
+              <div className="p-4 bg-blue-100 text-blue-600 rounded-[2rem] shadow-sm shadow-blue-100">
                 <FaStar size={20} />
               </div>
               Reviews
             </h1>
             <p className="text-gray-500 font-bold mt-2 ml-1 text-sm uppercase tracking-widest flex items-center gap-2">
-              <span className="w-8 h-[2px] bg-emerald-500 rounded-full"></span>
+              <span className="w-8 h-[2px] bg-blue-500 rounded-full"></span>
               Manage Customer Feedback
             </p>
           </div>
@@ -204,7 +204,7 @@ export default function ManageReviews() {
             ))
           ) : (
             <div className="bg-white rounded-[2.5rem] p-20 text-center border border-gray-100">
-              <div className="bg-emerald-50 text-emerald-500 w-20 h-20 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
+              <div className="bg-blue-50 text-blue-500 w-20 h-20 rounded-[2rem] flex items-center justify-center mx-auto mb-6">
                 <FaCommentDots size={32} />
               </div>
               <h3 className="text-xl font-black text-gray-900 mb-2">

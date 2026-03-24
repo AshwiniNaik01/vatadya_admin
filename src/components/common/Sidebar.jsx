@@ -6,12 +6,9 @@ import {
   FaClipboardList,
   FaUsers,
   FaImages,
-  FaVideo,
-  FaCog,
   FaBars,
   FaChevronDown,
   FaStar,
-  FaWallet,
 } from "react-icons/fa";
 
 const menuItems = [
@@ -37,7 +34,6 @@ const menuItems = [
     path: "/bookings",
     icon: <FaClipboardList />,
     submenu: [
-      // { name: "Create Bookings", path: "/bookings/create" },
       { name: "Manage Bookings", path: "/bookings/manage" },
     ],
   },
@@ -51,17 +47,30 @@ const menuItems = [
     ],
   },
   { name: "Reviews", path: "/reviews/manage", icon: <FaStar /> },
-  // { name: "Payments", path: "/payments/manage", icon: <FaWallet /> },
+  // {
+  //   name: "Slots",
+  //   path: "/slots",
+  //   icon: <FaImages />,
+  //   submenu: [
+  //     { name: "Create Slot", path: "/slots/create" },
+  //     { name: "Manage Slots", path: "/slots/manage" },
+  //   ],
+  // },
+  { name: "Contacts", path: "/contacts", icon: <FaUsers /> },
+  { name: "Booking Treks", path: "/bookingTreks", icon: <FaMountain /> },
   {
-    name: "Slots",
-    path: "/slots",
-    icon: <FaImages />,
+    name: "User Insights",
+    icon: <FaMountain />,
     submenu: [
-      { name: "Create Slot", path: "/slots/create" },
-      { name: "Manage Slots", path: "/slots/manage" },
+      { name: "Hero", path: "/userInsights/hero" },
+      { name: "Mission and Vision", path: "/userInsights/missionVision" },
+      { name: "How it Works", path: "/userInsights/howItWorks" },
+      { name: "Why Choose Us", path: "/userInsights/whyChooseUs" },
+      { name: "Safety Standards", path: "/userInsights/safetyStandards" },
+      { name: "FAQs", path: "/userInsights/faq" },
+      { name: "Features", path: "/userInsights/features" },
     ],
   },
-  { name: "Contacts", path: "/contacts", icon: <FaUsers /> },
 ];
 
 export default function Sidebar() {
@@ -70,56 +79,74 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`min-h-screen bg-linear-to-b from-emerald-900 to-emerald-800 text-white shadow-xl transition-all duration-300
-        ${collapsed ? "w-20" : "w-64"}`}
+      className={`h-screen flex flex-col bg-linear-to-b from-blue-950 to-blue-900 text-white shadow-2xl transition-all duration-300 border-r border-blue-800/50
+    ${collapsed ? "w-22" : "w-72"}`}
     >
       {/* HEADER / LOGO + HAMBURGER */}
-      <div className="flex items-center justify-between p-4 border-b border-emerald-700">
+      <div className="flex items-center justify-between p-6 border-b border-blue-800/50">
         {!collapsed && (
-          <div>
-           <h1 className="text-xl font-black flex items-center gap-2">
-  <img 
-    src="/vatadya_logo.jpeg" 
-    alt="Vatadya Logo" 
-    className="h-8 w-8 object-contain"
-  />
-  Admin Panel
-</h1>
-            <p className="text-[10px] text-emerald-300 uppercase tracking-widest">
-              Management Panel
+          <div className="flex flex-col">
+            <h1 className="text-xl font-black flex items-center gap-3">
+              <div className="p-1.5 bg-white rounded-lg shadow-inner">
+                <img
+                  src="/vatadya_logo.png"
+                  alt="Vatadya Logo"
+                  className="h-7 w-7 object-contain"
+                />
+              </div>
+              <span className="tracking-tight">
+                Admin <span className="text-blue-400">Panel</span>
+              </span>
+            </h1>
+            <p className="text-[10px] text-blue-300/60 uppercase tracking-[0.3em] mt-2 font-bold">
+              Management Suite
             </p>
           </div>
         )}
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="p-2 rounded-lg hover:bg-white/10 transition"
+          className="p-2.5 rounded-xl hover:bg-white/10 transition-all active:scale-95 text-blue-200 hover:text-white"
         >
-          <FaBars />
+          <FaBars size={18} />
         </button>
       </div>
 
       {/* NAV */}
-      <nav className="p-3 space-y-1">
+      <nav className="flex-1 overflow-y-auto p-4 space-y-2 no-scrollbar">
         {menuItems.map((item) =>
           item.submenu ? (
-            <div key={item.name}>
+            <div key={item.name} className="space-y-1">
               {/* Parent Button */}
               <button
                 onClick={() =>
                   setOpenSubmenu(openSubmenu === item.name ? "" : item.name)
                 }
-                className={`flex items-center justify-between w-full px-4 py-3 rounded-xl transition-all duration-200
-                ${openSubmenu === item.name ? "bg-emerald-600 font-semibold" : "text-emerald-200 hover:bg-white/10 hover:text-white"}
-                ${collapsed ? "justify-center" : ""}`}
+                className={`flex items-center justify-between w-full px-5 py-3.5 rounded-2xl transition-all duration-300 group
+                ${openSubmenu === item.name
+                    ? "bg-blue-600/20 text-blue-100 shadow-inner"
+                    : "text-blue-300/80 hover:bg-white/5 hover:text-white"
+                  }
+                ${collapsed ? "justify-center px-0" : ""}`}
               >
-                <div className="flex items-center gap-3">
-                  <span className="text-lg">{item.icon}</span>
-                  {!collapsed && <span>{item.name}</span>}
+                <div className="flex items-center gap-4">
+                  <span
+                    className={`text-xl transition-transform duration-300 group-hover:scale-110 ${openSubmenu === item.name ? "text-blue-400" : ""
+                      }`}
+                  >
+                    {item.icon}
+                  </span>
+                  {!collapsed && (
+                    <span className="font-semibold tracking-wide">
+                      {item.name}
+                    </span>
+                  )}
                 </div>
                 {!collapsed && (
                   <FaChevronDown
-                    className={`transition-transform duration-300 ${openSubmenu === item.name ? "rotate-180" : ""
+                    className={`text-xs transition-transform duration-500 ${openSubmenu === item.name
+                      ? "rotate-180 text-blue-400"
+                      : "opacity-40"
                       }`}
                   />
                 )}
@@ -127,17 +154,16 @@ export default function Sidebar() {
 
               {/* Submenu */}
               {!collapsed && openSubmenu === item.name && (
-                <div className="ml-8 mt-1 flex flex-col space-y-1">
+                <div className="ml-9 mt-1 flex flex-col space-y-1 border-l border-blue-800/50 pl-4 py-1">
                   {item.submenu.map((sub) => (
                     <NavLink
-                      key={sub.path}
+                      key={sub.name}
                       to={sub.path}
-                      end
                       className={({ isActive }) =>
-                        `px-4 py-2 rounded-lg transition-all duration-200
+                        `px-4 py-2.5 rounded-xl text-sm transition-all duration-200
                         ${isActive
-                          ? "bg-emerald-500 text-white font-semibold"
-                          : "text-emerald-200 hover:bg-white/10 hover:text-white"
+                          ? "bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/40"
+                          : "text-blue-300/60 hover:text-white hover:bg-white/5"
                         }`
                       }
                     >
@@ -149,20 +175,26 @@ export default function Sidebar() {
             </div>
           ) : (
             <NavLink
-              key={item.path}
+              key={item.name}
               to={item.path}
               end
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200
+                `flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all duration-300 group
                 ${isActive
-                  ? "bg-emerald-600 text-white shadow-lg shadow-emerald-900/40 font-semibold"
-                  : "text-emerald-200 hover:bg-white/10 hover:text-white"
+                  ? "bg-blue-600 text-white shadow-xl shadow-blue-950/50 font-bold"
+                  : "text-blue-300/80 hover:bg-white/5 hover:text-white"
                 }
-                ${collapsed ? "justify-center" : ""}`
+                ${collapsed ? "justify-center px-0" : ""}`
               }
             >
-              <span className="text-lg">{item.icon}</span>
-              {!collapsed && <span>{item.name}</span>}
+              <span
+                className={`text-xl transition-transform duration-300 group-hover:scale-110`}
+              >
+                {item.icon}
+              </span>
+              {!collapsed && (
+                <span className="font-semibold tracking-wide">{item.name}</span>
+              )}
             </NavLink>
           ),
         )}

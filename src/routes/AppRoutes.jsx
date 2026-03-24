@@ -18,6 +18,8 @@ import RegistrationPage from "../pages/Registration";
 import CreateSlotForm from "../pages/CreateSlotForm";
 import ManageContacts from "../pages/ManageContacts";
 import ManageSlot from "../pages/ManageSlot";
+import BookingTreks from "../pages/BookingTreks";
+import UserInsights from "../pages/UserInsights";
 
 export default function AppRoutes() {
   return (
@@ -58,6 +60,13 @@ export default function AppRoutes() {
 
           {/* Contacts */}
           <Route path="/contacts" element={<ManageContacts />} />
+
+          {/* Booking treks */}
+          <Route path="/bookingTreks" element={<BookingTreks />} />
+
+          {/* User Insights*/}
+          <Route path="/userInsights" element={<UserInsights />} />
+          <Route path="/userInsights/:tab" element={<UserInsights />} />
         </Route>
       </Route>
     </Routes>

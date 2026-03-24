@@ -21,7 +21,7 @@ export default function ReviewStats({ stats }) {
                 <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Total Reviews</p>
                 <div className="flex items-end gap-3">
                     <h2 className="text-5xl font-black text-gray-900 leading-none">{totalReviews}</h2>
-                    <div className="bg-emerald-50 text-emerald-600 px-2 py-1 rounded-lg text-xs font-black flex items-center gap-1 mb-1">
+                    <div className="bg-blue-50 text-blue-600 px-2 py-1 rounded-lg text-xs font-black flex items-center gap-1 mb-1">
                         <FaArrowUp size={10} /> {growth}
                     </div>
                 </div>
@@ -52,7 +52,7 @@ export default function ReviewStats({ stats }) {
                         </div>
                         <div className="flex-1 h-2 bg-gray-50 rounded-full overflow-hidden">
                             <div
-                                className="h-full bg-emerald-500 rounded-full transition-all duration-1000"
+                                className="h-full bg-blue-500 rounded-full transition-all duration-1000"
                                 style={{ width: `${item.percentage}%` }}
                             ></div>
                         </div>

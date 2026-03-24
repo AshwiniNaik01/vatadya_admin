@@ -38,7 +38,7 @@ const CustomSelect = ({ options, isMulti, value, onChange, placeholder = "Select
   return (
     <div className="relative w-full" ref={containerRef}>
       <div
-        className="min-h-[42px] w-full px-3 py-1.5 border border-gray-300 rounded-lg bg-white flex flex-wrap gap-2 items-center cursor-pointer focus-within:ring-2 focus-within:ring-emerald-500 focus-within:border-emerald-500 transition-all shadow-sm"
+        className="min-h-[42px] w-full px-3 py-1.5 border border-gray-300 rounded-lg bg-white flex flex-wrap gap-2 items-center cursor-pointer focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all shadow-sm"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isMulti ? (
@@ -47,11 +47,11 @@ const CustomSelect = ({ options, isMulti, value, onChange, placeholder = "Select
               value.map((v) => (
                 <span
                   key={v.value}
-                  className="bg-emerald-100 text-emerald-800 text-sm px-2 py-0.5 rounded-md flex items-center gap-1 group"
+                  className="bg-blue-100 text-blue-800 text-sm px-2 py-0.5 rounded-md flex items-center gap-1 group"
                 >
                   {v.label}
                   <HiX
-                    className="cursor-pointer hover:text-emerald-900"
+                    className="cursor-pointer hover:text-blue-900"
                     onClick={(e) => removeOption(e, v)}
                   />
                 </span>
@@ -73,9 +73,9 @@ const CustomSelect = ({ options, isMulti, value, onChange, placeholder = "Select
           {options.map((option) => (
             <div
               key={option.value}
-              className={`px-4 py-2.5 cursor-pointer transition-colors hover:bg-emerald-50 ${
+              className={`px-4 py-2.5 cursor-pointer transition-colors hover:bg-blue-50 ${
                 (isMulti ? value?.some((v) => v.value === option.value) : value?.value === option.value)
-                  ? "bg-emerald-50 text-emerald-700 font-medium"
+                  ? "bg-blue-50 text-blue-700 font-medium"
                   : "text-gray-700"
               }`}
               onClick={() => handleSelect(option)}

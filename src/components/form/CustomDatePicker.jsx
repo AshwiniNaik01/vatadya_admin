@@ -29,9 +29,9 @@ const CustomDatePicker = ({ startDate, endDate, onChange, placeholder = "Select 
     };
 
     return (
-        <div className="flex flex-col sm:flex-row items-center gap-4 bg-white p-3 border border-gray-200 rounded-xl shadow-sm focus-within:ring-2 focus-within:ring-emerald-500 transition-all">
+        <div className="flex flex-col sm:flex-row items-center gap-4 bg-white p-3 border border-gray-200 rounded-xl shadow-sm focus-within:ring-2 focus-within:ring-blue-500 transition-all">
             <div className="flex items-center gap-3 flex-1 w-full">
-                <HiCalendar className="text-emerald-600 text-xl" />
+                <HiCalendar className="text-blue-600 text-xl" />
                 <div className="flex flex-col flex-1">
                     <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Start Date</span>
                     <input
@@ -46,7 +46,7 @@ const CustomDatePicker = ({ startDate, endDate, onChange, placeholder = "Select 
             <div className="hidden sm:block h-8 w-[1px] bg-gray-200 mx-2" />
 
             <div className="flex items-center gap-3 flex-1 w-full">
-                <HiCalendar className="text-emerald-400 text-xl" />
+                <HiCalendar className="text-blue-400 text-xl" />
                 <div className="flex flex-col flex-1">
                     <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">End Date</span>
                     <input

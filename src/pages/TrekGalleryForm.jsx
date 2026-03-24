@@ -810,7 +810,7 @@ export default function TrekGalleryForm({
       <div className="bg-white rounded-3xl border border-[#E4EFEA] shadow-sm p-10 space-y-10">
         {/* HEADER */}
         <div>
-          <h2 className="text-3xl md:text-4xl font-bold text-green-700 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold text-blue-700 tracking-tight">
             {isEditMode ? "Edit Trek Gallery Item" : "Add Trek Gallery Item"}
           </h2>
           <p className="text-base text-[#6B8B82] mt-2">

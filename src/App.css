@@ -1,3 +1,52 @@
 @import "tailwindcss";
 
-/* Custom styles for the app can go here */
+@theme {
+  --color-brand-primary: var(--color-blue-600);
+  --color-brand-secondary: var(--color-blue-900);
+  --color-brand-light: var(--color-blue-50);
+}
+
+/* Global transitions and scrollbar */
+:root {
+  --blue-primary: #2563eb;
+  --blue-dark: #1e3a8a;
+  --blue-light: #eff6ff;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Hide scrollbar but keep scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE & Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+button {
+  cursor: pointer;
+}

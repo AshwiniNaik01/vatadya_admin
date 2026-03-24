@@ -15,11 +15,11 @@ export default function FilterControls({
             <div className="flex flex-wrap gap-4 items-center w-full md:w-auto">
                 {/* Reusable Dropdown Filter */}
                 <div className="relative group min-w-[200px]">
-                    <FaFilter className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-emerald-500 transition-colors" size={12} />
+                    <FaFilter className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={12} />
                     <select
                         value={filterValue}
                         onChange={(e) => setFilterValue(e.target.value)}
-                        className="w-full pl-10 pr-10 py-3 bg-gray-50 border-none rounded-2xl text-xs font-black text-gray-700 focus:ring-4 focus:ring-emerald-500/10 appearance-none transition-all cursor-pointer"
+                        className="w-full pl-10 pr-10 py-3 bg-gray-50 border-none rounded-2xl text-xs font-black text-gray-700 focus:ring-4 focus:ring-blue-500/10 appearance-none transition-all cursor-pointer"
                     >
                         <option value="all">{allLabel}</option>
                         {filterOptions.map((option) => (
@@ -35,13 +35,13 @@ export default function FilterControls({
 
                 {/* Reusable Search Input */}
                 <div className="relative group flex-1 md:flex-none">
-                    <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-emerald-500 transition-colors" size={12} />
+                    <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors" size={12} />
                     <input
                         type="text"
                         placeholder={placeholder}
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full md:w-64 pl-10 pr-4 py-3 bg-gray-50 border-none rounded-2xl text-xs font-black text-gray-700 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none"
+                        className="w-full md:w-64 pl-10 pr-4 py-3 bg-gray-50 border-none rounded-2xl text-xs font-black text-gray-700 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
                     />
                 </div>
             </div>

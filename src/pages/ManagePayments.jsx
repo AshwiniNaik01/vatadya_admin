@@ -62,7 +62,7 @@ export default function ManagePayments() {
             label: "Customer / Trek",
             render: (row) => (
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
                         <FaUser size={10} />
                     </div>
                     <div className="min-w-0">
@@ -78,7 +78,7 @@ export default function ManagePayments() {
             label: "Amount",
             render: (row) => (
                 <div className="flex flex-col">
-                    <span className="font-black text-emerald-700 text-sm">
+                    <span className="font-black text-blue-700 text-sm">
                         ₹ {row.totalAmount?.toLocaleString() || row.amount?.toLocaleString() || "0"}
                     </span>
                     <span className="text-[9px] text-gray-400 font-bold uppercase">Via Razorpay</span>
@@ -90,8 +90,8 @@ export default function ManagePayments() {
             render: (row) => {
                 const status = row.paymentDetails?.status || row.status || "Pending";
                 const configs = {
-                    Captured: { color: "bg-emerald-100 text-emerald-700 border-emerald-200", icon: <FaCheckCircle /> },
-                    Success: { color: "bg-emerald-100 text-emerald-700 border-emerald-200", icon: <FaCheckCircle /> },
+                    Captured: { color: "bg-blue-100 text-blue-700 border-blue-200", icon: <FaCheckCircle /> },
+                    Success: { color: "bg-blue-100 text-blue-700 border-blue-200", icon: <FaCheckCircle /> },
                     Pending: { color: "bg-amber-100 text-amber-700 border-amber-200", icon: <FaClock /> },
                     Failed: { color: "bg-rose-100 text-rose-700 border-rose-200", icon: <FaTimesCircle /> },
                     Refunded: { color: "bg-purple-100 text-purple-700 border-purple-200", icon: <FaArrowDown /> },
@@ -140,18 +140,18 @@ export default function ManagePayments() {
                     <div className="bg-white p-3 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
                         <div className="flex flex-col">
                             <span className="text-[9px] text-gray-400 font-black uppercase">Total Revenue</span>
-                            <span className="text-lg font-black text-emerald-600 leading-none">
+                            <span className="text-lg font-black text-blue-600 leading-none">
                                 ₹ {data.reduce((sum, item) => sum + (item.totalAmount || item.amount || 0), 0).toLocaleString()}
                             </span>
                         </div>
                         <div className="w-[1px] h-8 bg-gray-100"></div>
-                        <div className="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                        <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
                             <FaArrowDown className="rotate-180" />
                         </div>
                     </div>
                 </header>
 
-                <div className="bg-white p-2 rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-emerald-900/5 overflow-hidden">
+                <div className="bg-white p-2 rounded-[2.5rem] border border-gray-100 shadow-2xl shadow-blue-900/5 overflow-hidden">
                     <DataTable
                         columns={columns}
                         data={data}
