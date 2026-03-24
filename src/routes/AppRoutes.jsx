@@ -66,6 +66,7 @@ export default function AppRoutes() {
 
           {/* User Insights*/}
           <Route path="/userInsights" element={<UserInsights />} />
+          <Route path="/userInsights/:tab" element={<UserInsights />} />
         </Route>
       </Route>
     </Routes>

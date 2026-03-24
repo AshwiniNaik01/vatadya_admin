@@ -6,12 +6,9 @@ import {
   FaClipboardList,
   FaUsers,
   FaImages,
-  FaVideo,
-  FaCog,
   FaBars,
   FaChevronDown,
   FaStar,
-  FaWallet,
 } from "react-icons/fa";
 
 const menuItems = [
@@ -37,7 +34,6 @@ const menuItems = [
     path: "/bookings",
     icon: <FaClipboardList />,
     submenu: [
-      // { name: "Create Bookings", path: "/bookings/create" },
       { name: "Manage Bookings", path: "/bookings/manage" },
     ],
   },
@@ -51,19 +47,30 @@ const menuItems = [
     ],
   },
   { name: "Reviews", path: "/reviews/manage", icon: <FaStar /> },
-  // { name: "Payments", path: "/payments/manage", icon: <FaWallet /> },
-  {
-    name: "Slots",
-    path: "/slots",
-    icon: <FaImages />,
-    submenu: [
-      { name: "Create Slot", path: "/slots/create" },
-      { name: "Manage Slots", path: "/slots/manage" },
-    ],
-  },
+  // {
+  //   name: "Slots",
+  //   path: "/slots",
+  //   icon: <FaImages />,
+  //   submenu: [
+  //     { name: "Create Slot", path: "/slots/create" },
+  //     { name: "Manage Slots", path: "/slots/manage" },
+  //   ],
+  // },
   { name: "Contacts", path: "/contacts", icon: <FaUsers /> },
   { name: "Booking Treks", path: "/bookingTreks", icon: <FaMountain /> },
-  { name: "User Insights", path: "/userInsights", icon: <FaMountain /> },
+  {
+    name: "User Insights",
+    icon: <FaMountain />,
+    submenu: [
+      { name: "Hero", path: "/userInsights/hero" },
+      { name: "Mission and Vision", path: "/userInsights/missionVision" },
+      { name: "How it Works", path: "/userInsights/howItWorks" },
+      { name: "Why Choose Us", path: "/userInsights/whyChooseUs" },
+      { name: "Safety Standards", path: "/userInsights/safetyStandards" },
+      { name: "FAQs", path: "/userInsights/faq" },
+      { name: "Features", path: "/userInsights/features" },
+    ],
+  },
 ];
 
 export default function Sidebar() {
@@ -72,8 +79,8 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`min-h-screen bg-linear-to-b from-blue-950 to-blue-900 text-white shadow-2xl transition-all duration-300 border-r border-blue-800/50
-        ${collapsed ? "w-22" : "w-72"}`}
+      className={`h-screen flex flex-col bg-linear-to-b from-blue-950 to-blue-900 text-white shadow-2xl transition-all duration-300 border-r border-blue-800/50
+    ${collapsed ? "w-22" : "w-72"}`}
     >
       {/* HEADER / LOGO + HAMBURGER */}
       <div className="flex items-center justify-between p-6 border-b border-blue-800/50">
@@ -82,7 +89,7 @@ export default function Sidebar() {
             <h1 className="text-xl font-black flex items-center gap-3">
               <div className="p-1.5 bg-white rounded-lg shadow-inner">
                 <img
-                  src="/vatadya_logo.jpeg"
+                  src="/vatadya_logo.png"
                   alt="Vatadya Logo"
                   className="h-7 w-7 object-contain"
                 />
@@ -106,7 +113,7 @@ export default function Sidebar() {
       </div>
 
       {/* NAV */}
-      <nav className="p-4 space-y-2">
+      <nav className="flex-1 overflow-y-auto p-4 space-y-2 no-scrollbar">
         {menuItems.map((item) =>
           item.submenu ? (
             <div key={item.name} className="space-y-1">
@@ -116,18 +123,16 @@ export default function Sidebar() {
                   setOpenSubmenu(openSubmenu === item.name ? "" : item.name)
                 }
                 className={`flex items-center justify-between w-full px-5 py-3.5 rounded-2xl transition-all duration-300 group
-                ${
-                  openSubmenu === item.name
+                ${openSubmenu === item.name
                     ? "bg-blue-600/20 text-blue-100 shadow-inner"
                     : "text-blue-300/80 hover:bg-white/5 hover:text-white"
-                }
+                  }
                 ${collapsed ? "justify-center px-0" : ""}`}
               >
                 <div className="flex items-center gap-4">
                   <span
-                    className={`text-xl transition-transform duration-300 group-hover:scale-110 ${
-                      openSubmenu === item.name ? "text-blue-400" : ""
-                    }`}
+                    className={`text-xl transition-transform duration-300 group-hover:scale-110 ${openSubmenu === item.name ? "text-blue-400" : ""
+                      }`}
                   >
                     {item.icon}
                   </span>
@@ -139,11 +144,10 @@ export default function Sidebar() {
                 </div>
                 {!collapsed && (
                   <FaChevronDown
-                    className={`text-xs transition-transform duration-500 ${
-                      openSubmenu === item.name
-                        ? "rotate-180 text-blue-400"
-                        : "opacity-40"
-                    }`}
+                    className={`text-xs transition-transform duration-500 ${openSubmenu === item.name
+                      ? "rotate-180 text-blue-400"
+                      : "opacity-40"
+                      }`}
                   />
                 )}
               </button>
@@ -153,15 +157,13 @@ export default function Sidebar() {
                 <div className="ml-9 mt-1 flex flex-col space-y-1 border-l border-blue-800/50 pl-4 py-1">
                   {item.submenu.map((sub) => (
                     <NavLink
-                      key={sub.path}
+                      key={sub.name}
                       to={sub.path}
-                      end
                       className={({ isActive }) =>
                         `px-4 py-2.5 rounded-xl text-sm transition-all duration-200
-                        ${
-                          isActive
-                            ? "bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/40"
-                            : "text-blue-300/60 hover:text-white hover:bg-white/5"
+                        ${isActive
+                          ? "bg-blue-600 text-white font-bold shadow-lg shadow-blue-900/40"
+                          : "text-blue-300/60 hover:text-white hover:bg-white/5"
                         }`
                       }
                     >
@@ -173,23 +175,20 @@ export default function Sidebar() {
             </div>
           ) : (
             <NavLink
-              key={item.path}
+              key={item.name}
               to={item.path}
               end
               className={({ isActive }) =>
                 `flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all duration-300 group
-                ${
-                  isActive
-                    ? "bg-blue-600 text-white shadow-xl shadow-blue-950/50 font-bold"
-                    : "text-blue-300/80 hover:bg-white/5 hover:text-white"
+                ${isActive
+                  ? "bg-blue-600 text-white shadow-xl shadow-blue-950/50 font-bold"
+                  : "text-blue-300/80 hover:bg-white/5 hover:text-white"
                 }
                 ${collapsed ? "justify-center px-0" : ""}`
               }
             >
               <span
-                className={`text-xl transition-transform duration-300 group-hover:scale-110 ${
-                  collapsed ? "" : ""
-                }`}
+                className={`text-xl transition-transform duration-300 group-hover:scale-110`}
               >
                 {item.icon}
               </span>
