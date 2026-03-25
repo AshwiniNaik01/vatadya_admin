@@ -26,3 +26,18 @@ export const getAboutUs = async () => {
     throw error.response?.data || error;
   }
 };
+
+/**
+ * Edits About Us content.
+ * @param {string} id - The About Us ID.
+ * @param {Object} data - The updated About Us data payload.
+ */
+export const editAboutUs = async (id, data) => {
+  try {
+    const response = await axiosInstance.put(`/about-us/${id}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (editAboutUs):", error);
+    throw error.response?.data || error;
+  }
+};

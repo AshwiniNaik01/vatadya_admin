@@ -18,7 +18,7 @@ import {
   FaSpinner,
   FaCheckCircle,
   FaExclamationCircle,
-  FaTh,
+  FaEdit,
 } from "react-icons/fa";
 import InputField from "../components/form/InputField";
 import RichTextEditor from "../components/form/RichTextEditor";
@@ -26,7 +26,7 @@ import {
   ArrayBlock,
   EmptyState,
 } from "../components/form/SharedFormComponents";
-import { AddAboutUs } from "../api/aboutUsApi";
+import { AddAboutUs, getAboutUs, editAboutUs } from "../api/aboutUsApi";
 
 // ─── Toast Notification ───────────────────────────────────────────────────────
 function Toast({ message, type, onClose }) {
@@ -103,43 +103,86 @@ const validationSchema = Yup.object({
   }),
 });
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
+// ─── Default / empty form values ─────────────────────────────────────────────
+const emptyValues = {
+  aboutSection: { mainTitle: "", subTitle: "", features: [] },
+  missionSection: { title: "", description: "", subDescription: "" },
+  infoBar: { mainTitle: "", stats: [] },
+  operationalPillars: { mainTitle: "", pillars: [] },
+  capabilities: { mainTitle: "", items: [] },
+};
+
+// ─── Map API response → form values ──────────────────────────────────────────
+function mapApiToForm(data) {
+  return {
+    aboutSection: {
+      mainTitle: data?.aboutSection?.mainTitle ?? "",
+      subTitle: data?.aboutSection?.subTitle ?? "",
+      features: Array.isArray(data?.aboutSection?.features)
+        ? data.aboutSection.features
+        : [],
+    },
+    missionSection: {
+      title: data?.missionSection?.title ?? "",
+      description: data?.missionSection?.description ?? "",
+      subDescription: data?.missionSection?.subDescription ?? "",
+    },
+    infoBar: {
+      mainTitle: data?.infoBar?.mainTitle ?? "",
+      stats: Array.isArray(data?.infoBar?.stats) ? data.infoBar.stats : [],
+    },
+    operationalPillars: {
+      mainTitle: data?.operationalPillars?.mainTitle ?? "",
+      pillars: Array.isArray(data?.operationalPillars?.pillars)
+        ? data.operationalPillars.pillars
+        : [],
+    },
+    capabilities: {
+      mainTitle: data?.capabilities?.mainTitle ?? "",
+      items: Array.isArray(data?.capabilities?.items)
+        ? data.capabilities.items
+        : [],
+    },
+  };
+}
+
+// ─── Main ────────────────────────────────────────────────────────────────────
 export default function AboutUsForm({ onChange, disabled }) {
   const [isSaving, setIsSaving] = React.useState(false);
+  const [isFetching, setIsFetching] = React.useState(false);
   const [toast, setToast] = React.useState(null);
 
+  // Holds the _id from GET so Save calls editAboutUs(id, data) instead of AddAboutUs
+  const aboutUsIdRef = React.useRef(null);
+
   const formik = useFormik({
-    initialValues: {
-      aboutSection: {
-        mainTitle: "",
-        subTitle: "",
-        features: [],
-      },
-      missionSection: {
-        title: "",
-        description: "",
-        subDescription: "",
-      },
-      infoBar: {
-        mainTitle: "",
-        stats: [],
-      },
-      operationalPillars: {
-        mainTitle: "",
-        pillars: [],
-      },
-      capabilities: {
-        mainTitle: "",
-        items: [],
-      },
-    },
+    initialValues: emptyValues,
     validationSchema,
     onSubmit: async (values) => {
       try {
         setIsSaving(true);
-        await AddAboutUs(values);
-        setToast({ message: "About Us saved successfully!", type: "success" });
-        onChange?.(values);
+
+        if (aboutUsIdRef.current) {
+          // Edit mode: PUT /about-us/:id
+          await editAboutUs(aboutUsIdRef.current, values);
+          setToast({
+            message: "About Us updated successfully!",
+            type: "success",
+          });
+          // Reset to blank create form after successful update
+          aboutUsIdRef.current = null;
+          formik.resetForm();
+          onChange?.(emptyValues);
+        } else {
+          // Create mode: POST /about-us
+          const created = await AddAboutUs(values);
+          if (created?._id) aboutUsIdRef.current = created._id;
+          setToast({
+            message: "About Us saved successfully!",
+            type: "success",
+          });
+          onChange?.(values);
+        }
       } catch (err) {
         console.error("Failed to save About Us data:", err);
         setToast({
@@ -156,6 +199,29 @@ export default function AboutUsForm({ onChange, disabled }) {
   React.useEffect(() => {
     onChange?.(formik.values);
   }, [formik.values]);
+
+  // ─── Edit: fetch existing record and populate form ────────────────────────
+  const handleEdit = async () => {
+    try {
+      setIsFetching(true);
+      const response = await getAboutUs();
+
+      // API shape: { statusCode, success, data: { _id, aboutSection, ... } }
+      const record = response?.data ?? response;
+      aboutUsIdRef.current = record?._id ?? record?.id ?? null;
+
+      await formik.setValues(mapApiToForm(record), true);
+      setToast({ message: "Data loaded for editing.", type: "success" });
+    } catch (err) {
+      console.error("Failed to fetch About Us data:", err);
+      setToast({
+        message: err?.message || "Failed to load data. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsFetching(false);
+    }
+  };
 
   const fv = formik.values;
   const sfv = formik.setFieldValue;
@@ -194,7 +260,8 @@ export default function AboutUsForm({ onChange, disabled }) {
     return t && e ? e : undefined;
   };
 
-  const isDisabled = disabled || isSaving;
+  const isDisabled = disabled || isSaving || isFetching;
+  const isEditMode = !!aboutUsIdRef.current;
 
   return (
     <>
@@ -208,7 +275,7 @@ export default function AboutUsForm({ onChange, disabled }) {
 
       <div className="p-6 bg-gray-50 min-h-screen">
         <div className="max-w-7xl mx-auto space-y-8">
-          {/* Page Header */}
+          {/* ─── Page Header ────────────────────────────────────────────── */}
           <div className="mb-6 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-blue-600 to-blue-400 flex items-center justify-center shadow-lg shadow-blue-400/30">
@@ -219,14 +286,35 @@ export default function AboutUsForm({ onChange, disabled }) {
                   About Us
                 </h1>
                 <p className="text-slate-400 text-xs font-medium">
-                  Manage your about page content and sections
+                  {isEditMode
+                    ? "Editing existing about page content"
+                    : "Manage your about page content and sections"}
                 </p>
               </div>
             </div>
+
+            {/* ─── Edit Button ─────────────────────────────────────────── */}
+            {!disabled && (
+              <button
+                type="button"
+                onClick={handleEdit}
+                disabled={isFetching || isSaving || isEditMode}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-blue-200 text-blue-600 text-sm font-bold shadow-sm hover:bg-blue-50 hover:border-blue-400 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200"
+              >
+                {isFetching ? (
+                  <>
+                    <FaSpinner className="animate-spin text-xs" /> Loading…
+                  </>
+                ) : (
+                  <>
+                    <FaEdit className="text-xs" /> Edit
+                  </>
+                )}
+              </button>
+            )}
           </div>
 
-          {/* main page */}
-
+          {/* ─── Form Card ──────────────────────────────────────────────── */}
           <div className="space-y-2 animate-in fade-in slide-in-from-bottom-4 duration-500 bg-white p-6 md:p-10 rounded-3xl shadow-xl shadow-gray-200/50">
             {/* ═══ 1. ABOUT SECTION ═══ */}
             <SectionHeader
@@ -544,7 +632,7 @@ export default function AboutUsForm({ onChange, disabled }) {
             </div>
           </div>
 
-          {/* ═══ SAVE BUTTON ═══ */}
+          {/* ═══ SAVE / UPDATE BUTTON ═══ */}
           {!disabled && (
             <div className="flex justify-end pt-4 pb-8">
               <button
@@ -555,13 +643,12 @@ export default function AboutUsForm({ onChange, disabled }) {
               >
                 {isSaving ? (
                   <>
-                    <FaSpinner className="animate-spin text-xs" />
-                    Saving…
+                    <FaSpinner className="animate-spin text-xs" /> Saving…
                   </>
                 ) : (
                   <>
                     <FaSave className="text-xs" />
-                    Save About Us
+                    {isEditMode ? "Update About Us" : "Save About Us"}
                   </>
                 )}
               </button>

@@ -14,6 +14,7 @@ import {
   FaCheckCircle,
   FaExclamationCircle,
   FaMap,
+  FaEdit,
 } from "react-icons/fa";
 import InputField from "../components/form/InputField";
 import ImageUploader from "../components/form/ImageUploader";
@@ -22,7 +23,7 @@ import {
   AddButton,
   EmptyState,
 } from "../components/form/SharedFormComponents";
-import { AddContactUs } from "../api/contactUsApi";
+import { AddContactUs, getContactUs, editContactUs } from "../api/contactUsApi";
 
 // ─── Toast Notification ───────────────────────────────────────────────────────
 function Toast({ message, type, onClose }) {
@@ -104,47 +105,89 @@ const validationSchema = Yup.object({
   }),
 });
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
+// ─── Default / empty form values ─────────────────────────────────────────────
+const emptyValues = {
+  mainTitle: "",
+  contactMainImage: null,
+  contactOtherImages: [], // isMultiple=true expects an array
+  contactInfo: {
+    callUs: { value: "", subValue: "" },
+    emailUs: { value: "", subValue: "" },
+    visitUs: { value: "", subValue: "" },
+  },
+  findUs: { embeddedMapLocation: "" },
+  connectWithUs: [],
+};
 
-export default function ContactUsForm({ data = {}, onChange, disabled }) {
+// ─── Map API response → form values ──────────────────────────────────────────
+// API shape: { statusCode, success, data: { _id, mainTitle, contactInfo, ... } }
+function mapApiToForm(data) {
+  return {
+    mainTitle: data?.mainTitle ?? "",
+    // contactMainImage from API is an object { cdnUrl, fullS3URL, ... } or null
+    // ImageUploader.getPreviewSrc() only handles string | File — extract cdnUrl so preview works
+    contactMainImage:
+      data?.contactMainImage?.cdnUrl ?? data?.contactMainImage ?? null,
+    // contactOtherImages is an array of objects — map each to its cdnUrl string
+    contactOtherImages: Array.isArray(data?.contactOtherImages)
+      ? data.contactOtherImages.map((img) => img?.cdnUrl ?? img)
+      : (data?.contactOtherImages ?? null),
+    contactInfo: {
+      callUs: {
+        value: data?.contactInfo?.callUs?.value ?? "",
+        subValue: data?.contactInfo?.callUs?.subValue ?? "",
+      },
+      emailUs: {
+        value: data?.contactInfo?.emailUs?.value ?? "",
+        subValue: data?.contactInfo?.emailUs?.subValue ?? "",
+      },
+      visitUs: {
+        value: data?.contactInfo?.visitUs?.value ?? "",
+        subValue: data?.contactInfo?.visitUs?.subValue ?? "",
+      },
+    },
+    findUs: { embeddedMapLocation: data?.findUs?.embeddedMapLocation ?? "" },
+    connectWithUs: Array.isArray(data?.connectWithUs) ? data.connectWithUs : [],
+  };
+}
+
+// ─── Main ─────────────────────────────────────────────────────────────────────
+export default function ContactUsForm({ onChange, disabled }) {
   const [isSaving, setIsSaving] = React.useState(false);
+  const [isFetching, setIsFetching] = React.useState(false);
   const [toast, setToast] = React.useState(null);
 
+  // Holds the _id from GET so Save calls editContactUs(id, data) instead of AddContactUs
+  const contactUsIdRef = React.useRef(null);
+
   const formik = useFormik({
-    enableReinitialize: true,
-    initialValues: {
-      mainTitle: data?.mainTitle || "",
-      contactMainImage: data?.contactMainImage || null,
-      contactOtherImages: data?.contactOtherImages || null,
-      contactInfo: {
-        callUs: {
-          value: data?.contactInfo?.callUs?.value || "",
-          subValue: data?.contactInfo?.callUs?.subValue || "",
-        },
-        emailUs: {
-          value: data?.contactInfo?.emailUs?.value || "",
-          subValue: data?.contactInfo?.emailUs?.subValue || "",
-        },
-        visitUs: {
-          value: data?.contactInfo?.visitUs?.value || "",
-          subValue: data?.contactInfo?.visitUs?.subValue || "",
-        },
-      },
-      findUs: {
-        embeddedMapLocation: data?.findUs?.embeddedMapLocation || "",
-      },
-      connectWithUs: data?.connectWithUs || [],
-    },
+    initialValues: emptyValues,
     validationSchema,
     onSubmit: async (values) => {
       try {
         setIsSaving(true);
-        await AddContactUs(values);
-        setToast({
-          message: "Contact Us saved successfully!",
-          type: "success",
-        });
-        onChange?.(values);
+
+        if (contactUsIdRef.current) {
+          // Edit mode: PUT /contact-us/:id
+          await editContactUs(contactUsIdRef.current, values);
+          setToast({
+            message: "Contact Us updated successfully!",
+            type: "success",
+          });
+          // Reset to blank create form after successful update
+          contactUsIdRef.current = null;
+          formik.resetForm();
+          onChange?.(emptyValues);
+        } else {
+          // Create mode: POST /contact-us
+          const created = await AddContactUs(values);
+          if (created?._id) contactUsIdRef.current = created._id;
+          setToast({
+            message: "Contact Us saved successfully!",
+            type: "success",
+          });
+          onChange?.(values);
+        }
       } catch (err) {
         console.error("Failed to save Contact Us data:", err);
         setToast({
@@ -157,11 +200,35 @@ export default function ContactUsForm({ data = {}, onChange, disabled }) {
     },
   });
 
-  // Sync to parent
+  // Sync to parent on every change
   React.useEffect(() => {
     onChange?.(formik.values);
   }, [formik.values]);
 
+  // ─── Edit: fetch existing record and populate form ────────────────────────
+  const handleEdit = async () => {
+    try {
+      setIsFetching(true);
+      const response = await getContactUs();
+
+      // API shape: { statusCode, success, data: { _id, ... } }
+      const record = response?.data ?? response;
+      contactUsIdRef.current = record?._id ?? record?.id ?? null;
+
+      await formik.setValues(mapApiToForm(record), true);
+      setToast({ message: "Data loaded for editing.", type: "success" });
+    } catch (err) {
+      console.error("Failed to fetch Contact Us data:", err);
+      setToast({
+        message: err?.message || "Failed to load data. Please try again.",
+        type: "error",
+      });
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
+  // ─── Social link helpers ──────────────────────────────────────────────────
   const links = formik.values.connectWithUs;
   const addLink = () =>
     formik.setFieldValue("connectWithUs", [...links, { name: "", value: "" }]);
@@ -183,7 +250,8 @@ export default function ContactUsForm({ data = {}, onChange, disabled }) {
     return t && e ? e : undefined;
   };
 
-  const isDisabled = disabled || isSaving;
+  const isDisabled = disabled || isSaving || isFetching;
+  const isEditMode = !!contactUsIdRef.current;
 
   return (
     <>
@@ -208,10 +276,32 @@ export default function ContactUsForm({ data = {}, onChange, disabled }) {
                   Contact Us
                 </h1>
                 <p className="text-slate-400 text-xs font-medium">
-                  Manage your contact information and social links
+                  {isEditMode
+                    ? "Editing existing contact page content"
+                    : "Manage your contact information and social links"}
                 </p>
               </div>
             </div>
+
+            {/* ── Edit Button ──────────────────────────────────── */}
+            {!disabled && (
+              <button
+                type="button"
+                onClick={handleEdit}
+                disabled={isFetching || isSaving || isEditMode}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-blue-200 text-blue-600 text-sm font-bold shadow-sm hover:bg-blue-50 hover:border-blue-400 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-200"
+              >
+                {isFetching ? (
+                  <>
+                    <FaSpinner className="animate-spin text-xs" /> Loading…
+                  </>
+                ) : (
+                  <>
+                    <FaEdit className="text-xs" /> Edit
+                  </>
+                )}
+              </button>
+            )}
           </div>
 
           {/* ── Main Content ─────────────────────────────────── */}
@@ -248,9 +338,10 @@ export default function ContactUsForm({ data = {}, onChange, disabled }) {
                 <div className="bg-gray-50 rounded-2xl border border-gray-100 p-5">
                   <ImageUploader
                     label="Other Images"
-                    value={formik.values.contactOtherImages ?? null}
-                    onChange={(file) =>
-                      formik.setFieldValue("contactOtherImages", file ?? null)
+                    isMultiple
+                    value={formik.values.contactOtherImages ?? []}
+                    onChange={(files) =>
+                      formik.setFieldValue("contactOtherImages", files ?? [])
                     }
                   />
                 </div>
@@ -449,7 +540,7 @@ export default function ContactUsForm({ data = {}, onChange, disabled }) {
               )}
             </div>
 
-            {/* ── Save Button ──────────────────────────────────── */}
+            {/* ── Save / Update Button ─────────────────────────── */}
             {!disabled && (
               <div className="flex justify-end pt-4 pb-8">
                 <button
@@ -460,13 +551,12 @@ export default function ContactUsForm({ data = {}, onChange, disabled }) {
                 >
                   {isSaving ? (
                     <>
-                      <FaSpinner className="animate-spin text-xs" />
-                      Saving…
+                      <FaSpinner className="animate-spin text-xs" /> Saving…
                     </>
                   ) : (
                     <>
                       <FaSave className="text-xs" />
-                      Save Contact Us
+                      {isEditMode ? "Update Contact Us" : "Save Contact Us"}
                     </>
                   )}
                 </button>

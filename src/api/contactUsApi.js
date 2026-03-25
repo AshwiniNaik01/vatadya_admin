@@ -26,3 +26,18 @@ export const getContactUs = async () => {
     throw error.response?.data || error;
   }
 };
+
+/**
+ * Updates Contact Us data by ID.
+ * @param {string|number} id - The ID of the contact entry
+ * @param {Object} data - The updated contact data
+ */
+export const editContactUs = async (id, data) => {
+  try {
+    const response = await axiosInstance.put(`/contact-us/${id}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (editContactUs):", error);
+    throw error.response?.data || error;
+  }
+};
