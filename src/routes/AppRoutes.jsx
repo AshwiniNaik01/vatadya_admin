@@ -20,6 +20,8 @@ import ManageContacts from "../pages/ManageContacts";
 import ManageSlot from "../pages/ManageSlot";
 import BookingTreks from "../pages/BookingTreks";
 import UserInsights from "../pages/UserInsights";
+import AboutUsForm from "../pages/AboutUs";
+import ContactUsForm from "../pages/ContactUs";
 
 export default function AppRoutes() {
   return (
@@ -67,6 +69,12 @@ export default function AppRoutes() {
           {/* User Insights*/}
           <Route path="/userInsights" element={<UserInsights />} />
           <Route path="/userInsights/:tab" element={<UserInsights />} />
+
+          {/* About us */}
+          <Route path="/aboutUs" element={<AboutUsForm />} />
+
+          {/* Contact us */}
+          <Route path="/contactUs" element={<ContactUsForm />} />
         </Route>
       </Route>
     </Routes>
