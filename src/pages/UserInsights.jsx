@@ -37,21 +37,73 @@ const NAV = [
 ];
 
 const SECTION_META = {
-  hero: { label: "Hero", sub: "Configure the main hero banner content", Icon: FaHome },
-  missionVision: { label: "Mission & Vision", sub: "Define your mission values and key stats", Icon: FaEye },
-  howItWorks: { label: "How It Works", sub: "Explain your process step by step", Icon: FaCog },
-  whyChooseUs: { label: "Why Choose Us", sub: "Highlight your key differentiators", Icon: FaThumbsUp },
-  safetyStandards: { label: "Safety Standards", sub: "Showcase your safety commitments", Icon: FaShieldAlt },
-  faq: { label: "FAQ", sub: "Manage frequently asked questions", Icon: FaQuestionCircle },
-  features: { label: "Features", sub: "List your product features and metrics", Icon: FaStar },
+  hero: {
+    label: "Hero",
+    sub: "Configure the main hero banner content",
+    Icon: FaHome,
+  },
+  missionVision: {
+    label: "Mission & Vision",
+    sub: "Define your mission values and key stats",
+    Icon: FaEye,
+  },
+  howItWorks: {
+    label: "How It Works",
+    sub: "Explain your process step by step",
+    Icon: FaCog,
+  },
+  whyChooseUs: {
+    label: "Why Choose Us",
+    sub: "Highlight your key differentiators",
+    Icon: FaThumbsUp,
+  },
+  safetyStandards: {
+    label: "Safety Standards",
+    sub: "Showcase your safety commitments",
+    Icon: FaShieldAlt,
+  },
+  faq: {
+    label: "FAQ",
+    sub: "Manage frequently asked questions",
+    Icon: FaQuestionCircle,
+  },
+  features: {
+    label: "Features",
+    sub: "List your product features and metrics",
+    Icon: FaStar,
+  },
 };
 
 // ─── Initial State ────────────────────────────────────────────────────────────
 const initData = () => ({
-  hero: { title: "", description: "", image: "", peaksClimbed: "", totalDistance: "", avgAltitude: "", trekTime: "" },
-  missionVision: { title: "", peaksConquered: "", expeditions: "", happyTrekkers: "", yearsOfGlory: "", missions: [], image: "" },
+  hero: {
+    title: "",
+    description: "",
+    image: "",
+    peaksClimbed: "",
+    totalDistance: "",
+    avgAltitude: "",
+    trekTime: "",
+  },
+  missionVision: {
+    title: "",
+    peaksConquered: "",
+    expeditions: "",
+    happyTrekkers: "",
+    yearsOfGlory: "",
+    missions: [],
+    image: "",
+  },
   howItWorks: { title: "", description: "", phases: [] },
-  whyChooseUs: { mainTitle: "", rating: "", safety: "", happyTrekkers: "", expeditions: "", image: "", whyUsItems: [] },
+  whyChooseUs: {
+    mainTitle: "",
+    rating: "",
+    safety: "",
+    happyTrekkers: "",
+    expeditions: "",
+    image: "",
+    whyUsItems: [],
+  },
   safetyStandards: { title: "", description: "", standards: [] },
   faq: { mainTitle: "Frequently Asked Questions", faqs: [] },
   features: { mainTitle: "Our Features", features: [] },
@@ -81,11 +133,15 @@ const FORMS = {
 // ─── Toast ────────────────────────────────────────────────────────────────────
 function Toast({ show, message, isError }) {
   return (
-    <div className={`fixed top-6 right-6 z-50 transition-all duration-300 ${show ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3 pointer-events-none"}`}>
-      <div className={`flex items-center gap-2.5 px-5 py-3 rounded-2xl shadow-xl text-white text-sm font-semibold 
-      ${isError ? "bg-gradient-to-r from-red-600 to-red-500 shadow-red-500/30" : "bg-gradient-to-r from-blue-600 to-blue-500 shadow-blue-500/30"}`}>
-        <FaCheck className={`text-xs flex-shrink-0 ${isError ? 'hidden' : ''}`} />
-        <FaTimes className={`text-xs flex-shrink-0 ${!isError ? 'hidden' : ''}`} />
+    <div
+      className={`fixed top-6 right-6 z-50 transition-all duration-300 ${show ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-3 pointer-events-none"}`}
+    >
+      <div
+        className={`flex items-center gap-2.5 px-5 py-3 rounded-2xl shadow-xl text-white text-sm font-semibold 
+      ${isError ? "bg-linear-to-r from-red-600 to-red-500 shadow-red-500/30" : "bg-linear-to-r from-blue-600 to-blue-500 shadow-blue-500/30"}`}
+      >
+        <FaCheck className={`text-xs shrink-0 ${isError ? "hidden" : ""}`} />
+        <FaTimes className={`text-xs shrink-0 ${!isError ? "hidden" : ""}`} />
         {message}
       </div>
     </div>
@@ -101,11 +157,14 @@ export default function SectionManager() {
   const [formData, setFormData] = useState(initData());
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: "", isError: false });
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    isError: false,
+  });
   // ─── State Updates ─────────────────────────────────────────────
   const [isEditing, setIsEditing] = useState(false); // edit mode toggle
   const [isViewing, setIsViewing] = useState(false); // view mode toggle
-
 
   // ─── Fetch Section Data ────────────────────────────────────────
   // const fetchSectionData = async (sectionKey) => {
@@ -127,7 +186,9 @@ export default function SectionManager() {
   const fetchSectionData = async (sectionKey) => {
     setIsLoading(true);
     try {
-      const res = await axiosInstance.get(API_URLS[sectionKey], { timeout: 30000 });
+      const res = await axiosInstance.get(API_URLS[sectionKey], {
+        timeout: 30000,
+      });
 
       if (res.data?.data) {
         // Data exists, set in state
@@ -168,7 +229,7 @@ export default function SectionManager() {
     if (tab && FORMS[tab] && current !== tab) {
       setCurrent(tab);
     } else if (!tab) {
-      navigate('/userInsights/hero', { replace: true });
+      navigate("/userInsights/hero", { replace: true });
     }
   }, [tab, navigate]);
 
@@ -182,7 +243,8 @@ export default function SectionManager() {
     setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
   };
 
-  const updateSection = (val) => setFormData((prev) => ({ ...prev, [current]: val }));
+  const updateSection = (val) =>
+    setFormData((prev) => ({ ...prev, [current]: val }));
 
   // const handleSave = async () => {
   //   setIsSaving(true);
@@ -238,7 +300,6 @@ export default function SectionManager() {
   //     setIsSaving(false);
   //   }
   // };
-
 
   // const handleSave = async () => {
   //   setIsSaving(true);
@@ -299,7 +360,6 @@ export default function SectionManager() {
   //   }
   // };
 
-
   const handleSave = async () => {
     setIsSaving(true);
 
@@ -310,7 +370,12 @@ export default function SectionManager() {
       let payload;
       let headers = {};
 
-      const requiresFormData = ["hero", "missionVision", "whyChooseUs", "safetyStandards"].includes(current);
+      const requiresFormData = [
+        "hero",
+        "missionVision",
+        "whyChooseUs",
+        "safetyStandards",
+      ].includes(current);
 
       if (requiresFormData) {
         payload = new FormData();
@@ -323,22 +388,24 @@ export default function SectionManager() {
 
           if (value instanceof File) {
             let fieldName =
-              key === "image" && current === "hero" ? "HeroImage" :
-                key === "image" && current === "whyChooseUs" ? "WhyUsImage" :
-                  key;
+              key === "image" && current === "hero"
+                ? "HeroImage"
+                : key === "image" && current === "whyChooseUs"
+                  ? "WhyUsImage"
+                  : key;
 
             payload.append(fieldName, value);
-
-          } else if (Array.isArray(value) || (value && typeof value === "object")) {
+          } else if (
+            Array.isArray(value) ||
+            (value && typeof value === "object")
+          ) {
             payload.append(key, JSON.stringify(value));
-
           } else if (value !== null && value !== undefined) {
             payload.append(key, value);
           }
         });
 
         headers["Content-Type"] = "multipart/form-data";
-
       } else {
         payload = { ...data };
         headers["Content-Type"] = "application/json";
@@ -380,7 +447,6 @@ export default function SectionManager() {
       }));
 
       setIsEditing(false);
-
     } catch (err) {
       console.error("Save error:", err);
 
@@ -391,7 +457,6 @@ export default function SectionManager() {
       } else {
         showToast("An error occurred while saving. Please try again.", true);
       }
-
     } finally {
       setIsSaving(false);
     }
@@ -401,19 +466,22 @@ export default function SectionManager() {
   const SectionIcon = meta?.Icon || FaHome;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 via-white to-slate-50 flex items-center justify-center p-6">
       <Toast {...toast} />
       <div className="w-full max-w-6xl">
-
         {/* Page Header */}
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center shadow-lg shadow-blue-400/30">
+            <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-blue-600 to-blue-400 flex items-center justify-center shadow-lg shadow-blue-400/30">
               <FaTh className="text-white text-lg" />
             </div>
             <div>
-              <h1 className="text-3xl font-black bg-gradient-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent">User Insights</h1>
-              <p className="text-slate-400 text-xs font-medium">Manage all website content sections</p>
+              <h1 className="text-3xl font-black bg-linear-to-r from-blue-700 to-blue-500 bg-clip-text text-transparent">
+                User Insights
+              </h1>
+              <p className="text-slate-400 text-xs font-medium">
+                Manage all website content sections
+              </p>
             </div>
           </div>
           <div className="hidden sm:flex items-center gap-2 text-xs text-slate-400 font-medium bg-white border border-blue-100 px-3 py-1.5 rounded-full shadow-sm">
@@ -423,8 +491,10 @@ export default function SectionManager() {
         </div>
 
         {/* Main Card */}
-        <div className="rounded-3xl overflow-hidden border border-blue-100/80 shadow-2xl shadow-blue-100/60 flex bg-white" style={{ minHeight: 600 }}>
-
+        <div
+          className="rounded-3xl overflow-hidden border border-blue-100/80 shadow-2xl shadow-blue-100/60 flex bg-white"
+          style={{ minHeight: 600 }}
+        >
           {/* Content Area */}
           <div className="flex-1 flex flex-col min-w-0 relative">
             {isLoading && (
@@ -433,16 +503,18 @@ export default function SectionManager() {
               </div>
             )}
             {/* Section Header */}
-            <div className="px-8 pt-7 pb-5 border-b border-blue-50 bg-gradient-to-r from-blue-600/5 via-blue-50/20 to-transparent">
+            <div className="px-8 pt-7 pb-5 border-b border-blue-50 bg-linear-to-r from-blue-600/5 via-blue-50/20 to-transparent">
               <div className="flex items-center gap-4">
-                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-400 flex items-center justify-center shadow-md shadow-blue-500/30 flex-shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-linear-to-br from-blue-600 to-blue-400 flex items-center justify-center shadow-md shadow-blue-500/30 shrink-0">
                   <SectionIcon className="text-white text-lg" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h2 className="text-lg font-bold text-slate-800">{meta?.label}</h2>
+                  <h2 className="text-lg font-bold text-slate-800">
+                    {meta?.label}
+                  </h2>
                   <p className="text-xs text-slate-400 mt-0.5">{meta?.sub}</p>
                 </div>
-                <span className="bg-blue-50 text-blue-600 border-blue-200 text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full flex-shrink-0 border">
+                <span className="bg-blue-50 text-blue-600 border-blue-200 text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full shrink-0 border">
                   Object
                 </span>
               </div>
@@ -465,10 +537,12 @@ export default function SectionManager() {
             </div>
 
             {/* Footer */}
-            <div className="px-8 py-4 border-t border-blue-50 bg-gradient-to-r from-blue-50/40 to-white flex items-center justify-between flex-shrink-0">
+            <div className="px-8 py-4 border-t border-blue-50 bg-linear-to-r from-blue-50/40 to-white flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs text-slate-400 font-medium">Ready to save</span>
+                <span className="text-xs text-slate-400 font-medium">
+                  Ready to save
+                </span>
               </div>
               {/* <div className="flex items-center gap-3">
                 <button
@@ -482,7 +556,7 @@ export default function SectionManager() {
                   type="button"
                   disabled={isSaving || isLoading}
                   onClick={handleSave}
-                  className="inline-flex items-center gap-2 text-sm px-6 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold shadow-md shadow-blue-500/30 hover:from-blue-700 hover:to-blue-600 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-2 text-sm px-6 py-2 rounded-xl bg-linear-to-r from-blue-600 to-blue-500 text-white font-bold shadow-md shadow-blue-500/30 hover:from-blue-700 hover:to-blue-600 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
                 >
                   {isSaving ? (
                     <div className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
@@ -504,7 +578,8 @@ export default function SectionManager() {
                 <button
                   type="button"
                   onClick={handleEdit}
-                  className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-xl border border-blue-200 text-blue-600 font-semibold hover:bg-blue-50 transition-all"
+                  disabled={isLoading || isEditing}
+                  className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-xl border border-blue-200 text-blue-600 font-semibold hover:bg-blue-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <FaCog className="text-xs" /> Edit
                 </button>
@@ -512,9 +587,13 @@ export default function SectionManager() {
                   type="button"
                   disabled={isSaving || isLoading}
                   onClick={handleSave}
-                  className="inline-flex items-center gap-2 text-sm px-6 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold shadow-md shadow-blue-500/30 hover:from-blue-700 hover:to-blue-600 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
+                  className="inline-flex items-center gap-2 text-sm px-6 py-2 rounded-xl bg-linear-to-r from-blue-600 to-blue-500 text-white font-bold shadow-md shadow-blue-500/30 hover:from-blue-700 hover:to-blue-600 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
                 >
-                  {isSaving ? <div className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div> : <FaSave className="text-xs" />}
+                  {isSaving ? (
+                    <div className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
+                  ) : (
+                    <FaSave className="text-xs" />
+                  )}
                   {isSaving ? "Saving..." : "Save Section"}
                 </button>
               </div>
@@ -523,7 +602,8 @@ export default function SectionManager() {
         </div>
 
         <p className="text-center text-xs text-slate-400 mt-4">
-          Data stored in component state · <strong>Export JSON</strong> to get the full payload
+          Data stored in component state · <strong>Export JSON</strong> to get
+          the full payload
         </p>
       </div>
     </div>
