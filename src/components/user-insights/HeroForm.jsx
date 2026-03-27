@@ -79,8 +79,6 @@
 //   );
 // }
 
-
-
 import React from "react";
 import { FaMapMarkerAlt, FaRuler, FaClock, FaHeading } from "react-icons/fa";
 import InputField from "../form/InputField";
@@ -99,16 +97,18 @@ export default function HeroForm({ data, onChange, disabled = false }) {
 
   const stats = [
     { key: "peaksClimbed", label: "Peaks Climbed", placeholder: "e.g. 120+" },
-    { key: "totalDistance", label: "Total Distance", placeholder: "e.g. 5000 km" },
+    {
+      key: "totalDistance",
+      label: "Total Distance",
+      placeholder: "e.g. 5000 km",
+    },
     { key: "avgAltitude", label: "Avg Altitude", placeholder: "e.g. 4200 m" },
     { key: "trekTime", label: "Trek Time", placeholder: "e.g. 7–14 days" },
   ];
 
   // Handle image: support both string URL or object from backend
   const imageValue =
-    typeof data.image === "string"
-      ? data.image
-      : data.image?.cdnUrl || ""; // fallback to empty string
+    typeof data.image === "string" ? data.image : data.image || null; // fallback to empty string
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -150,7 +150,9 @@ export default function HeroForm({ data, onChange, disabled = false }) {
 
       {/* Key Statistics */}
       <div className="pt-6 border-t border-gray-100">
-        <h3 className="text-lg font-black text-gray-800 mb-6">Key Statistics</h3>
+        <h3 className="text-lg font-black text-gray-800 mb-6">
+          Key Statistics
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {stats.map(({ key, label, placeholder }) => (
             <InputField

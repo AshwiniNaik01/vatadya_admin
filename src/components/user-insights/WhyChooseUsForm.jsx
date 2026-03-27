@@ -13,8 +13,15 @@ export default function WhyChooseUsForm({ data, onChange, disabled = false }) {
     set("whyUsItems", [...whyUsItems, { title: "", description: "" }]);
   };
   const updateItem = (i, field, v) =>
-    set("whyUsItems", whyUsItems.map((it, idx) => (idx === i ? { ...it, [field]: v } : it)));
-  const removeItem = (i) => set("whyUsItems", whyUsItems.filter((_, idx) => idx !== i));
+    set(
+      "whyUsItems",
+      whyUsItems.map((it, idx) => (idx === i ? { ...it, [field]: v } : it)),
+    );
+  const removeItem = (i) =>
+    set(
+      "whyUsItems",
+      whyUsItems.filter((_, idx) => idx !== i),
+    );
   const stats = [
     { key: "rating", label: "Rating", placeholder: "e.g. 4.9/5" },
     { key: "safety", label: "Safety", placeholder: "e.g. 100%" },
@@ -44,7 +51,7 @@ export default function WhyChooseUsForm({ data, onChange, disabled = false }) {
 
           <ImageUploader
             label="Section Image"
-            value={data.image?.fullS3URL || ""}
+            value={data.image || null}
             onChange={(file) => set("image", file)}
             disabled={disabled}
           />
@@ -52,7 +59,9 @@ export default function WhyChooseUsForm({ data, onChange, disabled = false }) {
       </div>
 
       <div className="pt-6 border-t border-gray-100">
-        <h3 className="text-lg font-black text-gray-800 mb-6">Key Statistics</h3>
+        <h3 className="text-lg font-black text-gray-800 mb-6">
+          Key Statistics
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {stats.map(({ key, label, placeholder }) => (
             <div key={key}>
@@ -68,14 +77,23 @@ export default function WhyChooseUsForm({ data, onChange, disabled = false }) {
       </div>
 
       <div className="pt-6 border-t border-gray-100">
-        <h3 className="text-lg font-black text-gray-800 mb-6">Why Us Items (Max 3)</h3>
+        <h3 className="text-lg font-black text-gray-800 mb-6">
+          Why Us Items (Max 3)
+        </h3>
 
         {whyUsItems.length === 0 && (
-          <EmptyState Icon={FaListUl} message="No items yet. Add your first one." />
+          <EmptyState
+            Icon={FaListUl}
+            message="No items yet. Add your first one."
+          />
         )}
 
         {whyUsItems.map((it, i) => (
-          <ArrayBlock key={i} title={`Item ${i + 1}`} onRemove={() => removeItem(i)}>
+          <ArrayBlock
+            key={i}
+            title={`Item ${i + 1}`}
+            onRemove={() => removeItem(i)}
+          >
             <div className="space-y-4">
               <InputField
                 label="Item Title"
@@ -84,7 +102,9 @@ export default function WhyChooseUsForm({ data, onChange, disabled = false }) {
                 placeholder="Item title"
               />
               <div>
-                <label className="block text-sm font-bold text-gray-700 ml-1 mb-2">Description</label>
+                <label className="block text-sm font-bold text-gray-700 ml-1 mb-2">
+                  Description
+                </label>
                 <RichTextEditor
                   value={it.description || ""}
                   onChange={(content) => updateItem(i, "description", content)}
@@ -103,4 +123,3 @@ export default function WhyChooseUsForm({ data, onChange, disabled = false }) {
     </div>
   );
 }
-

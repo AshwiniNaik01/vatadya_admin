@@ -23,10 +23,10 @@ const ImageUploader = ({
   // Helper: get a displayable src from a File or a URL string
   const getPreviewSrc = (file) => {
     if (!file) return "";
-    if (typeof file === "string") return file; // existing CDN URL
+    if (typeof file === "string") return file; // already URL string
+    if (file?.cdnUrl) return file.cdnUrl; // object from API
     if (file instanceof File || file instanceof Blob)
-      // new upload
-      return URL.createObjectURL(file);
+      return URL.createObjectURL(file); // new upload
     return "";
   };
 
@@ -227,12 +227,12 @@ const ImageUploader = ({
           </div>
 
           <div
-            className={`grid ${isMultiple ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5" : "grid-cols-1"} gap-4`}
+            className={`grid ${isMultiple ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-4" : "grid-cols-1"}`}
           >
             {displayFiles.map((file, index) => (
               <div
                 key={index}
-                className="relative group aspect-square rounded-xl overflow-hidden border-2 border-gray-200 hover:border-blue-300 transition-all"
+                className="relative w-30 h-30 group aspect-square rounded-xl overflow-hidden border-2 border-gray-200 hover:border-blue-300 transition-all"
               >
                 <img
                   src={getPreviewSrc(file)}

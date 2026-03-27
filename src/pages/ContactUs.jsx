@@ -122,9 +122,9 @@ const emptyValues = {
 function mapApiToForm(data) {
   return {
     mainTitle: data?.mainTitle ?? "",
-    contactMainImage: data?.contactMainImage ?? null,
+    contactMainImage: data?.contactMainImage ?? null, // object is fine
     contactOtherImages: Array.isArray(data?.contactOtherImages)
-      ? data.contactOtherImages
+      ? data.contactOtherImages.map((img) => img ?? null)
       : [],
     contactInfo: {
       callUs: {
@@ -370,12 +370,7 @@ export default function ContactUsForm({ onChange, disabled }) {
                 <div className="bg-gray-50 rounded-2xl border border-gray-100 p-5">
                   <ImageUploader
                     label="Contact Main Image"
-                    // value={formik.values.contactMainImage ?? null}
-                    value={
-                      formik.values.contactMainImage === null
-                        ? ""
-                        : (formik.values.contactMainImage?.cdnUrl ?? "")
-                    }
+                    value={formik.values.contactMainImage || null}
                     onChange={(file) =>
                       formik.setFieldValue("contactMainImage", file ?? null)
                     }

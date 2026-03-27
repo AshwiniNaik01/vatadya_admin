@@ -19,9 +19,11 @@ import {
   FaCheckCircle,
   FaExclamationCircle,
   FaEdit,
+  FaImage,
 } from "react-icons/fa";
 import InputField from "../components/form/InputField";
 import RichTextEditor from "../components/form/RichTextEditor";
+import ImageUploader from "../components/form/ImageUploader";
 import {
   ArrayBlock,
   EmptyState,
@@ -110,6 +112,7 @@ const emptyValues = {
   infoBar: { mainTitle: "", stats: [] },
   operationalPillars: { mainTitle: "", pillars: [] },
   capabilities: { mainTitle: "", items: [] },
+  MissionImage: null,
 };
 
 // ─── Map API response → form values ──────────────────────────────────────────
@@ -143,6 +146,7 @@ function mapApiToForm(data) {
         ? data.capabilities.items
         : [],
     },
+    MissionImage: data?.MissionImage ?? null,
   };
 }
 
@@ -162,20 +166,34 @@ export default function AboutUsForm({ onChange, disabled }) {
       try {
         setIsSaving(true);
 
+        const formData = new FormData();
+        formData.append("aboutSection", JSON.stringify(values.aboutSection));
+        formData.append(
+          "missionSection",
+          JSON.stringify(values.missionSection),
+        );
+        formData.append("infoBar", JSON.stringify(values.infoBar));
+        formData.append(
+          "operationalPillars",
+          JSON.stringify(values.operationalPillars),
+        );
+        formData.append("capabilities", JSON.stringify(values.capabilities));
+
+        if (values.MissionImage instanceof File) {
+          formData.append("MissionImage", values.MissionImage);
+        }
+
         if (aboutUsIdRef.current) {
-          // Edit mode: PUT /about-us/:id
-          await editAboutUs(aboutUsIdRef.current, values);
+          await editAboutUs(aboutUsIdRef.current, formData);
           setToast({
             message: "About Us updated successfully!",
             type: "success",
           });
-          // Reset to blank create form after successful update
           aboutUsIdRef.current = null;
           formik.resetForm();
           onChange?.(emptyValues);
         } else {
-          // Create mode: POST /about-us
-          const created = await AddAboutUs(values);
+          const created = await AddAboutUs(formData);
           if (created?._id) aboutUsIdRef.current = created._id;
           setToast({
             message: "About Us saved successfully!",
@@ -629,6 +647,21 @@ export default function AboutUsForm({ onChange, disabled }) {
                   </ArrayBlock>
                 ))}
               </div>
+            </div>
+
+            {/* ====6. MissionImage === */}
+            <SectionHeader
+              icon={FaImage}
+              title="Mission Image"
+              subtitle="Upload the mission image"
+            />
+
+            <div>
+              <ImageUploader
+                label="Mission Image"
+                value={fv.MissionImage || null}
+                onChange={(file) => sfv("MissionImage", file ?? null)}
+              />
             </div>
           </div>
 

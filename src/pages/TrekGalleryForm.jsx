@@ -362,12 +362,12 @@ export default function TrekGalleryForm({
               <div>
                 <SectionHeader icon={FiImage} title="Trek Photo" />
                 <label className="block cursor-pointer">
-                  <div className="relative flex flex-col items-center justify-center h-48 rounded-xl overflow-hidden border-2 border-dashed border-blue-300 bg-blue-50 hover:bg-blue-100 transition-colors">
+                  <div className="relative flex flex-col items-center justify-center h-[400px] rounded-xl overflow-hidden border-2 border-dashed border-blue-300 bg-blue-50 hover:bg-blue-100 transition-colors">
                     {previewImage ? (
                       <img
                         src={previewImage}
                         alt="Preview"
-                        className="absolute inset-0 w-full h-full object-cover"
+                        className="absolute inset-0 w-full h-full object-fit-cover"
                       />
                     ) : (
                       <>

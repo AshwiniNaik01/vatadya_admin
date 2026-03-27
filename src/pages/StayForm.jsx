@@ -27,6 +27,7 @@ import CustomDatePicker from "../components/form/CustomDatePicker";
 import RichTextEditor from "../components/form/RichTextEditor";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
+import { createStay } from "../api/staysApi";
 
 // ─── Validation Schema ──────────────────────────────────────────────────────
 const stayValidationSchema = Yup.object().shape({
@@ -119,6 +120,7 @@ const DEFAULT_FORM = {
   endTime: "",
   tags: [],
   description: "",
+  highlight: "",
   reg_type: "AC",
   bookingType: "",
   category: null,
@@ -137,11 +139,14 @@ const DEFAULT_FORM = {
     country: "India",
   },
   feeDetails: {
-    baseFee: { amount: 0, description: "" },
-    discount: { value: 0, description: "" },
-    gstPercent: { value: 5, description: "" },
-    insurance: { amount: 180, description: "" },
-    transport: { amount: 0, description: "" },
+    basePrice: { amount: 0, description: "" }, // was: baseFee
+    pricingType: { description: "" }, // missing entirely
+    weekendCharge: { amount: 0, description: "" }, // missing
+    peakMultiplier: { value: 1, description: "" }, // missing
+    mealPrice: { amount: 0, description: "" }, // missing
+    extraBedPrice: { amount: 0, description: "" }, // missing
+    discount: { value: 0, description: "" }, // ✓ exists
+    gstPercent: { value: 5, description: "" }, // ✓ exists
   },
   addons: [],
   image: null,
@@ -202,19 +207,21 @@ export default function StayForm() {
     const num = (obj, key) =>
       obj && typeof obj === "object" ? Number(obj[key] ?? 0) : Number(obj ?? 0);
 
-    const base = num(fd.baseFee, "amount");
+    const base = num(fd.basePrice, "amount");
     const discountAmt = (base * num(fd.discount, "value")) / 100;
     const baseAfterDisc = base - discountAmt;
     const gst = (baseAfterDisc * num(fd.gstPercent, "value")) / 100;
-    const insurance = num(fd.insurance, "amount");
-    const transport = num(fd.transport, "amount");
+    const weekend = num(fd.weekendCharge, "amount");
+    const peak = baseAfterDisc * (num(fd.peakMultiplier, "value") - 1); // multiplier above 1x
+    const meal = num(fd.mealPrice, "amount");
+    const extraBed = num(fd.extraBedPrice, "amount");
     const addonsTotal = (doc.addons || []).reduce(
       (s, a) => s + Number(a.price || 0),
       0,
     );
 
     return Math.round(
-      baseAfterDisc + gst + insurance + transport + addonsTotal,
+      baseAfterDisc + gst + weekend + peak + meal + extraBed + addonsTotal,
     );
   };
 
@@ -273,6 +280,8 @@ export default function StayForm() {
         "id",
         "image",
         "gallery",
+        "startDate",
+        "endDate",
       ];
 
       Object.keys(formData).forEach((key) => {
@@ -288,6 +297,17 @@ export default function StayForm() {
         }
       });
 
+      if (formData.startDate)
+        formDataToSend.append(
+          "startDate",
+          new Date(formData.startDate).toISOString(),
+        );
+      if (formData.endDate)
+        formDataToSend.append(
+          "endDate",
+          new Date(formData.endDate).toISOString(),
+        );
+
       if (formData.image instanceof File) {
         formDataToSend.append("StayImage", formData.image);
       } else if (typeof formData.image === "string" && formData.image) {
@@ -301,13 +321,8 @@ export default function StayForm() {
             formDataToSend.append("gallery", item);
         });
       }
-
-      // ── Wire up your own API calls here ──────────────────────────────────
-      // if (isEditMode) { await updateStay(id, formDataToSend); }
-      // else            { await createStay(formDataToSend); }
-
-      alert(`Stay ${isEditMode ? "updated" : "created"} successfully!`);
-      navigate("/stays/manage");
+      await createStay(formDataToSend);
+      navigate("/stay/manage");
     } catch (err) {
       if (err.name === "ValidationError") {
         const errors = {};
@@ -365,7 +380,7 @@ export default function StayForm() {
           <div className="flex gap-4">
             <button
               type="button"
-              onClick={() => navigate("/stays/manage")}
+              onClick={() => navigate("/stay/manage")}
               className="px-6 py-2 text-gray-500 font-bold hover:text-gray-800 transition-colors"
             >
               Cancel
@@ -891,11 +906,14 @@ export default function StayForm() {
                         {/* 🔹 INPUT / SELECT */}
                         {field.type === "select" ? (
                           <select
-                            value={formData.feeDetails[field.key] || ""}
+                            value={formData.feeDetails[field.key]?.value || ""}
                             onChange={(e) =>
                               updateFeeDetails({
                                 ...formData.feeDetails,
-                                [field.key]: e.target.value,
+                                [field.key]: {
+                                  ...formData.feeDetails[field.key],
+                                  value: e.target.value,
+                                },
                               })
                             }
                             className="w-full bg-gray-50 px-4 py-3 rounded-xl border border-gray-100 font-semibold text-gray-700 outline-none focus:ring-2 focus:ring-blue-500/20"

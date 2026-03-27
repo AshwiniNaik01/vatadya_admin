@@ -74,11 +74,7 @@ export default function MissionVisionForm({ data, onChange }) {
           <ImageUploader
             label="Section Image"
             // Show uploaded image first, fallback to prefilled image
-            value={
-              data.MissionImage === null
-                ? ""
-                : (data.MissionImage?.cdnUrl ?? data.image?.cdnUrl ?? "")
-            }
+            value={data.MissionImage || null}
             // When file changes or is removed
             onChange={(file) => set("MissionImage", file || null)}
             // allowRemove={true} // if your ImageUploader supports it

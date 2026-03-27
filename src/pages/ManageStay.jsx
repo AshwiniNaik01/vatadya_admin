@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-// import { deleteStay, getStays } from "../api/stayApi";
+import { deleteStay, getStays, updateStay } from "../api/staysApi";
 import Modal from "../components/modal/Modal";
 import {
   FaPlus,
