@@ -109,7 +109,7 @@ const validationSchema = Yup.object({
 const emptyValues = {
   mainTitle: "",
   contactMainImage: null,
-  contactOtherImages: [], // isMultiple=true expects an array
+  contactOtherImages: [],
   contactInfo: {
     callUs: { value: "", subValue: "" },
     emailUs: { value: "", subValue: "" },
@@ -119,19 +119,13 @@ const emptyValues = {
   connectWithUs: [],
 };
 
-// ─── Map API response → form values ──────────────────────────────────────────
-// API shape: { statusCode, success, data: { _id, mainTitle, contactInfo, ... } }
 function mapApiToForm(data) {
   return {
     mainTitle: data?.mainTitle ?? "",
-    // contactMainImage from API is an object { cdnUrl, fullS3URL, ... } or null
-    // ImageUploader.getPreviewSrc() only handles string | File — extract cdnUrl so preview works
-    contactMainImage:
-      data?.contactMainImage?.cdnUrl ?? data?.contactMainImage ?? null,
-    // contactOtherImages is an array of objects — map each to its cdnUrl string
+    contactMainImage: data?.contactMainImage ?? null,
     contactOtherImages: Array.isArray(data?.contactOtherImages)
-      ? data.contactOtherImages.map((img) => img?.cdnUrl ?? img)
-      : (data?.contactOtherImages ?? null),
+      ? data.contactOtherImages
+      : [],
     contactInfo: {
       callUs: {
         value: data?.contactInfo?.callUs?.value ?? "",
@@ -151,13 +145,57 @@ function mapApiToForm(data) {
   };
 }
 
+function buildFormData(values) {
+  const formData = new FormData();
+
+  // ── Plain text fields ────────────────────────────────────────────────────────
+  formData.append("mainTitle", values.mainTitle ?? "");
+
+  // ── Nested objects → JSON strings ───────────────────────────────────────────
+  formData.append("contactInfo", JSON.stringify(values.contactInfo ?? {}));
+  formData.append("findUs", JSON.stringify(values.findUs ?? {}));
+  formData.append("connectWithUs", JSON.stringify(values.connectWithUs ?? []));
+
+  // ── ContactMainImage ─────────────────────────────────────────────────────────
+  if (values.contactMainImage instanceof File) {
+    // New upload — PascalCase matches Multer .fields() config
+    formData.append("ContactMainImage", values.contactMainImage);
+  } else if (values.contactMainImage?.cdnUrl) {
+    // Existing image object from API (edit mode) — send URL string as text field
+    formData.append("contactMainImage", values.contactMainImage.cdnUrl);
+  } else if (
+    typeof values.contactMainImage === "string" &&
+    values.contactMainImage
+  ) {
+    // Already a plain URL string
+    formData.append("contactMainImage", values.contactMainImage);
+  }
+
+  // ── ContactOtherImages ───────────────────────────────────────────────────────
+  if (Array.isArray(values.contactOtherImages)) {
+    values.contactOtherImages.forEach((img) => {
+      if (img instanceof File) {
+        // New upload — PascalCase matches Multer .fields() config
+        formData.append("ContactOtherImages", img);
+      } else if (img?.cdnUrl) {
+        // Existing image object from API (edit mode) — send URL string as text field
+        formData.append("contactOtherImages", img.cdnUrl);
+      } else if (typeof img === "string" && img) {
+        // Already a plain URL string
+        formData.append("contactOtherImages", img);
+      }
+    });
+  }
+
+  return formData;
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function ContactUsForm({ onChange, disabled }) {
   const [isSaving, setIsSaving] = React.useState(false);
   const [isFetching, setIsFetching] = React.useState(false);
   const [toast, setToast] = React.useState(null);
 
-  // Holds the _id from GET so Save calls editContactUs(id, data) instead of AddContactUs
   const contactUsIdRef = React.useRef(null);
 
   const formik = useFormik({
@@ -167,20 +205,21 @@ export default function ContactUsForm({ onChange, disabled }) {
       try {
         setIsSaving(true);
 
+        const payload = buildFormData(values);
+
         if (contactUsIdRef.current) {
           // Edit mode: PUT /contact-us/:id
-          await editContactUs(contactUsIdRef.current, values);
+          await editContactUs(contactUsIdRef.current, payload);
           setToast({
             message: "Contact Us updated successfully!",
             type: "success",
           });
-          // Reset to blank create form after successful update
           contactUsIdRef.current = null;
           formik.resetForm();
           onChange?.(emptyValues);
         } else {
           // Create mode: POST /contact-us
-          const created = await AddContactUs(values);
+          const created = await AddContactUs(payload);
           if (created?._id) contactUsIdRef.current = created._id;
           setToast({
             message: "Contact Us saved successfully!",
@@ -210,11 +249,8 @@ export default function ContactUsForm({ onChange, disabled }) {
     try {
       setIsFetching(true);
       const response = await getContactUs();
-
-      // API shape: { statusCode, success, data: { _id, ... } }
       const record = response?.data ?? response;
       contactUsIdRef.current = record?._id ?? record?.id ?? null;
-
       await formik.setValues(mapApiToForm(record), true);
       setToast({ message: "Data loaded for editing.", type: "success" });
     } catch (err) {
@@ -230,19 +266,23 @@ export default function ContactUsForm({ onChange, disabled }) {
 
   // ─── Social link helpers ──────────────────────────────────────────────────
   const links = formik.values.connectWithUs;
+
   const addLink = () =>
     formik.setFieldValue("connectWithUs", [...links, { name: "", value: "" }]);
+
   const updateLink = (i, k, v) =>
     formik.setFieldValue(
       "connectWithUs",
       links.map((l, idx) => (idx === i ? { ...l, [k]: v } : l)),
     );
+
   const removeLink = (i) =>
     formik.setFieldValue(
       "connectWithUs",
       links.filter((_, idx) => idx !== i),
     );
 
+  // ─── Touch + error helper ─────────────────────────────────────────────────
   const touchedError = (path) => {
     const keys = path.split(".");
     const t = keys.reduce((o, k) => o?.[k], formik.touched);
@@ -252,6 +292,7 @@ export default function ContactUsForm({ onChange, disabled }) {
 
   const isDisabled = disabled || isSaving || isFetching;
   const isEditMode = !!contactUsIdRef.current;
+  // console.log(formik.values);
 
   return (
     <>
@@ -329,7 +370,12 @@ export default function ContactUsForm({ onChange, disabled }) {
                 <div className="bg-gray-50 rounded-2xl border border-gray-100 p-5">
                   <ImageUploader
                     label="Contact Main Image"
-                    value={formik.values.contactMainImage ?? null}
+                    // value={formik.values.contactMainImage ?? null}
+                    value={
+                      formik.values.contactMainImage === null
+                        ? ""
+                        : (formik.values.contactMainImage?.cdnUrl ?? "")
+                    }
                     onChange={(file) =>
                       formik.setFieldValue("contactMainImage", file ?? null)
                     }
@@ -339,7 +385,14 @@ export default function ContactUsForm({ onChange, disabled }) {
                   <ImageUploader
                     label="Other Images"
                     isMultiple
-                    value={formik.values.contactOtherImages ?? []}
+                    // value={formik.values.contactOtherImages ?? []}
+                    value={
+                      Array.isArray(formik.values.contactOtherImages)
+                        ? formik.values.contactOtherImages.map((img) =>
+                            typeof img === "string" ? img : img?.cdnUrl || img,
+                          )
+                        : []
+                    }
                     onChange={(files) =>
                       formik.setFieldValue("contactOtherImages", files ?? [])
                     }
@@ -356,6 +409,7 @@ export default function ContactUsForm({ onChange, disabled }) {
                 subtitle="Phone, email and address details with sub-labels"
               />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {/* Call Us */}
                 <ContactCard
                   icon={FaPhone}
                   label="Call Us"
@@ -391,6 +445,7 @@ export default function ContactUsForm({ onChange, disabled }) {
                   />
                 </ContactCard>
 
+                {/* Email Us */}
                 <ContactCard
                   icon={FaEnvelope}
                   label="Email Us"
@@ -426,6 +481,7 @@ export default function ContactUsForm({ onChange, disabled }) {
                   />
                 </ContactCard>
 
+                {/* Visit Us */}
                 <ContactCard
                   icon={FaMapMarkerAlt}
                   label="Visit Us"
