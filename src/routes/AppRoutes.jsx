@@ -22,6 +22,8 @@ import BookingTreks from "../pages/BookingTreks";
 import UserInsights from "../pages/UserInsights";
 import AboutUsForm from "../pages/AboutUs";
 import ContactUsForm from "../pages/ContactUs";
+import StayForm from "../pages/StayForm";
+import ManageStay from "../pages/ManageStay";
 
 export default function AppRoutes() {
   return (
@@ -75,6 +77,10 @@ export default function AppRoutes() {
 
           {/* Contact us */}
           <Route path="/contactUs" element={<ContactUsForm />} />
+
+          {/* Stay */}
+          <Route path={"/stay/create"} element={<StayForm />} />
+          <Route path={"/stay/manage"} element={<ManageStay />} />
         </Route>
       </Route>
     </Routes>
