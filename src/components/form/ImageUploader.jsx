@@ -209,20 +209,26 @@ const ImageUploader = ({
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <h4 className="text-lg font-semibold text-gray-700">
-              Uploaded Images ({displayFiles.length})
+              {isMultiple
+                ? `Uploaded Images (${displayFiles.length})`
+                : "Selected Image"}
             </h4>
 
-            <button
-              type="button"
-              onClick={removeAll}
-              className="text-sm text-red-500 hover:text-red-700 font-medium flex items-center gap-2 px-3 py-1 hover:bg-red-50 rounded-lg transition-colors"
-            >
-              <HiXMark size={16} />
-              Remove All
-            </button>
+            {isMultiple && (
+              <button
+                type="button"
+                onClick={removeAll}
+                className="text-sm text-red-500 hover:text-red-700 font-medium flex items-center gap-2 px-3 py-1 hover:bg-red-50 rounded-lg transition-colors"
+              >
+                <HiXMark size={16} />
+                Remove All
+              </button>
+            )}
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div
+            className={`grid ${isMultiple ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5" : "grid-cols-1"} gap-4`}
+          >
             {displayFiles.map((file, index) => (
               <div
                 key={index}
@@ -244,7 +250,7 @@ const ImageUploader = ({
                   </button>
                 </div>
 
-                {index === 0 && !isMultiple && (
+                {!isMultiple && index === 0 && (
                   <div className="absolute top-2 left-2 px-2 py-1 bg-blue-500 text-white text-xs font-bold rounded">
                     MAIN
                   </div>
