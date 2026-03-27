@@ -73,6 +73,15 @@ const menuItems = [
   },
   { name: "About US", path: "/aboutUs", icon: <FaInfoCircle /> },
   { name: "Contact US", path: "/contactUs", icon: <FaEnvelope /> },
+  // {
+  //   name: "Stay",
+  //   path: "/stay",
+  //   icon: <FaHome />,
+  //   submenu: [
+  //     { name: "Create Stay", path: "/stay/create" },
+  //     { name: "Manage Stay", path: "/stay/manage" },
+  //   ],
+  // },
 ];
 
 export default function Sidebar() {
