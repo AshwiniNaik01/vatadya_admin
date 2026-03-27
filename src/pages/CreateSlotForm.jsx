@@ -289,30 +289,25 @@ import InputField from "../components/form/InputField";
 const slotValidationSchema = Yup.object().shape({
   // Trek ID validation - must select a trek
   // trekId: Yup.string().required("Please select a trek"),
-
   // // Start date validation - required and must be a valid date
   // startDate: Yup.date()
   //   .required("Start date is required")
   //   .typeError("Please enter a valid start date"),
-
   // // End date validation - must be after start date
   // endDate: Yup.date()
   //   .required("End date is required")
   //   .min(Yup.ref("startDate"), "End date must be after start date")
   //   .typeError("Please enter a valid end date"),
-
   // // Status validation - must be one of predefined values
   // status: Yup.string()
   //   .oneOf(["AVBL", "FULL", "CANCELLED"], "Invalid status")
   //   .required("Status is required"),
-
   // // Total seats validation - must be positive integer
   // totalSeats: Yup.number()
   //   .integer("Total seats must be a whole number")
   //   .min(1, "Total seats must be at least 1")
   //   .max(100, "Total seats cannot exceed 100")
   //   .required("Total seats is required"),
-
   // // Booked seats validation - cannot exceed total seats
   // bookedSeats: Yup.number()
   //   .integer("Booked seats must be a whole number")
@@ -326,7 +321,6 @@ const slotValidationSchema = Yup.object().shape({
   //     },
   //   )
   //   .required("Booked seats is required"),
-
   // // Display range - auto-generated, optional validation
   // displayRange: Yup.string().nullable(),
 });
@@ -586,7 +580,7 @@ const CreateSlotForm = () => {
         {/* API Error Message */}
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex gap-3">
-            <FiAlertCircle className="text-red-600 mt-1 flex-shrink-0" />
+            <FiAlertCircle className="text-red-600 mt-1 shrink-0" />
             <p className="text-sm text-red-700">{error}</p>
           </div>
         )}
@@ -594,7 +588,7 @@ const CreateSlotForm = () => {
         {/* Success Message */}
         {successMessage && (
           <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex gap-3">
-            <FiCheck className="text-blue-600 mt-1 flex-shrink-0" />
+            <FiCheck className="text-blue-600 mt-1 shrink-0" />
             <p className="text-sm text-blue-700">{successMessage}</p>
           </div>
         )}

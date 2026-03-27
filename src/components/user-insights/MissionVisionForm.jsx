@@ -1,5 +1,11 @@
 import React from "react";
-import { FaFlag, FaChartBar, FaUsers, FaClock, FaHeading } from "react-icons/fa";
+import {
+  FaFlag,
+  FaChartBar,
+  FaUsers,
+  FaClock,
+  FaHeading,
+} from "react-icons/fa";
 import InputField from "../form/InputField";
 import RichTextEditor from "../form/RichTextEditor";
 import ImageUploader from "../form/ImageUploader";
@@ -15,14 +21,30 @@ const STAT_ICONS = {
 export default function MissionVisionForm({ data, onChange }) {
   const set = (k, v) => onChange({ ...data, [k]: v });
   const missions = data.missions || [];
-  const addMission = () => set("missions", [...missions, { title: "", description: "" }]);
+  const addMission = () =>
+    set("missions", [...missions, { title: "", description: "" }]);
   const updateMission = (i, field, v) =>
-    set("missions", missions.map((m, idx) => (idx === i ? { ...m, [field]: v } : m)));
-  const removeMission = (i) => set("missions", missions.filter((_, idx) => idx !== i));
+    set(
+      "missions",
+      missions.map((m, idx) => (idx === i ? { ...m, [field]: v } : m)),
+    );
+  const removeMission = (i) =>
+    set(
+      "missions",
+      missions.filter((_, idx) => idx !== i),
+    );
   const stats = [
-    { key: "peaksConquered", label: "Peaks Conquered", placeholder: "e.g. 200+" },
+    {
+      key: "peaksConquered",
+      label: "Peaks Conquered",
+      placeholder: "e.g. 200+",
+    },
     { key: "expeditions", label: "Expeditions", placeholder: "e.g. 50" },
-    { key: "happyTrekkers", label: "Happy Trekkers", placeholder: "e.g. 10,000+" },
+    {
+      key: "happyTrekkers",
+      label: "Happy Trekkers",
+      placeholder: "e.g. 10,000+",
+    },
     { key: "yearsOfGlory", label: "Years Of Glory", placeholder: "e.g. 15" },
   ];
 
@@ -52,16 +74,18 @@ export default function MissionVisionForm({ data, onChange }) {
           <ImageUploader
             label="Section Image"
             // Show uploaded image first, fallback to prefilled image
-            value={data.MissionImage?.cdnUrl ?? (data.image?.cdnUrl ?? "")}
+            value={data.MissionImage || null}
             // When file changes or is removed
             onChange={(file) => set("MissionImage", file || null)}
-          // allowRemove={true} // if your ImageUploader supports it
+            // allowRemove={true} // if your ImageUploader supports it
           />
         </div>
       </div>
 
       <div className="pt-6 border-t border-gray-100">
-        <h3 className="text-lg font-black text-gray-800 mb-6">Key Statistics</h3>
+        <h3 className="text-lg font-black text-gray-800 mb-6">
+          Key Statistics
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {stats.map(({ key, label, placeholder }) => (
             <div key={key}>
@@ -79,9 +103,18 @@ export default function MissionVisionForm({ data, onChange }) {
 
       <div className="pt-6 border-t border-gray-100">
         <h3 className="text-lg font-black text-gray-800 mb-6">Missions</h3>
-        {missions.length === 0 && <EmptyState Icon={FaFlag} message="No missions yet. Add your first one." />}
+        {missions.length === 0 && (
+          <EmptyState
+            Icon={FaFlag}
+            message="No missions yet. Add your first one."
+          />
+        )}
         {missions.map((m, i) => (
-          <ArrayBlock key={i} title={`Mission ${i + 1}`} onRemove={() => removeMission(i)}>
+          <ArrayBlock
+            key={i}
+            title={`Mission ${i + 1}`}
+            onRemove={() => removeMission(i)}
+          >
             <div className="space-y-4">
               <InputField
                 label="Mission Title"
@@ -90,10 +123,14 @@ export default function MissionVisionForm({ data, onChange }) {
                 placeholder="Mission title"
               />
               <div>
-                <label className="block text-sm font-bold text-gray-700 ml-1 mb-2">Description</label>
+                <label className="block text-sm font-bold text-gray-700 ml-1 mb-2">
+                  Description
+                </label>
                 <RichTextEditor
                   value={m.description || ""}
-                  onChange={(content) => updateMission(i, "description", content)}
+                  onChange={(content) =>
+                    updateMission(i, "description", content)
+                  }
                 />
               </div>
             </div>
@@ -106,4 +143,3 @@ export default function MissionVisionForm({ data, onChange }) {
     </div>
   );
 }
-
