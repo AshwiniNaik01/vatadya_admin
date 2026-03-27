@@ -4,9 +4,23 @@ import axiosInstance from "./axiosInstance";
  * Submits Contact Us form data.
  * @param {Object} data - The contact form payload.
  */
+// export const AddContactUs = async (data) => {
+//   try {
+//     const response = await axiosInstance.post(`/contact-us`, data);
+//     return response.data;
+//   } catch (error) {
+//     console.error("API Error (postContactUs):", error);
+//     throw error.response?.data || error;
+//   }
+// };
+
 export const AddContactUs = async (data) => {
   try {
-    const response = await axiosInstance.post(`/contact-us`, data);
+    const response = await axiosInstance.post(`/contact-us`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("API Error (postContactUs):", error);
@@ -20,6 +34,7 @@ export const AddContactUs = async (data) => {
 export const getContactUs = async () => {
   try {
     const response = await axiosInstance.get(`/contact-us`);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("API Error (getContactUs):", error);
