@@ -157,31 +157,23 @@ function buildFormData(values) {
   formData.append("connectWithUs", JSON.stringify(values.connectWithUs ?? []));
 
   // ── ContactMainImage ─────────────────────────────────────────────────────────
+  // ← Replace the old contactMainImage block with this:
   if (values.contactMainImage instanceof File) {
-    // New upload — PascalCase matches Multer .fields() config
-    formData.append("ContactMainImage", values.contactMainImage);
+    formData.append("ContactMainImage", values.contactMainImage); // PascalCase
   } else if (values.contactMainImage?.cdnUrl) {
-    // Existing image object from API (edit mode) — send URL string as text field
-    formData.append("contactMainImage", values.contactMainImage.cdnUrl);
-  } else if (
-    typeof values.contactMainImage === "string" &&
-    values.contactMainImage
-  ) {
-    // Already a plain URL string
-    formData.append("contactMainImage", values.contactMainImage);
+    formData.append("ContactMainImage", values.contactMainImage.cdnUrl);
+  } else if (typeof values.contactMainImage === "string" && values.contactMainImage) {
+    formData.append("ContactMainImage", values.contactMainImage);
   }
 
   // ── ContactOtherImages ───────────────────────────────────────────────────────
   if (Array.isArray(values.contactOtherImages)) {
     values.contactOtherImages.forEach((img) => {
       if (img instanceof File) {
-        // New upload — PascalCase matches Multer .fields() config
-        formData.append("ContactOtherImages", img);
+        formData.append("ContactOtherImages", img); // PascalCase
       } else if (img?.cdnUrl) {
-        // Existing image object from API (edit mode) — send URL string as text field
-        formData.append("contactOtherImages", img.cdnUrl);
+        formData.append("contactOtherImages", img.cdnUrl); // optional: for existing URLs
       } else if (typeof img === "string" && img) {
-        // Already a plain URL string
         formData.append("contactOtherImages", img);
       }
     });
@@ -189,6 +181,51 @@ function buildFormData(values) {
 
   return formData;
 }
+
+// function buildFormData(values) {
+//   const formData = new FormData();
+
+//   // ── Plain text fields ────────────────────────────────────────────────────────
+//   formData.append("mainTitle", values.mainTitle ?? "");
+
+//   // ── Nested objects → JSON strings ───────────────────────────────────────────
+//   formData.append("contactInfo", JSON.stringify(values.contactInfo ?? {}));
+//   formData.append("findUs", JSON.stringify(values.findUs ?? {}));
+//   formData.append("connectWithUs", JSON.stringify(values.connectWithUs ?? []));
+
+//   // ── ContactMainImage ─────────────────────────────────────────────────────────
+//   if (values.contactMainImage instanceof File) {
+//     // New upload — PascalCase matches Multer .fields() config
+//     formData.append("contactMainImage", values.contactMainImage);
+//   } else if (values.contactMainImage?.cdnUrl) {
+//     // Existing image object from API (edit mode) — send URL string as text field
+//     formData.append("contactMainImage", values.contactMainImage.cdnUrl);
+//   } else if (
+//     typeof values.contactMainImage === "string" &&
+//     values.contactMainImage
+//   ) {
+//     // Already a plain URL string
+//     formData.append("contactMainImage", values.contactMainImage);
+//   }
+
+//   // ── ContactOtherImages ───────────────────────────────────────────────────────
+//   if (Array.isArray(values.contactOtherImages)) {
+//     values.contactOtherImages.forEach((img) => {
+//       if (img instanceof File) {
+//         // New upload — PascalCase matches Multer .fields() config
+//         formData.append("ContactOtherImages", img);
+//       } else if (img?.cdnUrl) {
+//         // Existing image object from API (edit mode) — send URL string as text field
+//         formData.append("contactOtherImages", img.cdnUrl);
+//       } else if (typeof img === "string" && img) {
+//         // Already a plain URL string
+//         formData.append("contactOtherImages", img);
+//       }
+//     });
+//   }
+
+//   return formData;
+// }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 export default function ContactUsForm({ onChange, disabled }) {
