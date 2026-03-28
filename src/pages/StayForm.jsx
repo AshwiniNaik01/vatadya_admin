@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import * as Yup from "yup";
 
 import {
@@ -27,7 +27,7 @@ import CustomDatePicker from "../components/form/CustomDatePicker";
 import RichTextEditor from "../components/form/RichTextEditor";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaChevronRight } from "react-icons/fa";
-import { createStay } from "../api/staysApi";
+import { createStay, getStayById, updateStay } from "../api/staysApi";
 
 // ─── Validation Schema ──────────────────────────────────────────────────────
 const stayValidationSchema = Yup.object().shape({
@@ -139,14 +139,14 @@ const DEFAULT_FORM = {
     country: "India",
   },
   feeDetails: {
-    basePrice: { amount: 0, description: "" }, // was: baseFee
-    pricingType: { description: "" }, // missing entirely
-    weekendCharge: { amount: 0, description: "" }, // missing
-    peakMultiplier: { value: 1, description: "" }, // missing
-    mealPrice: { amount: 0, description: "" }, // missing
-    extraBedPrice: { amount: 0, description: "" }, // missing
-    discount: { value: 0, description: "" }, // ✓ exists
-    gstPercent: { value: 5, description: "" }, // ✓ exists
+    basePrice: { amount: 0, description: "" },
+    pricingType: { description: "" },
+    weekendCharge: { amount: 0, description: "" },
+    peakMultiplier: { value: 1, description: "" },
+    mealPrice: { amount: 0, description: "" },
+    extraBedPrice: { amount: 0, description: "" },
+    discount: { value: 0, description: "" },
+    gstPercent: { value: 5, description: "" },
   },
   addons: [],
   image: null,
@@ -165,6 +165,90 @@ export default function StayForm() {
   const priceInputRef = useRef(null);
   const { id } = useParams();
   const isEditMode = !!id;
+  // Add this useEffect after: const isEditMode = !!id;
+  useEffect(() => {
+    if (!isEditMode) return;
+
+    const fetchStay = async () => {
+      try {
+        setLoading(true);
+        const res = await getStayById(id);
+        const stay = res.data || res;
+
+        setFormData({
+          title: stay.title || "",
+          duration: stay.duration || "",
+          groupSize: stay.groupSize || "",
+          price: stay.price || 0,
+          featured: stay.featured || false,
+          isActive: stay.isActive !== undefined ? stay.isActive : true,
+          startTime: stay.startTime || "",
+          endTime: stay.endTime || "",
+          tags: stay.tags || [],
+          description: stay.description || "",
+          highlight: stay.highlight || "",
+          reg_type: stay.reg_type || "AC",
+          bookingType: stay.bookingType || "",
+          category: stay.category || null,
+          startDate: stay.startDate ? new Date(stay.startDate) : null,
+          endDate: stay.endDate ? new Date(stay.endDate) : null,
+          mapUrl: stay.mapUrl || "",
+          address: {
+            address1: stay.address?.address1 || "",
+            address2: stay.address?.address2 || "",
+            nearbyLocation: stay.address?.nearbyLocation || "",
+            street: stay.address?.street || "",
+            district: stay.address?.district || "",
+            city: stay.address?.city || "",
+            state: stay.address?.state || null,
+            pincode: stay.address?.pincode || "",
+            country: stay.address?.country || "India",
+          },
+          feeDetails: {
+            basePrice: stay.feeDetails?.basePrice || {
+              amount: 0,
+              description: "",
+            },
+            pricingType: stay.feeDetails?.pricingType || { description: "" },
+            weekendCharge: stay.feeDetails?.weekendCharge || {
+              amount: 0,
+              description: "",
+            },
+            peakMultiplier: stay.feeDetails?.peakMultiplier || {
+              value: 1,
+              description: "",
+            },
+            mealPrice: stay.feeDetails?.mealPrice || {
+              amount: 0,
+              description: "",
+            },
+            extraBedPrice: stay.feeDetails?.extraBedPrice || {
+              amount: 0,
+              description: "",
+            },
+            discount: stay.feeDetails?.discount || {
+              value: 0,
+              description: "",
+            },
+            gstPercent: stay.feeDetails?.gstPercent || {
+              value: 5,
+              description: "",
+            },
+          },
+          addons: stay.addons || [],
+          // Keep existing image/gallery URLs as strings for display
+          image: stay.image?.cdnUrl || stay.image || null,
+          gallery: (stay.gallery || []).map((g) => g?.cdnUrl || g),
+        });
+      } catch (err) {
+        setErrorMessage("Failed to load stay data for editing.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStay();
+  }, [id, isEditMode]);
 
   const tabs = [
     { id: "basic", label: "Basic Info", icon: FaInfoCircle },
@@ -204,27 +288,45 @@ export default function StayForm() {
 
   const calculateFinalFee = (doc) => {
     const fd = doc.feeDetails || {};
-    const num = (obj, key) =>
-      obj && typeof obj === "object" ? Number(obj[key] ?? 0) : Number(obj ?? 0);
 
-    const base = num(fd.basePrice, "amount");
-    const discountAmt = (base * num(fd.discount, "value")) / 100;
-    const baseAfterDisc = base - discountAmt;
-    const gst = (baseAfterDisc * num(fd.gstPercent, "value")) / 100;
-    const weekend = num(fd.weekendCharge, "amount");
-    const peak = baseAfterDisc * (num(fd.peakMultiplier, "value") - 1); // multiplier above 1x
-    const meal = num(fd.mealPrice, "amount");
-    const extraBed = num(fd.extraBedPrice, "amount");
+    const getAmount = (obj) => Number(obj?.amount ?? 0);
+    const getValue = (obj) => Number(obj?.value ?? 0);
+
+    // Base price
+    const base = getAmount(fd.basePrice);
+
+    // Discount (on base)
+    const discountPercent = getValue(fd.discount);
+    const discountAmount = (base * discountPercent) / 100;
+    const discountedBase = base - discountAmount;
+
+    // Peak pricing (only if > 1)
+    const peakMultiplier = getValue(fd.peakMultiplier);
+    const peakAdjustedBase =
+      peakMultiplier > 1 ? discountedBase * peakMultiplier : discountedBase;
+
+    // Add-ons / optional charges
+    const weekend = getAmount(fd.weekendCharge);
+    const meal = getAmount(fd.mealPrice);
+    const extraBed = getAmount(fd.extraBedPrice);
+
+    // Dynamic addons
     const addonsTotal = (doc.addons || []).reduce(
-      (s, a) => s + Number(a.price || 0),
+      (sum, a) => sum + Number(a.price || 0),
       0,
     );
 
-    return Math.round(
-      baseAfterDisc + gst + weekend + peak + meal + extraBed + addonsTotal,
-    );
-  };
+    // Subtotal before GST
+    const subtotal = peakAdjustedBase + weekend + meal + extraBed + addonsTotal;
 
+    // GST (on subtotal)
+    const gstPercent = getValue(fd.gstPercent);
+    const gstAmount = (subtotal * gstPercent) / 100;
+
+    const finalAmount = subtotal + gstAmount;
+
+    return Math.round(finalAmount);
+  };
   const updateFeeDetails = (updatedFeeDetails) => {
     const updated = { ...formData, feeDetails: updatedFeeDetails };
     setFormData({ ...updated, price: calculateFinalFee(updated) });
@@ -321,7 +423,12 @@ export default function StayForm() {
             formDataToSend.append("gallery", item);
         });
       }
-      await createStay(formDataToSend);
+      // With:
+      if (isEditMode) {
+        await updateStay(id, formDataToSend);
+      } else {
+        await createStay(formDataToSend);
+      }
       navigate("/stay/manage");
     } catch (err) {
       if (err.name === "ValidationError") {

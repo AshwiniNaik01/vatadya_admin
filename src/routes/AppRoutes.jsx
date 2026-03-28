@@ -80,6 +80,7 @@ export default function AppRoutes() {
 
           {/* Stay */}
           <Route path={"/stay/create"} element={<StayForm />} />
+          <Route path="/stay/edit/:id" element={<StayForm />} />
           <Route path={"/stay/manage"} element={<ManageStay />} />
         </Route>
       </Route>
