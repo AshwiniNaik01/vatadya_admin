@@ -24,6 +24,7 @@ import WhyChooseUsForm from "../components/user-insights/WhyChooseUsForm";
 import SafetyStandardsForm from "../components/user-insights/SafetyStandardsForm";
 import FaqForm from "../components/user-insights/FaqForm";
 import FeaturesForm from "../components/user-insights/FeaturesForm";
+import FooterForm from "../components/user-insights/FooterForm";
 
 // ─── Nav Config ───────────────────────────────────────────────────────────────
 const NAV = [
@@ -34,6 +35,7 @@ const NAV = [
   { key: "safetyStandards", label: "Safety Standards", Icon: FaShieldAlt },
   { key: "faq", label: "FAQ", Icon: FaQuestionCircle },
   { key: "features", label: "Features", Icon: FaStar },
+  { key: "footer", label: "Footer", Icon: FaTh },
 ];
 
 const SECTION_META = {
@@ -72,6 +74,11 @@ const SECTION_META = {
     sub: "List your product features and metrics",
     Icon: FaStar,
   },
+  footer: {
+    label: "Footer",
+    sub: "Edit footer content and links",
+    Icon: FaTh,
+  },
 };
 
 // ─── Initial State ────────────────────────────────────────────────────────────
@@ -107,6 +114,23 @@ const initData = () => ({
   safetyStandards: { title: "", description: "", standards: [] },
   faq: { mainTitle: "Frequently Asked Questions", faqs: [] },
   features: { mainTitle: "Our Features", features: [] },
+  footer: {
+    brand: { tagline: "", description: "" },
+    socialLinks: { facebook: "", instagram: "", twitter: "", youtube: "" },
+    contact: {
+      phone: "",
+      email: "",
+      address: {
+        line1: "",
+        line2: "",
+        city: "",
+        state: "",
+        country: "",
+        pincode: "",
+      },
+    },
+    footerBottom: { year: new Date().getFullYear(), companyName: "" },
+  },
 });
 
 // ─── API Map ──────────────────────────────────────────────────────────────────
@@ -118,6 +142,7 @@ const API_URLS = {
   safetyStandards: "/safety-standards",
   faq: "/faqs",
   features: "/our-features",
+  footer: "/footer",
 };
 
 const FORMS = {
@@ -128,6 +153,7 @@ const FORMS = {
   safetyStandards: SafetyStandardsForm,
   faq: FaqForm,
   features: FeaturesForm,
+  footer: FooterForm,
 };
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
@@ -414,7 +440,7 @@ export default function SectionManager() {
       // ✅ Decide API method + URL
       const method = hasId ? "put" : "post";
       const url = hasId
-        ? `${API_URLS[current]}/${data._id}` // update
+        ? `${API_URLS[current]}` // update
         : API_URLS[current]; // create
 
       console.log("METHOD:", method);

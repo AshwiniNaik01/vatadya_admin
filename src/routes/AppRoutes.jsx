@@ -20,10 +20,11 @@ import ManageContacts from "../pages/ManageContacts";
 import ManageSlot from "../pages/ManageSlot";
 import BookingTreks from "../pages/BookingTreks";
 import UserInsights from "../pages/UserInsights";
-import AboutUsForm from "../pages/AboutUs";
-import ContactUsForm from "../pages/ContactUs";
+import AboutUsForm from "../components/user-insights/AboutUs";
+import ContactUsForm from "../components/user-insights/ContactUs";
 import StayForm from "../pages/StayForm";
 import ManageStay from "../pages/ManageStay";
+import UserManagement from "../pages/UserManagement";
 
 export default function AppRoutes() {
   return (
@@ -82,6 +83,9 @@ export default function AppRoutes() {
           <Route path={"/stay/create"} element={<StayForm />} />
           <Route path="/stay/edit/:id" element={<StayForm />} />
           <Route path={"/stay/manage"} element={<ManageStay />} />
+
+          {/* User Management */}
+          <Route path="/users" element={<UserManagement />} />
         </Route>
       </Route>
     </Routes>
