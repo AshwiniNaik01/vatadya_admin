@@ -15,9 +15,12 @@ import {
   deleteGalleryItem,
   updateGallery,
 } from "../api/galleryApi";
+import { usePermissions } from "../components/hooks/usePermissions";
 
 export default function ManageTrekGallery() {
   const navigate = useNavigate();
+  const { hasPermission } = usePermissions();
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -208,18 +211,23 @@ export default function ManageTrekGallery() {
                 <p className="text-sm text-gray-500">Region: {item.region}</p>
 
                 <div className="flex justify-end gap-2 mt-2">
-                  <button
-                    onClick={() => handleEdit(item)}
-                    className="px-3 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition text-sm flex items-center gap-1"
-                  >
-                    <FiEdit /> Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(item)}
-                    className="px-3 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition text-sm flex items-center gap-1"
-                  >
-                    <FiTrash2 /> Delete
-                  </button>
+                  {hasPermission("booking", "update") && (
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className="px-3 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition text-sm flex items-center gap-1"
+                    >
+                      <FiEdit /> Edit
+                    </button>
+                  )}
+
+                  {hasPermission("booking", "delete") && (
+                    <button
+                      onClick={() => handleDelete(item)}
+                      className="px-3 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition text-sm flex items-center gap-1"
+                    >
+                      <FiTrash2 /> Delete
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

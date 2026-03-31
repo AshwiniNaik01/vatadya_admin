@@ -14,9 +14,13 @@ import {
   FaInfoCircle,
   FaImage,
 } from "react-icons/fa";
+import { usePermissions } from "../components/hooks/usePermissions";
 
 export default function ManageCategories() {
   const navigate = useNavigate();
+
+  const { hasPermission } = usePermissions();
+
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -78,15 +82,24 @@ export default function ManageCategories() {
   };
 
   const rowActions = [
-    { label: "View Details", icon: <FaEye />, onClick: handleView },
-    { label: "Edit Category", icon: <FaEdit />, onClick: handleEdit },
-    {
+    // View is always visible (read permission)
+    hasPermission("trekCategory", "read") && {
+      label: "View Details",
+      icon: <FaEye />,
+      onClick: handleView,
+    },
+    hasPermission("trekCategory", "update") && {
+      label: "Edit Category",
+      icon: <FaEdit />,
+      onClick: handleEdit,
+    },
+    hasPermission("trekCategory", "delete") && {
       label: "Delete",
       icon: <FaTrashAlt />,
       onClick: handleDelete,
       variant: "danger",
     },
-  ];
+  ].filter(Boolean); //
 
   const columns = [
     {
