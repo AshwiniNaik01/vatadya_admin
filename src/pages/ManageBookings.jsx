@@ -39,7 +39,7 @@ export default function ManageBookings() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [apiError, setApiError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const { hasPermission } = usePermissions();
+  // const { hasPermission } = usePermissions();
 
   /* ---------------- Fetch All Bookings ---------------- */
   useEffect(() => {
@@ -278,35 +278,35 @@ export default function ManageBookings() {
     },
   ];
 
-  // const rowActions = [
-  //   { label: "View Booking", icon: <FaEye />, onClick: handleView },
-  //   { label: "Edit Booking", icon: <FaEdit />, onClick: handleEdit },
-  //   {
-  //     label: "Delete Booking",
-  //     icon: <FaTrashAlt />,
-  //     onClick: handleDelete,
-  //     variant: "danger",
-  //   },
-  // ];
-
   const rowActions = [
-    hasPermission("booking", "read") && {
-      label: "View Booking",
-      icon: <FaEye />,
-      onClick: handleView,
-    },
-    hasPermission("booking", "update") && {
-      label: "Edit Booking",
-      icon: <FaEdit />,
-      onClick: handleEdit,
-    },
-    hasPermission("booking", "delete") && {
+    { label: "View Booking", icon: <FaEye />, onClick: handleView },
+    { label: "Edit Booking", icon: <FaEdit />, onClick: handleEdit },
+    {
       label: "Delete Booking",
       icon: <FaTrashAlt />,
       onClick: handleDelete,
       variant: "danger",
     },
-  ].filter(Boolean);
+  ];
+
+  // const rowActions = [
+  //   hasPermission("booking", "read") && {
+  //     label: "View Booking",
+  //     icon: <FaEye />,
+  //     onClick: handleView,
+  //   },
+  //   hasPermission("booking", "update") && {
+  //     label: "Edit Booking",
+  //     icon: <FaEdit />,
+  //     onClick: handleEdit,
+  //   },
+  //   hasPermission("booking", "delete") && {
+  //     label: "Delete Booking",
+  //     icon: <FaTrashAlt />,
+  //     onClick: handleDelete,
+  //     variant: "danger",
+  //   },
+  // ].filter(Boolean);
 
   /* ---------------- JSX ---------------- */
   return (
