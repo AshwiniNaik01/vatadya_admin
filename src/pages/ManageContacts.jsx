@@ -14,6 +14,7 @@ import {
   HiRefresh,
 } from "react-icons/hi";
 import { getAllContacts } from "../api/contactApi";
+// import { usePermissions } from "../components/hooks/usePermissions";
 
 const ManageContacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -22,6 +23,7 @@ const ManageContacts = () => {
   const [filterStatus, setFilterStatus] = useState("all");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // const { hasPermission } = usePermissions();
 
   // Fetch contacts on component mount
   useEffect(() => {
@@ -311,8 +313,8 @@ const ManageContacts = () => {
                               <div className="text-gray-700 font-medium">
                                 {contact.createdAt
                                   ? new Date(
-                                    contact.createdAt,
-                                  ).toLocaleDateString()
+                                      contact.createdAt,
+                                    ).toLocaleDateString()
                                   : "N/A"}
                               </div>
                             </td>
@@ -320,12 +322,14 @@ const ManageContacts = () => {
                             {/* Actions */}
                             <td className="px-6 py-5">
                               <div className="flex justify-center">
+                                {/* {hasPermission("contact", "read") && ( */}
                                 <button
                                   onClick={() => toggleRow(contact.id)}
-                                  className={`group flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all ${expandedRow === contact.id
-                                    ? "bg-blue-600 text-white shadow-lg"
-                                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
-                                    }`}
+                                  className={`group flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                                    expandedRow === contact.id
+                                      ? "bg-blue-600 text-white shadow-lg"
+                                      : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                                  }`}
                                 >
                                   {expandedRow === contact.id ? "Hide" : "View"}
                                   {expandedRow === contact.id ? (
@@ -334,6 +338,7 @@ const ManageContacts = () => {
                                     <HiChevronDown className="w-4 h-4 group-hover:translate-y-0.5 transition-transform" />
                                   )}
                                 </button>
+                                {/* )} */}
                               </div>
                             </td>
                           </tr>
@@ -396,13 +401,13 @@ const ManageContacts = () => {
                                           <HiCalendar className="w-4 h-4 text-blue-600" />
                                           {contact.createdAt
                                             ? new Date(
-                                              contact.createdAt,
-                                            ).toLocaleDateString("en-US", {
-                                              weekday: "long",
-                                              year: "numeric",
-                                              month: "long",
-                                              day: "numeric",
-                                            })
+                                                contact.createdAt,
+                                              ).toLocaleDateString("en-US", {
+                                                weekday: "long",
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                              })
                                             : "N/A"}
                                         </div>
                                       </div>

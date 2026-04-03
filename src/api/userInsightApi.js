@@ -17,13 +17,13 @@ import axiosInstance from "../api/axiosInstance";
  * @returns {Promise<Object>} - The created hero section from the server.
  */
 export const createHero = async (heroData) => {
-    try {
-        const response = await axiosInstance.post("/hero", heroData);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (createHero):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.post("/hero", heroData);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (createHero):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -31,13 +31,13 @@ export const createHero = async (heroData) => {
  * @returns {Promise<Object>} - The hero section data from the server.
  */
 export const getHero = async () => {
-    try {
-        const response = await axiosInstance.get("/hero");
-        return response.data;
-    } catch (error) {
-        console.error("API Error (getHero):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.get("/hero");
+    return response.data;
+  } catch (error) {
+    console.error("API Error (getHero):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -47,13 +47,13 @@ export const getHero = async () => {
  * @returns {Promise<Object>} - The updated hero section from the server.
  */
 export const updateHero = async (id, heroData) => {
-    try {
-        const response = await axiosInstance.put(`/hero/${id}`, heroData);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (updateHero):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.put(`/hero/${id}`, heroData);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (updateHero):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -62,13 +62,13 @@ export const updateHero = async (id, heroData) => {
  * @returns {Promise<Object>} - The deletion confirmation from the server.
  */
 export const deleteHero = async (id) => {
-    try {
-        const response = await axiosInstance.delete(`/hero/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (deleteHero):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.delete(`/hero/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (deleteHero):", error);
+    throw error.response?.data || error;
+  }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -87,13 +87,13 @@ export const deleteHero = async (id) => {
  * @returns {Promise<Object>} - The created mission & vision section from the server.
  */
 export const createMissionVision = async (data) => {
-    try {
-        const response = await axiosInstance.post("/mission-vision", data);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (createMissionVision):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.post("/mission-vision", data);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (createMissionVision):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -101,13 +101,13 @@ export const createMissionVision = async (data) => {
  * @returns {Promise<Object>} - The mission & vision section data from the server.
  */
 export const getMissionVision = async () => {
-    try {
-        const response = await axiosInstance.get("/mission-vision");
-        return response.data;
-    } catch (error) {
-        console.error("API Error (getMissionVision):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.get("/mission-vision");
+    return response.data;
+  } catch (error) {
+    console.error("API Error (getMissionVision):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -117,13 +117,13 @@ export const getMissionVision = async () => {
  * @returns {Promise<Object>} - The updated mission & vision section from the server.
  */
 export const updateMissionVision = async (id, data) => {
-    try {
-        const response = await axiosInstance.put(`/mission-vision/${id}`, data);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (updateMissionVision):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.put(`/mission-vision/${id}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (updateMissionVision):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -132,13 +132,13 @@ export const updateMissionVision = async (id, data) => {
  * @returns {Promise<Object>} - The deletion confirmation from the server.
  */
 export const deleteMissionVision = async (id) => {
-    try {
-        const response = await axiosInstance.delete(`/mission-vision/${id}`);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (deleteMissionVision):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.delete(`/mission-vision/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (deleteMissionVision):", error);
+    throw error.response?.data || error;
+  }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -154,13 +154,13 @@ export const deleteMissionVision = async (id) => {
  * @returns {Promise<Object>} - The created FAQ entry from the server.
  */
 export const createFaq = async (faqData) => {
-    try {
-        const response = await axiosInstance.post("/faqs", faqData);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (createFaq):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.post("/faqs", faqData);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (createFaq):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -169,14 +169,14 @@ export const createFaq = async (faqData) => {
  * @returns {Promise<Array<Object>>} - The list of FAQ entries from the server.
  */
 export const getFaqs = async (category) => {
-    try {
-        const params = category ? { category } : {};
-        const response = await axiosInstance.get("/faqs", { params });
-        return response.data;
-    } catch (error) {
-        console.error("API Error (getFaqs):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const params = category ? { category } : {};
+    const response = await axiosInstance.get("/faqs", { params });
+    return response.data;
+  } catch (error) {
+    console.error("API Error (getFaqs):", error);
+    throw error.response?.data || error;
+  }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -192,13 +192,13 @@ export const getFaqs = async (category) => {
  * @returns {Promise<Object>} - The created safety standards section from the server.
  */
 export const createSafetyStandards = async (data) => {
-    try {
-        const response = await axiosInstance.post("/safety-standards", data);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (createSafetyStandards):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.post("/safety-standards", data);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (createSafetyStandards):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -206,13 +206,13 @@ export const createSafetyStandards = async (data) => {
  * @returns {Promise<Object>} - The safety standards section data from the server.
  */
 export const getSafetyStandards = async () => {
-    try {
-        const response = await axiosInstance.get("/safety-standards");
-        return response.data;
-    } catch (error) {
-        console.error("API Error (getSafetyStandards):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.get("/safety-standards");
+    return response.data;
+  } catch (error) {
+    console.error("API Error (getSafetyStandards):", error);
+    throw error.response?.data || error;
+  }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -227,13 +227,13 @@ export const getSafetyStandards = async () => {
  * @returns {Promise<Object>} - The created how-we-work entry from the server.
  */
 export const createHowWeWork = async (data) => {
-    try {
-        const response = await axiosInstance.post("/how-we-work", data);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (createHowWeWork):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.post("/how-we-work", data);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (createHowWeWork):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -241,13 +241,13 @@ export const createHowWeWork = async (data) => {
  * @returns {Promise<Array<Object>>} - The list of how-we-work entries from the server.
  */
 export const getHowWeWork = async () => {
-    try {
-        const response = await axiosInstance.get("/how-we-work");
-        return response.data;
-    } catch (error) {
-        console.error("API Error (getHowWeWork):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.get("/how-we-work");
+    return response.data;
+  } catch (error) {
+    console.error("API Error (getHowWeWork):", error);
+    throw error.response?.data || error;
+  }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -267,13 +267,13 @@ export const getHowWeWork = async () => {
  * @returns {Promise<Object>} - The created why-choose-us section from the server.
  */
 export const createWhyChooseUs = async (data) => {
-    try {
-        const response = await axiosInstance.post("/why-choose-us", data);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (createWhyChooseUs):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.post("/why-choose-us", data);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (createWhyChooseUs):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -281,13 +281,13 @@ export const createWhyChooseUs = async (data) => {
  * @returns {Promise<Object>} - The why-choose-us section data from the server.
  */
 export const getWhyChooseUs = async () => {
-    try {
-        const response = await axiosInstance.get("/why-choose-us");
-        return response.data;
-    } catch (error) {
-        console.error("API Error (getWhyChooseUs):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.get("/why-choose-us");
+    return response.data;
+  } catch (error) {
+    console.error("API Error (getWhyChooseUs):", error);
+    throw error.response?.data || error;
+  }
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -305,13 +305,13 @@ export const getWhyChooseUs = async () => {
  * @returns {Promise<Object>} - The created feature entry from the server.
  */
 export const createFeature = async (data) => {
-    try {
-        const response = await axiosInstance.post("/our-features", data);
-        return response.data;
-    } catch (error) {
-        console.error("API Error (createFeature):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.post("/our-features", data);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (createFeature):", error);
+    throw error.response?.data || error;
+  }
 };
 
 /**
@@ -319,11 +319,79 @@ export const createFeature = async (data) => {
  * @returns {Promise<Array<Object>>} - The list of feature entries from the server.
  */
 export const getFeatures = async () => {
-    try {
-        const response = await axiosInstance.get("/our-features");
-        return response.data;
-    } catch (error) {
-        console.error("API Error (getFeatures):", error);
-        throw error.response?.data || error;
-    }
+  try {
+    const response = await axiosInstance.get("/our-features");
+    return response.data;
+  } catch (error) {
+    console.error("API Error (getFeatures):", error);
+    throw error.response?.data || error;
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+//  FOOTER
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Creates a new footer section.
+ * @param {Object} footerData - The footer section data.
+ * @returns {Promise<Object>} - The created footer section from the server.
+ */
+export const createFooter = async (footerData) => {
+  try {
+    const response = await axiosInstance.post("/footer", footerData);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (createFooter):", error);
+    throw error.response?.data || error;
+  }
+};
+
+/**
+ * Fetches the footer section.
+ * @returns {Promise<Object>} - The footer section data from the server.
+ */
+export const getFooter = async () => {
+  try {
+    const response = await axiosInstance.get("/footer");
+    return response.data;
+  } catch (error) {
+    console.error("API Error (getFooter):", error);
+    throw error.response?.data || error;
+  }
+};
+
+/**
+ * Updates an existing footer section by ID.
+ * @param {string} id - The footer section document ID.
+ * @param {Object} footerData - The updated footer section data.
+ * @param {Object} [footerData.brand] - Updated brand info block.
+ * @param {Object} [footerData.socialLinks] - Updated social media URLs.
+ * @param {Object} [footerData.contact] - Updated contact details block.
+ * @param {Object} [footerData.footerBottom] - Updated footer bottom bar data.
+ * @returns {Promise<Object>} - The updated footer section from the server.
+ */
+export const updateFooter = async (footerData) => {
+  try {
+    const response = await axiosInstance.put("/footer", footerData);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (updateFooter):", error);
+    throw error.response?.data || error;
+  }
+};
+
+/**
+ * Deletes a footer section by ID.
+ * @param {string} id - The footer section document ID.
+ * @returns {Promise<Object>} - The deletion confirmation from the server.
+ */
+export const deleteFooter = async (id) => {
+  try {
+    const response = await axiosInstance.delete(`/footer/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("API Error (deleteFooter):", error);
+    throw error.response?.data || error;
+  }
 };

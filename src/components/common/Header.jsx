@@ -20,7 +20,7 @@ export default function Header({ onToggleSidebar }) {
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-3">
           <h2 className="font-black text-xl text-slate-800 tracking-tight">
-            VataDya <span className="text-blue-600">Console</span>
+            Vatadya <span className="text-blue-600">Console</span>
           </h2>
         </div>
       </div>

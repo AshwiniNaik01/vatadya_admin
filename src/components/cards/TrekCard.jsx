@@ -10,6 +10,7 @@ import {
   FaTimesCircle,
   FaStar,
 } from "react-icons/fa";
+import PermissionGuard from "../wrapper/PermissionGuard";
 
 export default function TrekCard({ trek, onEdit, onView, onDelete }) {
   const difficultyColors = {
@@ -105,7 +106,9 @@ export default function TrekCard({ trek, onEdit, onView, onDelete }) {
                 Size
               </p>
               <p className="text-xs font-black text-gray-700">
-                {trek.groupSize}
+                {trek.groupSize
+                  ? `${trek.groupSize} people`
+                  : `${trek.adults} Adults, ${trek.children} Children`}
               </p>
             </div>
           </div>
@@ -138,6 +141,7 @@ export default function TrekCard({ trek, onEdit, onView, onDelete }) {
             >
               <FaEdit size={14} />
             </button>
+            {/* <PermissionGuard module="trek" action="delete"> */}
             <button
               onClick={() => onDelete(trek)}
               className="p-2.5 rounded-xl bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all active:scale-95"
@@ -145,6 +149,7 @@ export default function TrekCard({ trek, onEdit, onView, onDelete }) {
             >
               <FaTrashAlt size={14} />
             </button>
+            {/* </PermissionGuard> */}
           </div>
         </div>
       </div>

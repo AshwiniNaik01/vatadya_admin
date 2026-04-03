@@ -329,7 +329,8 @@ export default function ManageStays() {
                   Group Size
                 </p>
                 <p className="text-sm font-bold text-gray-800">
-                  {selectedStay.groupSize || "N/A"}
+                  {selectedStay.adults || "N/A"} Adults &{" "}
+                  {selectedStay.children || "N/A"} Children
                 </p>
               </div>
               <div>
@@ -353,7 +354,7 @@ export default function ManageStays() {
                   Base Fee
                 </p>
                 <p className="text-sm font-bold text-gray-800">
-                  Rs. {selectedStay?.feeDetails?.baseFee?.amount || 0}
+                  Rs. {selectedStay?.feeDetails?.basePrice?.amount || 0}
                 </p>
               </div>
             </div>
@@ -384,16 +385,25 @@ export default function ManageStays() {
             {/* Highlights & Description */}
             <div className="space-y-2">
               <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
-                <FaInfoCircle className="text-blue-500" /> Highlights &
-                Description
+                <FaInfoCircle className="text-blue-500" /> Highlights
+              </h4>
+              <div
+                className="text-sm text-gray-600 leading-relaxed font-medium bg-white p-4 rounded-xl border border-gray-100"
+                dangerouslySetInnerHTML={{
+                  __html: selectedStay.highlight || "No Highlight provided.",
+                }}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                <FaInfoCircle className="text-blue-500" /> Description
               </h4>
               <div
                 className="text-sm text-gray-600 leading-relaxed font-medium bg-white p-4 rounded-xl border border-gray-100"
                 dangerouslySetInnerHTML={{
                   __html:
-                    selectedStay.highlight ||
-                    selectedStay.description ||
-                    "No description provided.",
+                    selectedStay.description || "No description provided.",
                 }}
               />
             </div>
@@ -405,7 +415,7 @@ export default function ManageStays() {
                   <FiImage className="text-blue-500" /> Property Gallery
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {selectedStay.gallery.map((img, index) => (
+                  {selectedStay.gallery?.map((img, index) => (
                     <img
                       key={index}
                       src={img?.cdnUrl || img}
