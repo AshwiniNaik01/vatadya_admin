@@ -272,7 +272,7 @@ const UserManagement = () => {
   };
 
   const inputCls =
-    "w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-800 " +
+    "w-[400px] bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-800 " +
     "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition placeholder:text-slate-400";
 
   return (
@@ -295,7 +295,7 @@ const UserManagement = () => {
         </div>
 
         {/* ── Filters Bar ──────────────────────────────────────────────── */}
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 justify-between">
           {/* Search */}
           <div className="relative flex-1 max-w-sm">
             <FaSearch
@@ -315,7 +315,7 @@ const UserManagement = () => {
           <select
             value={selectedRole}
             onChange={(e) => setSelectedRole(e.target.value)}
-            className={`${inputCls} w-auto min-w-[160px]`}
+            className={`${inputCls}  min-w-[400px]`}
           >
             <option value="">All Roles</option>
             {roles.map((r) => (

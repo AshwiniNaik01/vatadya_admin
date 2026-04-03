@@ -25,7 +25,7 @@ import SafetyStandardsForm from "../components/user-insights/SafetyStandardsForm
 import FaqForm from "../components/user-insights/FaqForm";
 import FeaturesForm from "../components/user-insights/FeaturesForm";
 import FooterForm from "../components/user-insights/FooterForm";
-import { usePermissions } from "../components/hooks/usePermissions";
+// import { usePermissions } from "../components/hooks/usePermissions";
 
 // ─── Nav Config ───────────────────────────────────────────────────────────────
 const NAV = [
@@ -179,7 +179,7 @@ function Toast({ show, message, isError }) {
 export default function SectionManager() {
   const { tab } = useParams();
   const navigate = useNavigate();
-  const { hasPermission } = usePermissions();
+  // const { hasPermission } = usePermissions();
 
   const [current, setCurrent] = useState(tab && FORMS[tab] ? tab : "hero");
   const [formData, setFormData] = useState(initData());
@@ -603,32 +603,32 @@ export default function SectionManager() {
                 >
                   <FaEye className="text-xs" /> View
                 </button> */}
-                {hasPermission("userInsight", "update") && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={handleEdit}
-                      disabled={isLoading || isEditing}
-                      className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-xl border border-blue-200 text-blue-600 font-semibold hover:bg-blue-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      <FaCog className="text-xs" /> Edit
-                    </button>
+                {/* {hasPermission("userInsight", "update") && ( */}
+                {/* <> */}
+                <button
+                  type="button"
+                  onClick={handleEdit}
+                  disabled={isLoading || isEditing}
+                  className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-xl border border-blue-200 text-blue-600 font-semibold hover:bg-blue-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <FaCog className="text-xs" /> Edit
+                </button>
 
-                    <button
-                      type="button"
-                      disabled={isSaving || isLoading}
-                      onClick={handleSave}
-                      className="inline-flex items-center gap-2 text-sm px-6 py-2 rounded-xl bg-linear-to-r from-blue-600 to-blue-500 text-white font-bold shadow-md shadow-blue-500/30 hover:from-blue-700 hover:to-blue-600 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
-                    >
-                      {isSaving ? (
-                        <div className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
-                      ) : (
-                        <FaSave className="text-xs" />
-                      )}
-                      {isSaving ? "Saving..." : "Save Section"}
-                    </button>
-                  </>
-                )}
+                <button
+                  type="button"
+                  disabled={isSaving || isLoading}
+                  onClick={handleSave}
+                  className="inline-flex items-center gap-2 text-sm px-6 py-2 rounded-xl bg-linear-to-r from-blue-600 to-blue-500 text-white font-bold shadow-md shadow-blue-500/30 hover:from-blue-700 hover:to-blue-600 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
+                >
+                  {isSaving ? (
+                    <div className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
+                  ) : (
+                    <FaSave className="text-xs" />
+                  )}
+                  {isSaving ? "Saving..." : "Save Section"}
+                </button>
+                {/* </> */}
+                {/* )} */}
               </div>
             </div>
           </div>

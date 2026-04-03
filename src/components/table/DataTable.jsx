@@ -110,7 +110,7 @@ export default function DataTable({
       </div>
 
       {/* Table Container */}
-      <div className="max-h-[650px] overflow-y-auto custom-scrollbar relative">
+      <div className="max-h-[650px] min-h-[250px] overflow-y-auto custom-scrollbar relative">
         <table className="w-full text-left border-collapse">
           <thead className="sticky top-0 z-20 shadow-sm">
             <tr className="bg-white">
@@ -162,10 +162,11 @@ export default function DataTable({
                       >
                         <button
                           onClick={() => toggleDropdown(rowIdx)}
-                          className={`p-2 rounded-xl transition-all shadow-sm border ${activeDropdown === rowIdx
-                            ? "bg-amber-500 border-amber-400 text-white shadow-amber-500/20"
-                            : "text-blue-200 border-transparent hover:text-amber-600 hover:bg-white hover:border-blue-100"
-                            }`}
+                          className={`p-2 rounded-xl transition-all shadow-sm border ${
+                            activeDropdown === rowIdx
+                              ? "bg-amber-500 border-amber-400 text-white shadow-amber-500/20"
+                              : "text-blue-200 border-transparent hover:text-amber-600 hover:bg-white hover:border-blue-100"
+                          }`}
                         >
                           <FaEllipsisV />
                         </button>
@@ -181,9 +182,10 @@ export default function DataTable({
                                   setActiveDropdown(null);
                                 }}
                                 className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold transition-all text-left
-                                  ${action.variant === "danger"
-                                    ? "text-red-500 hover:bg-red-50"
-                                    : "text-blue-700 hover:bg-blue-50"
+                                  ${
+                                    action.variant === "danger"
+                                      ? "text-red-500 hover:bg-red-50"
+                                      : "text-blue-700 hover:bg-blue-50"
                                   }
                                 `}
                               >
@@ -222,7 +224,7 @@ export default function DataTable({
       </div>
 
       {/* Pagination Footer */}
-      <div className="p-6 bg-blue-50/10 border-t border-blue-50 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-6 bg-blue-50/10 border-t border-blue-50 flex flex-col sm:flex-row items-center justify-between gap-4 ">
         <p className="text-sm font-bold text-blue-900/50">
           Showing{" "}
           <span className="text-blue-700">
@@ -254,9 +256,10 @@ export default function DataTable({
                     key={page}
                     onClick={() => handlePageChange(page)}
                     className={`min-w-[40px] h-10 rounded-xl text-sm font-black transition-all shadow-sm border
-                      ${currentPage === page
-                        ? "bg-amber-500 border-amber-400 text-white shadow-amber-500/20"
-                        : "bg-white border-blue-100 text-blue-700 hover:bg-blue-50"
+                      ${
+                        currentPage === page
+                          ? "bg-amber-500 border-amber-400 text-white shadow-amber-500/20"
+                          : "bg-white border-blue-100 text-blue-700 hover:bg-blue-50"
                       }`}
                   >
                     {page}

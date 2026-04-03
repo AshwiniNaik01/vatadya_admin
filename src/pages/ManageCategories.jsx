@@ -19,7 +19,7 @@ import { usePermissions } from "../components/hooks/usePermissions";
 export default function ManageCategories() {
   const navigate = useNavigate();
 
-  const { hasPermission } = usePermissions();
+  // const { hasPermission } = usePermissions();
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -83,23 +83,26 @@ export default function ManageCategories() {
 
   const rowActions = [
     // View is always visible (read permission)
-    hasPermission("trekCategory", "read") && {
+    // hasPermission("trekCategory", "read") &&
+    {
       label: "View Details",
       icon: <FaEye />,
       onClick: handleView,
     },
-    hasPermission("trekCategory", "update") && {
+    // hasPermission("trekCategory", "update") &&
+    {
       label: "Edit Category",
       icon: <FaEdit />,
       onClick: handleEdit,
     },
-    hasPermission("trekCategory", "delete") && {
+    // hasPermission("trekCategory", "delete") &&
+    {
       label: "Delete",
       icon: <FaTrashAlt />,
       onClick: handleDelete,
       variant: "danger",
     },
-  ].filter(Boolean); //
+  ]; //
 
   const columns = [
     {
