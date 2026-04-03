@@ -21,14 +21,11 @@ import {
   FaEdit,
   FaImage,
 } from "react-icons/fa";
-import InputField from "../components/form/InputField";
-import RichTextEditor from "../components/form/RichTextEditor";
-import ImageUploader from "../components/form/ImageUploader";
-import {
-  ArrayBlock,
-  EmptyState,
-} from "../components/form/SharedFormComponents";
-import { AddAboutUs, getAboutUs, editAboutUs } from "../api/aboutUsApi";
+import InputField from "../form/InputField";
+import RichTextEditor from "../form/RichTextEditor";
+import ImageUploader from "../form/ImageUploader";
+import { ArrayBlock, EmptyState } from "../form/SharedFormComponents";
+import { AddAboutUs, getAboutUs, editAboutUs } from "../../api/aboutUsApi";
 
 // ─── Toast Notification ───────────────────────────────────────────────────────
 function Toast({ message, type, onClose }) {

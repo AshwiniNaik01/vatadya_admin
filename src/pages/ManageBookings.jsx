@@ -24,6 +24,7 @@ import {
 
 import DataTable from "../components/table/DataTable";
 import Modal from "../components/modal/Modal";
+import { usePermissions } from "../components/hooks/usePermissions";
 
 export default function ManageBookings() {
   const [data, setData] = useState([]);
@@ -38,38 +39,41 @@ export default function ManageBookings() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [apiError, setApiError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const { hasPermission } = usePermissions();
 
   /* ---------------- Fetch All Bookings ---------------- */
   useEffect(() => {
     fetchBookings();
   }, []);
 
-const fetchBookings = async () => {
-  setIsLoading(true);
-  setApiError("");
-  try {
-    const response = await getAllBookings();
-    const bookingsRaw = response.data || response.bookings || [];
-    
-    // Map the API response to flatten nested fields for easier use
-    const bookings = bookingsRaw.map((b) => ({
-      ...b,
-      trekTitle: b.trekId?.title || "Trek Adventure",
-      trekLocation: b.trekId?.location || "",
-      trekPrice: b.trekId?.price || 0,
-      slotDetails: b.slots || [],
-      status: b.paymentDetails?.status || "Pending",
-      merchTxnId: b.paymentDetails?.merchTxnId || null,
-    }));
+  const fetchBookings = async () => {
+    setIsLoading(true);
+    setApiError("");
+    try {
+      const response = await getAllBookings();
+      const bookingsRaw = response.data || response.bookings || [];
 
-    setData(bookings);
-  } catch (error) {
-    console.error("Error fetching bookings:", error);
-    setApiError(error.message || "Failed to load bookings. Please try again.");
-  } finally {
-    setIsLoading(false);
-  }
-};
+      // Map the API response to flatten nested fields for easier use
+      const bookings = bookingsRaw.map((b) => ({
+        ...b,
+        trekTitle: b.trekId?.title || "Trek Adventure",
+        trekLocation: b.trekId?.location || "",
+        trekPrice: b.trekId?.price || 0,
+        slotDetails: b.slots || [],
+        status: b.paymentDetails?.status || "Pending",
+        merchTxnId: b.paymentDetails?.merchTxnId || null,
+      }));
+
+      setData(bookings);
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+      setApiError(
+        error.message || "Failed to load bookings. Please try again.",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   /* ---------------- Handlers ---------------- */
   const handleView = (row) => {
@@ -84,7 +88,9 @@ const fetchBookings = async () => {
 
   const handleDelete = async (row) => {
     if (
-      !window.confirm(`Are you sure you want to delete booking ${row.trekId?.title}?`)
+      !window.confirm(
+        `Are you sure you want to delete booking ${row.trekId?.title}?`,
+      )
     ) {
       return;
     }
@@ -113,41 +119,47 @@ const fetchBookings = async () => {
     }
   };
 
-const handleUpdateBooking = async (e) => {
-  e.preventDefault();
-  setIsUpdating(true);
-  setApiError("");
-  setSuccessMessage("");
+  const handleUpdateBooking = async (e) => {
+    e.preventDefault();
+    setIsUpdating(true);
+    setApiError("");
+    setSuccessMessage("");
 
-  try {
-    const updateData = {
-      fullName: editBooking.name || editBooking.fullName,
-      whatsappNumber: editBooking.phone || editBooking.whatsappNumber,
-      email: editBooking.email,
-      departureDate: editBooking.date || editBooking.departureDate,
-      numberOfPeople: parseInt(editBooking.people || editBooking.numberOfPeople),
-      status: editBooking.status,
-      additionalMembers: editBooking.additionalMembers || [], // <-- include this
-    };
+    try {
+      const updateData = {
+        fullName: editBooking.name || editBooking.fullName,
+        whatsappNumber: editBooking.phone || editBooking.whatsappNumber,
+        email: editBooking.email,
+        departureDate: editBooking.date || editBooking.departureDate,
+        numberOfPeople: parseInt(
+          editBooking.people || editBooking.numberOfPeople,
+        ),
+        status: editBooking.status,
+        additionalMembers: editBooking.additionalMembers || [], // <-- include this
+      };
 
-    const response = await updateBooking(editBooking._id, updateData);
+      const response = await updateBooking(editBooking._id, updateData);
 
-    // Update local state
-    setData((prev) =>
-      prev.map((b) => (b._id === editBooking._id ? { ...b, ...editBooking } : b))
-    );
+      // Update local state
+      setData((prev) =>
+        prev.map((b) =>
+          b._id === editBooking._id ? { ...b, ...editBooking } : b,
+        ),
+      );
 
-    setSuccessMessage("Booking updated successfully!");
-    setIsEditOpen(false);
+      setSuccessMessage("Booking updated successfully!");
+      setIsEditOpen(false);
 
-    setTimeout(() => setSuccessMessage(""), 3000);
-  } catch (error) {
-    console.error("Error updating booking:", error);
-    setApiError(error.message || "Failed to update booking. Please try again.");
-  } finally {
-    setIsUpdating(false);
-  }
-};
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (error) {
+      console.error("Error updating booking:", error);
+      setApiError(
+        error.message || "Failed to update booking. Please try again.",
+      );
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   // const handleUpdateBooking = async (e) => {
   //   e.preventDefault();
@@ -195,86 +207,106 @@ const handleUpdateBooking = async (e) => {
   // };
 
   /* ---------------- Table Columns ---------------- */
-const columns = [
-  {
-    label: "Booking",
-    render: (row) => (
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
-          <FaTicketAlt />
+  const columns = [
+    {
+      label: "Booking",
+      render: (row) => (
+        <div className="flex items-center gap-4">
+          <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600">
+            <FaTicketAlt />
+          </div>
+          <div>
+            <p className="font-black text-gray-900">{row.trekTitle}</p>
+            <p className="text-[10px] uppercase font-bold text-gray-400">
+              {row.trekLocation}
+            </p>
+          </div>
         </div>
-        <div>
-          <p className="font-black text-gray-900">{row.trekTitle}</p>
-          <p className="text-[10px] uppercase font-bold text-gray-400">
-            {row.trekLocation}
-          </p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    label: "Customer",
-    render: (row) => (
-      <div className="space-y-1">
-        <div className="flex items-center gap-2 font-bold text-gray-700">
-          <FaUser size={12} /> {row.name}
-        </div>
-        <div className="flex items-center gap-2 text-xs text-gray-500">
-          <FaPhoneAlt size={10} /> {row.whatsappNumber}
-        </div>
-      </div>
-    ),
-  },
-  {
-    label: "Date / PAX",
-    render: (row) => (
-      <div className="space-y-1">
-        <div className="flex items-center gap-2 text-xs font-bold text-blue-600">
-          <FaCalendarCheck /> {new Date(row.departureDate).toLocaleDateString()}
-        </div>
-        <div className="text-[10px] text-gray-400 font-bold uppercase">
-          <FaUsers className="inline mr-1" /> {row.numberOfPeople} People
-        </div>
-      </div>
-    ),
-  },
-  {
-    label: "Status",
-    render: (row) => {
-      const status = row.status;
-      if (status === "Confirmed") {
-        return (
-          <span className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-100 text-[10px] font-black uppercase">
-            <FaCheckCircle /> Confirmed
-          </span>
-        );
-      }
-      if (status === "Pending") {
-        return (
-          <span className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-xl border border-amber-100 text-[10px] font-black uppercase">
-            <FaClock /> Pending
-          </span>
-        );
-      }
-      return (
-        <span className="flex items-center gap-2 px-3 py-1.5 bg-red-50 text-red-600 rounded-xl border border-red-100 text-[10px] font-black uppercase">
-          <FaTimesCircle /> Cancelled
-        </span>
-      );
+      ),
     },
-  },
-];
+    {
+      label: "Customer",
+      render: (row) => (
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 font-bold text-gray-700">
+            <FaUser size={12} /> {row.name}
+          </div>
+          <div className="flex items-center gap-2 text-xs text-gray-500">
+            <FaPhoneAlt size={10} /> {row.whatsappNumber}
+          </div>
+        </div>
+      ),
+    },
+    {
+      label: "Date / PAX",
+      render: (row) => (
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-xs font-bold text-blue-600">
+            <FaCalendarCheck />{" "}
+            {new Date(row.departureDate).toLocaleDateString()}
+          </div>
+          <div className="text-[10px] text-gray-400 font-bold uppercase">
+            <FaUsers className="inline mr-1" /> {row.numberOfPeople} People
+          </div>
+        </div>
+      ),
+    },
+    {
+      label: "Status",
+      render: (row) => {
+        const status = row.status;
+        if (status === "Confirmed") {
+          return (
+            <span className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-xl border border-blue-100 text-[10px] font-black uppercase">
+              <FaCheckCircle /> Confirmed
+            </span>
+          );
+        }
+        if (status === "Pending") {
+          return (
+            <span className="flex items-center gap-2 px-3 py-1.5 bg-amber-50 text-amber-600 rounded-xl border border-amber-100 text-[10px] font-black uppercase">
+              <FaClock /> Pending
+            </span>
+          );
+        }
+        return (
+          <span className="flex items-center gap-2 px-3 py-1.5 bg-red-50 text-red-600 rounded-xl border border-red-100 text-[10px] font-black uppercase">
+            <FaTimesCircle /> Cancelled
+          </span>
+        );
+      },
+    },
+  ];
+
+  // const rowActions = [
+  //   { label: "View Booking", icon: <FaEye />, onClick: handleView },
+  //   { label: "Edit Booking", icon: <FaEdit />, onClick: handleEdit },
+  //   {
+  //     label: "Delete Booking",
+  //     icon: <FaTrashAlt />,
+  //     onClick: handleDelete,
+  //     variant: "danger",
+  //   },
+  // ];
 
   const rowActions = [
-    { label: "View Booking", icon: <FaEye />, onClick: handleView },
-    { label: "Edit Booking", icon: <FaEdit />, onClick: handleEdit },
-    {
+    hasPermission("booking", "read") && {
+      label: "View Booking",
+      icon: <FaEye />,
+      onClick: handleView,
+    },
+    hasPermission("booking", "update") && {
+      label: "Edit Booking",
+      icon: <FaEdit />,
+      onClick: handleEdit,
+    },
+    hasPermission("booking", "delete") && {
       label: "Delete Booking",
       icon: <FaTrashAlt />,
       onClick: handleDelete,
       variant: "danger",
     },
-  ];
+  ].filter(Boolean);
 
   /* ---------------- JSX ---------------- */
   return (
@@ -370,9 +402,17 @@ const columns = [
                   value={selectedBooking.date || selectedBooking.departureDate}
                 />
                 <InfoRow label="Trek" value={selectedBooking.trekTitle} />
-<InfoRow label="Departure Date" value={new Date(selectedBooking.departureDate).toLocaleDateString()} />
-<InfoRow label="People" value={`${selectedBooking.numberOfPeople} PAX`} />
-<InfoRow label="Status" value={selectedBooking.status} />
+                <InfoRow
+                  label="Departure Date"
+                  value={new Date(
+                    selectedBooking.departureDate,
+                  ).toLocaleDateString()}
+                />
+                <InfoRow
+                  label="People"
+                  value={`${selectedBooking.numberOfPeople} PAX`}
+                />
+                <InfoRow label="Status" value={selectedBooking.status} />
                 <InfoRow
                   label="People"
                   value={`${selectedBooking.people || selectedBooking.numberOfPeople} PAX`}
@@ -433,14 +473,21 @@ const columns = [
                       Additional Members
                     </p>
                     <div className="space-y-2">
-                     {selectedBooking.additionalMembers?.map((member, idx) => (
-  <div key={idx} className="flex items-center gap-3 text-sm">
-    <FaUser className="text-gray-400" />
-    <span className="font-semibold text-[#1F2D2A]">{member.name}</span>
-    <span className="text-gray-500">•</span>
-    <span className="text-gray-600">{member.whatsappNumber}</span>
-  </div>
-))}
+                      {selectedBooking.additionalMembers?.map((member, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center gap-3 text-sm"
+                        >
+                          <FaUser className="text-gray-400" />
+                          <span className="font-semibold text-[#1F2D2A]">
+                            {member.name}
+                          </span>
+                          <span className="text-gray-500">•</span>
+                          <span className="text-gray-600">
+                            {member.whatsappNumber}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
@@ -501,13 +548,30 @@ const columns = [
                   setEditBooking({ ...editBooking, email: e.target.value })
                 }
               />
-              <EditField label="Departure Date" type="date" value={new Date(editBooking.departureDate).toISOString().slice(0, 10)} onChange={(e) =>
-  setEditBooking({ ...editBooking, departureDate: e.target.value })
-} />
-<EditField label="No. of People" type="number" value={editBooking.numberOfPeople} onChange={(e) =>
-  setEditBooking({ ...editBooking, numberOfPeople: parseInt(e.target.value) })
-} />
-
+              <EditField
+                label="Departure Date"
+                type="date"
+                value={new Date(editBooking.departureDate)
+                  .toISOString()
+                  .slice(0, 10)}
+                onChange={(e) =>
+                  setEditBooking({
+                    ...editBooking,
+                    departureDate: e.target.value,
+                  })
+                }
+              />
+              <EditField
+                label="No. of People"
+                type="number"
+                value={editBooking.numberOfPeople}
+                onChange={(e) =>
+                  setEditBooking({
+                    ...editBooking,
+                    numberOfPeople: parseInt(e.target.value),
+                  })
+                }
+              />
 
               <div>
                 <label className="text-[10px] uppercase font-black text-gray-400">

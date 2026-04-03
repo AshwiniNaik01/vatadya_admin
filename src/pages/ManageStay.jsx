@@ -353,7 +353,7 @@ export default function ManageStays() {
                   Base Fee
                 </p>
                 <p className="text-sm font-bold text-gray-800">
-                  Rs. {selectedStay?.feeDetails?.baseFee?.amount || 0}
+                  Rs. {selectedStay?.feeDetails?.basePrice?.amount || 0}
                 </p>
               </div>
             </div>
@@ -405,7 +405,7 @@ export default function ManageStays() {
                   <FiImage className="text-blue-500" /> Property Gallery
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {selectedStay.gallery.map((img, index) => (
+                  {selectedStay.gallery?.map((img, index) => (
                     <img
                       key={index}
                       src={img?.cdnUrl || img}

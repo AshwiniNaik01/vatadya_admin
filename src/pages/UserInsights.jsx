@@ -24,6 +24,8 @@ import WhyChooseUsForm from "../components/user-insights/WhyChooseUsForm";
 import SafetyStandardsForm from "../components/user-insights/SafetyStandardsForm";
 import FaqForm from "../components/user-insights/FaqForm";
 import FeaturesForm from "../components/user-insights/FeaturesForm";
+import FooterForm from "../components/user-insights/FooterForm";
+import { usePermissions } from "../components/hooks/usePermissions";
 
 // ─── Nav Config ───────────────────────────────────────────────────────────────
 const NAV = [
@@ -34,6 +36,7 @@ const NAV = [
   { key: "safetyStandards", label: "Safety Standards", Icon: FaShieldAlt },
   { key: "faq", label: "FAQ", Icon: FaQuestionCircle },
   { key: "features", label: "Features", Icon: FaStar },
+  { key: "footer", label: "Footer", Icon: FaTh },
 ];
 
 const SECTION_META = {
@@ -72,6 +75,11 @@ const SECTION_META = {
     sub: "List your product features and metrics",
     Icon: FaStar,
   },
+  footer: {
+    label: "Footer",
+    sub: "Edit footer content and links",
+    Icon: FaTh,
+  },
 };
 
 // ─── Initial State ────────────────────────────────────────────────────────────
@@ -107,6 +115,23 @@ const initData = () => ({
   safetyStandards: { title: "", description: "", standards: [] },
   faq: { mainTitle: "Frequently Asked Questions", faqs: [] },
   features: { mainTitle: "Our Features", features: [] },
+  footer: {
+    brand: { tagline: "", description: "" },
+    socialLinks: { facebook: "", instagram: "", twitter: "", youtube: "" },
+    contact: {
+      phone: "",
+      email: "",
+      address: {
+        line1: "",
+        line2: "",
+        city: "",
+        state: "",
+        country: "",
+        pincode: "",
+      },
+    },
+    footerBottom: { year: new Date().getFullYear(), companyName: "" },
+  },
 });
 
 // ─── API Map ──────────────────────────────────────────────────────────────────
@@ -118,6 +143,7 @@ const API_URLS = {
   safetyStandards: "/safety-standards",
   faq: "/faqs",
   features: "/our-features",
+  footer: "/footer",
 };
 
 const FORMS = {
@@ -128,6 +154,7 @@ const FORMS = {
   safetyStandards: SafetyStandardsForm,
   faq: FaqForm,
   features: FeaturesForm,
+  footer: FooterForm,
 };
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
@@ -152,6 +179,7 @@ function Toast({ show, message, isError }) {
 export default function SectionManager() {
   const { tab } = useParams();
   const navigate = useNavigate();
+  const { hasPermission } = usePermissions();
 
   const [current, setCurrent] = useState(tab && FORMS[tab] ? tab : "hero");
   const [formData, setFormData] = useState(initData());
@@ -414,7 +442,7 @@ export default function SectionManager() {
       // ✅ Decide API method + URL
       const method = hasId ? "put" : "post";
       const url = hasId
-        ? `${API_URLS[current]}/${data._id}` // update
+        ? `${API_URLS[current]}` // update
         : API_URLS[current]; // create
 
       console.log("METHOD:", method);
@@ -575,27 +603,32 @@ export default function SectionManager() {
                 >
                   <FaEye className="text-xs" /> View
                 </button> */}
-                <button
-                  type="button"
-                  onClick={handleEdit}
-                  disabled={isLoading || isEditing}
-                  className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-xl border border-blue-200 text-blue-600 font-semibold hover:bg-blue-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <FaCog className="text-xs" /> Edit
-                </button>
-                <button
-                  type="button"
-                  disabled={isSaving || isLoading}
-                  onClick={handleSave}
-                  className="inline-flex items-center gap-2 text-sm px-6 py-2 rounded-xl bg-linear-to-r from-blue-600 to-blue-500 text-white font-bold shadow-md shadow-blue-500/30 hover:from-blue-700 hover:to-blue-600 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
-                >
-                  {isSaving ? (
-                    <div className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
-                  ) : (
-                    <FaSave className="text-xs" />
-                  )}
-                  {isSaving ? "Saving..." : "Save Section"}
-                </button>
+                {hasPermission("userInsight", "update") && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={handleEdit}
+                      disabled={isLoading || isEditing}
+                      className="inline-flex items-center gap-2 text-sm px-4 py-2 rounded-xl border border-blue-200 text-blue-600 font-semibold hover:bg-blue-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <FaCog className="text-xs" /> Edit
+                    </button>
+
+                    <button
+                      type="button"
+                      disabled={isSaving || isLoading}
+                      onClick={handleSave}
+                      className="inline-flex items-center gap-2 text-sm px-6 py-2 rounded-xl bg-linear-to-r from-blue-600 to-blue-500 text-white font-bold shadow-md shadow-blue-500/30 hover:from-blue-700 hover:to-blue-600 hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-75 disabled:cursor-not-allowed"
+                    >
+                      {isSaving ? (
+                        <div className="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin"></div>
+                      ) : (
+                        <FaSave className="text-xs" />
+                      )}
+                      {isSaving ? "Saving..." : "Save Section"}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           </div>

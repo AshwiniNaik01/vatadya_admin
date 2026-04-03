@@ -18,7 +18,7 @@ export const registerAdmin = async (data) => {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     return response.data;
@@ -46,7 +46,7 @@ export const loginAdmin = async (data) => {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
     return response.data;
@@ -64,3 +64,40 @@ export const loginAdmin = async (data) => {
 //     throw error.response?.data || error;
 //   }
 // };
+
+export const resetPassword = async (id, newPassword) => {
+  try {
+    const response = await axiosInstance.patch(`/admin/reset-password/${id}`, {
+      newPassword,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("API Error (resetPassword):", error);
+    throw error.response?.data || error;
+  }
+};
+
+export const updatePermissions = async (id, allowedTabs) => {
+  try {
+    const response = await axiosInstance.patch(
+      `/admin/update-permissions/${id}`,
+      {
+        allowedTabs,
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error("API Error (updatePermissions):", error);
+    throw error.response?.data || error;
+  }
+};
+
+export const getAllAdmins = async () => {
+  try {
+    const response = await axiosInstance.get("/admin");
+    return response.data;
+  } catch (error) {
+    console.error("API Error (getAllAdmins):", error);
+    throw error.response?.data || error;
+  }
+};
