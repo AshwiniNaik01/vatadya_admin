@@ -55,20 +55,12 @@ export const loginAdmin = async (data) => {
     throw error.response?.data || error;
   }
 };
-// export const loginAdmin = async (formData) => {
-//   try {
-//     const response = await axiosInstance.post("/admin/login", formData);
-//     return response.data;
-//   } catch (error) {
-//     console.error("API Error (loginAdmin):", error);
-//     throw error.response?.data || error;
-//   }
-// };
 
-export const resetPassword = async (id, newPassword) => {
+export const resetPassword = async (reference, password) => {
   try {
-    const response = await axiosInstance.patch(`/admin/reset-password/${id}`, {
-      newPassword,
+    const response = await axiosInstance.post("/auth/reset-password", {
+      reference,
+      password,
     });
     return response.data;
   } catch (error) {
@@ -98,6 +90,29 @@ export const getAllAdmins = async () => {
     return response.data;
   } catch (error) {
     console.error("API Error (getAllAdmins):", error);
+    throw error.response?.data || error;
+  }
+};
+
+export const sendOtp = async (email) => {
+  try {
+    const response = await axiosInstance.post(`/auth/send-otp`, { email });
+    return response.data;
+  } catch (error) {
+    console.error("Error sending OTP:", error);
+    throw error.response?.data || error;
+  }
+};
+
+export const verifyOtp = async (reference, otp) => {
+  try {
+    const response = await axiosInstance.post(`/auth/verify-otp`, {
+      reference,
+      otp,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error verifying OTP:", error);
     throw error.response?.data || error;
   }
 };
