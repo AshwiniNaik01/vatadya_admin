@@ -56,11 +56,11 @@ export const loginAdmin = async (data) => {
   }
 };
 
-export const resetPassword = async (reference, password) => {
+export const resetPassword = async (email, password) => {
   try {
-    const response = await axiosInstance.post("/auth/reset-password", {
-      reference,
-      password,
+    const response = await axiosInstance.post("/admin/forget-password", {
+      email,
+      newPassword: password,
     });
     return response.data;
   } catch (error) {

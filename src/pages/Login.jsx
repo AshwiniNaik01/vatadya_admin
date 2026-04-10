@@ -74,7 +74,7 @@ export default function Login() {
 
   const handleResetPassword = async () => {
     try {
-      await resetPassword(reference, newPassword);
+      await resetPassword(email, newPassword);
       alert("Password changed successfully");
       setShowForgotModal(false);
     } catch (err) {
