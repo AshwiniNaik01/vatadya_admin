@@ -19,7 +19,9 @@ import {
   FaKey,
 } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
+import axiosInstance from "../api/axiosInstance";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TOGGLE SWITCH
@@ -286,6 +288,17 @@ const UserManagement = () => {
     "w-[400px] bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-800 " +
     "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition placeholder:text-slate-400";
 
+  const handleDelete = async (id) => {
+    try {
+      await axiosInstance.delete(`/user/${id}`);
+      // refresh users list
+
+      dispatch(fetchUsers());
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 p-6">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -431,7 +444,7 @@ const UserManagement = () => {
                           role={user.role}
                         />
                       </td>
-                      <td className="px-5 py-4">
+                      <td className="p flex x-5 py-4">
                         <button
                           onClick={() => setResetTarget(user)}
                           disabled={user.role?.toLowerCase() === "user"}
@@ -442,6 +455,27 @@ const UserManagement = () => {
                         >
                           <FaKey size={10} />
                           Reset
+                        </button>
+                        {/* <button
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold 
+                          text-red-600 bg-red-50 hover:bg-red-100 rounded-lg 
+                           border border-red-100 transition-all active:scale-95"
+                        >
+                          <MdDeleteForever size={20} />
+                        </button> */}
+
+                        <button
+                          onClick={() => handleDelete(user._id)}
+                          disabled={user.role === "admin"}
+                          className={`p-2 rounded-lg transition-all
+    ${
+      user.role === "admin"
+        ? "opacity-40 cursor-not-allowed"
+        : "hover:bg-red-50 active:scale-95"
+    }
+  `}
+                        >
+                          <MdDeleteForever size={20} className="text-red-600" />
                         </button>
                       </td>
                     </tr>
