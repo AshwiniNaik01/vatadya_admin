@@ -368,7 +368,31 @@ export default function TrekForm() {
         ) {
           formDataToSend.append(key, JSON.stringify(value));
         } else if (Array.isArray(value)) {
-          formDataToSend.append(key, JSON.stringify(value));
+          // 🔥 Handle availableMonths (NOT months)
+          if (key === "availableMonths") {
+            const hasAll = value.some((m) => m?.trim().toLowerCase() === "all");
+
+            const ALL_MONTHS = [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
+            ];
+
+            const finalMonths = hasAll ? ALL_MONTHS : value;
+
+            formDataToSend.append(key, JSON.stringify(finalMonths));
+          } else {
+            formDataToSend.append(key, JSON.stringify(value));
+          }
         } else if (value !== null && value !== undefined) {
           formDataToSend.append(key, value);
         }
@@ -509,6 +533,22 @@ export default function TrekForm() {
     updated[infoIndex].values.splice(valueIndex, 1);
     setFormData({ ...formData, trekInfo: updated });
   };
+
+  const ALL_MONTHS = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   return (
     <div className="bg-gray-50 py-10 min-h-screen">
       <div className="max-w-6xl mx-auto">
@@ -1030,36 +1070,13 @@ export default function TrekForm() {
                     }
                     placeholder="E.g. Weekend Warriors, Pro Solos"
                   />
-                  {/* <InputField
-                    label="Pro-Trekker Incentives"
-                    value={formData.proTrekkerBenefit}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        proTrekkerBenefit: e.target.value,
-                      })
-                    }
-                    placeholder="Special perks for returning trekkers"
-                  />
-
-                  <InputField
-                    label="Govt. Eligibility / Certificate"
-                    value={formData.govtEligibility}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        govtEligibility: e.target.value,
-                      })
-                    }
-                    placeholder="Eligibility criteria for govt. benefits"
-                  /> */}
 
                   <div className="md:col-span-2 mt-6">
                     <TagsInput
                       label="Available Months"
-                      value={formData.months}
+                      value={formData.availableMonths}
                       onChange={(months) =>
-                        setFormData({ ...formData, months })
+                        setFormData({ ...formData, availableMonths: months })
                       }
                       placeholder="Type month and press enter..."
                     />
@@ -1073,9 +1090,6 @@ export default function TrekForm() {
               </div>
               {/* Inclusions & Exclusions */}
               <div className="mt-8">
-                {/* <div className="mb-1 text-sm font-black uppercase tracking-widest text-blue-500">
-                  Trek Configuration
-                </div> */}
                 <h3 className="text-lg font-black text-gray-800 mb-1">
                   Inclusions &amp; Exclusions
                 </h3>

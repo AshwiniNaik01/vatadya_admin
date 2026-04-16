@@ -19,12 +19,14 @@ import {
   FaKey,
 } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
+import axiosInstance from "../api/axiosInstance";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TOGGLE SWITCH
 // ─────────────────────────────────────────────────────────────────────────────
-function ToggleSwitch({ checked, onChange, disabled }) {
+const ToggleSwitch = ({ checked, onChange, disabled }) => {
   return (
     <button
       type="button"
@@ -44,12 +46,17 @@ function ToggleSwitch({ checked, onChange, disabled }) {
       />
     </button>
   );
-}
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PASSWORD INPUT
 // ─────────────────────────────────────────────────────────────────────────────
-function PasswordInput({ value, onChange, placeholder = "Password", label }) {
+const PasswordInput = ({
+  value,
+  onChange,
+  placeholder = "Password",
+  label,
+}) => {
   const [visible, setVisible] = useState(false);
   return (
     <div className="flex flex-col gap-1">
@@ -78,12 +85,12 @@ function PasswordInput({ value, onChange, placeholder = "Password", label }) {
       </div>
     </div>
   );
-}
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MODAL
 // ─────────────────────────────────────────────────────────────────────────────
-function Modal({ isOpen, onClose, title, children, footer }) {
+const Modal = ({ isOpen, onClose, title, children, footer }) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -110,7 +117,7 @@ function Modal({ isOpen, onClose, title, children, footer }) {
       </div>
     </div>
   );
-}
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ROLE BADGE
@@ -121,7 +128,7 @@ const roleBadgeColors = {
   default: "bg-slate-100 text-slate-600 border-slate-200",
 };
 
-function RoleBadge({ role }) {
+const RoleBadge = ({ role }) => {
   const color = roleBadgeColors[role?.toLowerCase()] || roleBadgeColors.default;
   return (
     <span
@@ -130,13 +137,19 @@ function RoleBadge({ role }) {
       {role ? role.charAt(0).toUpperCase() + role.slice(1) : "—"}
     </span>
   );
-}
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PASSWORD CELL (per-row reveal)
 // ─────────────────────────────────────────────────────────────────────────────
-function PasswordCell({ password }) {
+const PasswordCell = ({ password, role }) => {
   const [visible, setVisible] = useState(false);
+
+  // For plain users, just show a dash — no dots, no eye icon
+  if (role?.toLowerCase() === "user") {
+    return <span className="text-slate-400 text-sm">—</span>;
+  }
+
   return (
     <div className="flex items-center gap-2">
       <span className="font-mono text-xs text-slate-700 min-w-[80px]">
@@ -151,7 +164,7 @@ function PasswordCell({ password }) {
       </button>
     </div>
   );
-}
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MAIN COMPONENT
@@ -274,6 +287,17 @@ const UserManagement = () => {
   const inputCls =
     "w-[400px] bg-slate-50 border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-slate-800 " +
     "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition placeholder:text-slate-400";
+
+  const handleDelete = async (id) => {
+    try {
+      await axiosInstance.delete(`/user/${id}`);
+      // refresh users list
+
+      dispatch(fetchUsers());
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 p-6">
@@ -415,17 +439,43 @@ const UserManagement = () => {
                         </div>
                       </td>
                       <td className="px-5 py-4">
-                        <PasswordCell password={user.password} />
+                        <PasswordCell
+                          password={user.password}
+                          role={user.role}
+                        />
                       </td>
-                      <td className="px-5 py-4">
+                      <td className="p flex x-5 py-4">
                         <button
                           onClick={() => setResetTarget(user)}
+                          disabled={user.role?.toLowerCase() === "user"}
                           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold
                             text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg
-                            border border-blue-100 transition-all active:scale-95"
+                            border border-blue-100 transition-all active:scale-95
+                            disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-blue-50"
                         >
                           <FaKey size={10} />
                           Reset
+                        </button>
+                        {/* <button
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold 
+                          text-red-600 bg-red-50 hover:bg-red-100 rounded-lg 
+                           border border-red-100 transition-all active:scale-95"
+                        >
+                          <MdDeleteForever size={20} />
+                        </button> */}
+
+                        <button
+                          onClick={() => handleDelete(user._id)}
+                          disabled={user.role === "admin"}
+                          className={`p-2 rounded-lg transition-all
+    ${
+      user.role === "admin"
+        ? "opacity-40 cursor-not-allowed"
+        : "hover:bg-red-50 active:scale-95"
+    }
+  `}
+                        >
+                          <MdDeleteForever size={20} className="text-red-600" />
                         </button>
                       </td>
                     </tr>

@@ -1,13 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
 import { HiChevronDown, HiX } from "react-icons/hi";
 
-const CustomSelect = ({ options, isMulti, value, onChange, placeholder = "Select..." }) => {
+const CustomSelect = ({
+  options,
+  isMulti,
+  value,
+  onChange,
+  placeholder = "Select...",
+  className = "",
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (containerRef.current && !containerRef.current.contains(event.target)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
         setIsOpen(false);
       }
     };
@@ -28,7 +38,6 @@ const CustomSelect = ({ options, isMulti, value, onChange, placeholder = "Select
       setIsOpen(false);
     }
   };
-  
 
   const removeOption = (e, option) => {
     e.stopPropagation();
@@ -38,7 +47,7 @@ const CustomSelect = ({ options, isMulti, value, onChange, placeholder = "Select
   return (
     <div className="relative w-full" ref={containerRef}>
       <div
-        className="min-h-[42px] w-full px-3 py-1.5 border border-gray-300 rounded-lg bg-white flex flex-wrap gap-2 items-center cursor-pointer focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all shadow-sm"
+        className={`min-h-[42px] w-full px-3 py-1.5 border border-gray-300 rounded-lg bg-white flex flex-wrap gap-2 items-center cursor-pointer focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all shadow-sm ${className}`}
         onClick={() => setIsOpen(!isOpen)}
       >
         {isMulti ? (
@@ -62,10 +71,16 @@ const CustomSelect = ({ options, isMulti, value, onChange, placeholder = "Select
           </div>
         ) : (
           <div className="flex-1 text-gray-700">
-            {value ? value.label : <span className="text-gray-400">{placeholder}</span>}
+            {value ? (
+              value.label
+            ) : (
+              <span className="text-gray-400">{placeholder}</span>
+            )}
           </div>
         )}
-        <HiChevronDown className={`text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+        <HiChevronDown
+          className={`text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`}
+        />
       </div>
 
       {isOpen && (
@@ -74,7 +89,11 @@ const CustomSelect = ({ options, isMulti, value, onChange, placeholder = "Select
             <div
               key={option.value}
               className={`px-4 py-2.5 cursor-pointer transition-colors hover:bg-blue-50 ${
-                (isMulti ? value?.some((v) => v.value === option.value) : value?.value === option.value)
+                (
+                  isMulti
+                    ? value?.some((v) => v.value === option.value)
+                    : value?.value === option.value
+                )
                   ? "bg-blue-50 text-blue-700 font-medium"
                   : "text-gray-700"
               }`}
