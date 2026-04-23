@@ -10,6 +10,8 @@ import TrekGalleryForm from "../pages/TrekGalleryForm";
 import ManageTrekGallery from "../pages/ManageTrekGallery";
 import ManageCategories from "../pages/ManageCategories";
 import CategoryForm from "../pages/CategoryForm";
+import ManageCoupons from "../pages/ManageCoupons";
+import CouponForm from "../pages/CouponForm";
 
 import ManageReviews from "../pages/ManageReviews";
 import ManagePayments from "../pages/ManagePayments";
@@ -49,6 +51,11 @@ export default function AppRoutes() {
             <Route path="/categories/manage" element={<ManageCategories />} />
             <Route path="/categories/create" element={<CategoryForm />} />
             <Route path="/categories/edit/:id" element={<CategoryForm />} />
+
+            {/* Coupons */}
+            <Route path="/coupons/manage" element={<ManageCoupons />} />
+            <Route path="/coupons/create" element={<CouponForm />} />
+            <Route path="/coupons/edit/:id" element={<CouponForm />} />
 
             {/* Bookings */}
             <Route path="/bookings/create" element={<TrekBookingForm />} />

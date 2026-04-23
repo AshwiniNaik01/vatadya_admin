@@ -440,7 +440,7 @@ export default function SectionManager() {
       }
 
       // ✅ Decide API method + URL
-      const method = hasId ? "put" : "post";
+      const method = hasId ? "post" : "post";
       const url = hasId
         ? `${API_URLS[current]}` // update
         : API_URLS[current]; // create
