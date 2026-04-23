@@ -11,6 +11,7 @@ import {
   FaStar,
   FaEnvelope,
   FaInfoCircle,
+  FaTicketAlt,
 } from "react-icons/fa";
 
 const menuItems = [
@@ -57,16 +58,15 @@ const menuItems = [
       { name: "Manage Gallery Items", path: "/gallery/manage" },
     ],
   },
-  // { name: "Reviews", path: "/reviews/manage", icon: <FaStar /> },
-  // {
-  //   name: "Slots",
-  //   path: "/slots",
-  //   icon: <FaImages />,
-  //   submenu: [
-  //     { name: "Create Slot", path: "/slots/create" },
-  //     { name: "Manage Slots", path: "/slots/manage" },
-  //   ],
-  // },
+  {
+    name: "Coupons",
+    path: "/coupons",
+    icon: <FaTicketAlt />,
+    submenu: [
+      { name: "Create Coupon", path: "/coupons/create" },
+      { name: "Manage Coupons", path: "/coupons/manage" },
+    ],
+  },
   { name: "Contacts", path: "/contacts", icon: <FaUsers /> },
   {
     name: "User Insights",

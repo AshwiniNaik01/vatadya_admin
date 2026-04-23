@@ -138,14 +138,14 @@ export default function HeroForm({ data, onChange, disabled = false }) {
         </div>
 
         {/* Hero Image */}
-        <div className="md:col-span-2 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+        {/* <div className="md:col-span-2 bg-gray-50 p-6 rounded-2xl border border-gray-100">
           <ImageUploader
             label="Hero Image"
             value={imageValue}
             onChange={(file) => set("image", file)}
             disabled={disabled} // ✅ respect view mode
           />
-        </div>
+        </div> */}
       </div>
 
       {/* Key Statistics */}
