@@ -113,7 +113,14 @@ const validationSchema = Yup.object({
 const emptyValues = {
   mainTitle: "",
   contactMainImage: null,
-  contactOtherImages: [],
+  // contactOtherImages: [],
+  contactOtherImages: [
+    {
+      file: null,        // File or existing image object
+      name: "",
+      description: "",
+    }
+  ],
   contactInfo: {
     callUs: { value: "", subValue: "" },
     emailUs: { value: "", subValue: "" },
@@ -128,7 +135,12 @@ function mapApiToForm(data) {
     mainTitle: data?.mainTitle ?? "",
     contactMainImage: data?.contactMainImage ?? null, // object is fine
     contactOtherImages: Array.isArray(data?.contactOtherImages)
-      ? data.contactOtherImages.map((img) => img ?? null)
+      ? data.contactOtherImages.map((img) => ({
+        _id: img._id,
+        file: img?.image || null,
+        name: img?.name || "",
+        description: img?.description || "",
+      }))
       : [],
     contactInfo: {
       callUs: {
@@ -171,17 +183,26 @@ function buildFormData(values) {
   }
 
   // ── ContactOtherImages ───────────────────────────────────────────────────────
+  const otherImagesMeta = [];
+
   if (Array.isArray(values.contactOtherImages)) {
-    values.contactOtherImages.forEach((img) => {
-      if (img instanceof File) {
-        formData.append("ContactOtherImages", img); // PascalCase
-      } else if (img?.cdnUrl) {
-        formData.append("contactOtherImages", img.cdnUrl); // optional: for existing URLs
-      } else if (typeof img === "string" && img) {
-        formData.append("contactOtherImages", img);
+    values.contactOtherImages.forEach((item) => {
+      // Upload file
+      if (item.file instanceof File) {
+        formData.append("ContactOtherImages", item.file);
       }
+
+      // Prepare metadata
+      otherImagesMeta.push({
+        _id: item._id,
+        name: item.name,
+        description: item.description,
+      });
     });
   }
+
+  // send metadata as JSON
+  formData.append("contactOtherImagesMeta", JSON.stringify(otherImagesMeta));
 
   return formData;
 }
@@ -418,21 +439,74 @@ export default function ContactUsForm({ onChange, disabled }) {
                   />
                 </div>
                 <div className="bg-gray-50 rounded-2xl border border-gray-100 p-5">
-                  <ImageUploader
-                    label="Other Images"
-                    isMultiple
-                    // value={formik.values.contactOtherImages ?? []}
-                    value={
-                      Array.isArray(formik.values.contactOtherImages)
-                        ? formik.values.contactOtherImages.map((img) =>
-                            typeof img === "string" ? img : img?.cdnUrl || img,
-                          )
-                        : []
-                    }
-                    onChange={(files) =>
-                      formik.setFieldValue("contactOtherImages", files ?? [])
-                    }
-                  />
+                  <div className="space-y-4">
+                    {formik.values.contactOtherImages.map((item, index) => (
+                      <div key={index} className="p-4 border rounded-xl bg-gray-50 space-y-3">
+
+                        <ImageUploader
+                          label={`Image ${index + 1}`}
+                          value={
+                            typeof item.file === "string"
+                              ? item.file
+                              : item.file?.cdnUrl || item.file
+                          }
+                          onChange={(file) => {
+                            const updated = [...formik.values.contactOtherImages];
+                            updated[index].file = file;
+                            formik.setFieldValue("contactOtherImages", updated);
+                          }}
+                        />
+
+                        <InputField
+                          label="Name"
+                          value={item.name}
+                          onChange={(e) => {
+                            const updated = [...formik.values.contactOtherImages];
+                            updated[index].name = e.target.value;
+                            formik.setFieldValue("contactOtherImages", updated);
+                          }}
+                          placeholder="Enter image name"
+                        />
+
+                        <InputField
+                          label="Description"
+                          value={item.description}
+                          onChange={(e) => {
+                            const updated = [...formik.values.contactOtherImages];
+                            updated[index].description = e.target.value;
+                            formik.setFieldValue("contactOtherImages", updated);
+                          }}
+                          placeholder="Enter description"
+                        />
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = formik.values.contactOtherImages.filter(
+                              (_, i) => i !== index
+                            );
+                            formik.setFieldValue("contactOtherImages", updated);
+                          }}
+                          className="text-red-500 text-sm"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        formik.setFieldValue("contactOtherImages", [
+                          ...formik.values.contactOtherImages,
+                          { file: null, name: "", description: "" },
+                        ])
+                      }
+                      className="px-4 py-2 bg-blue-500 text-white rounded-lg text-sm"
+                    >
+                      Add Image
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
