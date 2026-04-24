@@ -392,22 +392,26 @@ export default function ManageBookings() {
                     selectedBooking.phone || selectedBooking.whatsappNumber
                   }
                 />
-                <InfoRow label="Booking ID" value={selectedBooking._id} />
+                {/* <InfoRow label="Booking ID" value={selectedBooking._id} /> */}
                 <InfoRow
                   label="Trek"
                   value={selectedBooking.trek || "Trek Adventure"}
                 />
                 <InfoRow
                   label="Departure Date"
-                  value={selectedBooking.date || selectedBooking.departureDate}
+                  value={
+                    selectedBooking?.departureDate
+                      ? new Date(selectedBooking.departureDate).toLocaleDateString("en-GB")
+                      : selectedBooking?.date || "-"
+                  }
                 />
                 <InfoRow label="Trek" value={selectedBooking.trekTitle} />
-                <InfoRow
+                {/* <InfoRow
                   label="Departure Date"
                   value={new Date(
                     selectedBooking.departureDate,
                   ).toLocaleDateString()}
-                />
+                /> */}
                 <InfoRow
                   label="People"
                   value={`${selectedBooking.numberOfPeople} PAX`}
@@ -551,9 +555,11 @@ export default function ManageBookings() {
               <EditField
                 label="Departure Date"
                 type="date"
-                value={new Date(editBooking.departureDate)
-                  .toISOString()
-                  .slice(0, 10)}
+                value={
+                  editBooking?.departureDate
+                    ? new Date(editBooking.departureDate).toISOString().split("T")[0]
+                    : ""
+                }
                 onChange={(e) =>
                   setEditBooking({
                     ...editBooking,

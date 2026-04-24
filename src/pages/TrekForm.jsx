@@ -54,7 +54,7 @@ export default function TrekForm() {
     bestFor: "",
     description: "",
     status: "Upcoming",
-    bookingType: "",
+    bookingType: [],
     startDate: null,
     endDate: null,
     feeDetails: {
@@ -151,6 +151,7 @@ export default function TrekForm() {
             ...trekData,
             category: categoryId,
             months: monthsList,
+            bookingType: trekData.bookingType?.map((bt) => bt._id) || [],
             feeDetails: { ...prev.feeDetails, ...(trekData.feeDetails || {}) },
             links: { ...prev.links, ...(trekData.links || {}) },
             trekInfo: (() => {
@@ -361,10 +362,30 @@ export default function TrekForm() {
             };
           });
           formDataToSend.append("trekInfo", JSON.stringify(normalizedTrekInfo));
+        } else if (key === "links") {
+          const linksObj = { ...value };
+
+          if (linksObj.inclusions instanceof File) {
+            formDataToSend.append("inclusionsPdf", linksObj.inclusions);
+            delete linksObj.inclusions;
+          }
+          if (linksObj.terms instanceof File) {
+            formDataToSend.append("termsPdf", linksObj.terms);
+            delete linksObj.terms;
+          }
+          if (linksObj.cancellation instanceof File) {
+            formDataToSend.append("cancellationPdf", linksObj.cancellation);
+            delete linksObj.cancellation;
+          }
+          if (linksObj.scholarships instanceof File) {
+            formDataToSend.append("scholarshipsPdf", linksObj.scholarships);
+            delete linksObj.scholarships;
+          }
+
+          formDataToSend.append(key, JSON.stringify(linksObj));
         } else if (
           key === "addons" ||
-          key === "feeDetails" ||
-          key === "links"
+          key === "feeDetails"
         ) {
           formDataToSend.append(key, JSON.stringify(value));
         } else if (Array.isArray(value)) {
@@ -569,11 +590,10 @@ export default function TrekForm() {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className={`${
-                loading
-                  ? "bg-blue-400 cursor-not-allowed"
-                  : "bg-blue-600 hover:bg-blue-700"
-              } text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-blue-500/20 active:scale-95 transition-all flex items-center gap-2`}
+              className={`${loading
+                ? "bg-blue-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+                } text-white font-bold px-8 py-3 rounded-xl shadow-lg shadow-blue-500/20 active:scale-95 transition-all flex items-center gap-2`}
             >
               {loading ? (
                 <>
@@ -603,10 +623,9 @@ export default function TrekForm() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all
-                ${
-                  activeTab === tab.id
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
+                ${activeTab === tab.id
+                  ? "bg-white text-blue-600 shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
                 }`}
             >
               <tab.icon className="text-lg" />
@@ -737,15 +756,20 @@ export default function TrekForm() {
                   <label className="block text-sm font-bold text-gray-700 ml-1 mb-2">
                     Booking Type
                   </label>
+
                   <CustomSelect
                     options={bookingTypes}
                     value={
                       bookingTypes.find(
-                        (bt) => bt.value === formData.bookingType,
+                        (bt) => bt.value === formData.bookingType?.[0]
                       ) || null
                     }
-                    onChange={(val) =>
-                      setFormData({ ...formData, bookingType: val.value })
+                    onChange={(val) => {
+                      setFormData((prev) => ({
+                        ...prev,
+                        bookingType: val ? [val.value] : [],
+                      }));
+                    }
                     }
                     placeholder={
                       bookingTypes.length === 0
@@ -754,6 +778,7 @@ export default function TrekForm() {
                     }
                     isDisabled={bookingTypes.length === 0}
                   />
+
                   {fieldErrors.bookingType && (
                     <p className="text-red-500 text-sm mt-1">
                       {fieldErrors.bookingType}
@@ -2030,86 +2055,73 @@ export default function TrekForm() {
                 <SectionTitle icon={FaFileAlt} title="Resource Endpoints" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <InputField
-                      label="Inclusions PDF"
-                      value={formData.links.inclusions}
+                    <label className="block text-sm font-bold text-gray-700 ml-1 mb-2">Inclusions PDF</label>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          links: {
-                            ...formData.links,
-                            inclusions: e.target.value,
-                          },
+                          links: { ...formData.links, inclusions: e.target.files[0] },
                         })
                       }
-                      placeholder="https://..."
+                      className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-200 rounded-xl"
                     />
-                    {fieldErrors["links.inclusions"] && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {fieldErrors["links.inclusions"]}
-                      </p>
+                    {(typeof formData.links.inclusions === 'string' ? formData.links.inclusions : formData.links.inclusions?.cdnUrl) && (
+                      <a href={typeof formData.links.inclusions === 'string' ? formData.links.inclusions : formData.links.inclusions.cdnUrl} target="_blank" rel="noreferrer" className="text-xs text-blue-500 mt-1 block">Current File</a>
                     )}
                   </div>
                   <div>
-                    <InputField
-                      label="Terms & Conditions"
-                      value={formData.links.terms}
+                    <label className="block text-sm font-bold text-gray-700 ml-1 mb-2">Terms & Conditions PDF</label>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          links: { ...formData.links, terms: e.target.value },
+                          links: { ...formData.links, terms: e.target.files[0] },
                         })
                       }
-                      placeholder="https://..."
+                      className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-200 rounded-xl"
                     />
-                    {fieldErrors["links.terms"] && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {fieldErrors["links.terms"]}
-                      </p>
+                    {(typeof formData.links.terms === 'string' ? formData.links.terms : formData.links.terms?.cdnUrl) && (
+                      <a href={typeof formData.links.terms === 'string' ? formData.links.terms : formData.links.terms.cdnUrl} target="_blank" rel="noreferrer" className="text-xs text-blue-500 mt-1 block">Current File</a>
                     )}
                   </div>
                   <div>
-                    <InputField
-                      label="Cancellation Policy"
-                      value={formData.links.cancellation}
+                    <label className="block text-sm font-bold text-gray-700 ml-1 mb-2">Cancellation Policy PDF</label>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          links: {
-                            ...formData.links,
-                            cancellation: e.target.value,
-                          },
+                          links: { ...formData.links, cancellation: e.target.files[0] },
                         })
                       }
-                      placeholder="https://..."
+                      className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-200 rounded-xl"
                     />
-                    {fieldErrors["links.cancellation"] && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {fieldErrors["links.cancellation"]}
-                      </p>
+                    {(typeof formData.links.cancellation === 'string' ? formData.links.cancellation : formData.links.cancellation?.cdnUrl) && (
+                      <a href={typeof formData.links.cancellation === 'string' ? formData.links.cancellation : formData.links.cancellation.cdnUrl} target="_blank" rel="noreferrer" className="text-xs text-blue-500 mt-1 block">Current File</a>
                     )}
                   </div>
-                  <div>
-                    <InputField
-                      label="Scholarship Details"
-                      value={formData.links.scholarships}
+                  {/* <div>
+                    <label className="block text-sm font-bold text-gray-700 ml-1 mb-2">Scholarships PDF</label>
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx"
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          links: {
-                            ...formData.links,
-                            scholarships: e.target.value,
-                          },
+                          links: { ...formData.links, scholarships: e.target.files[0] },
                         })
                       }
-                      placeholder="https://..."
+                      className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 border border-gray-200 rounded-xl"
                     />
-                    {fieldErrors["links.scholarships"] && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {fieldErrors["links.scholarships"]}
-                      </p>
+                    {(typeof formData.links.scholarships === 'string' ? formData.links.scholarships : formData.links.scholarships?.cdnUrl) && (
+                       <a href={typeof formData.links.scholarships === 'string' ? formData.links.scholarships : formData.links.scholarships.cdnUrl} target="_blank" rel="noreferrer" className="text-xs text-blue-500 mt-1 block">Current File</a>
                     )}
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
